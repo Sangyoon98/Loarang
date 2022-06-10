@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/tab_character"
+        android:icon="@drawable/character"
+        android:title="캐릭터" />
+
+    <item
+        android:id="@+id/tab_homework"
+        android:icon="@drawable/homework"
+        android:title="주간숙제" />
+
+    <item
+        android:id="@+id/tab_calender"
+        android:icon="@drawable/calender"
+        android:title="일정표" />
+
+    <item
+        android:id="@+id/tab_info"
+        android:icon="@drawable/info"
+        android:title="정보실" />
+
+    <item
+        android:id="@+id/tab_setting"
+        android:icon="@drawable/setting"
+        android:title="설정" />
+
+</menu>
