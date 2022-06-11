@@ -25,15 +25,15 @@ public class CharacterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_character, container, false);
         charName = (TextView) view.findViewById(R.id.charName);
-        new CharacterAsynkTask(charName).execute();
+        new CharacterAsyncTask(charName).execute();
 
         return view;
     }
 
-    class CharacterAsynkTask extends AsyncTask<String, Void, String> {
+    class CharacterAsyncTask extends AsyncTask<String, Void, String> {
         TextView textView;
 
-        public CharacterAsynkTask(TextView textView) {
+        public CharacterAsyncTask(TextView textView) {
             this.textView = textView;
         }
 
