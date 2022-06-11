@@ -1,5 +1,6 @@
 package com.cookandroid.loarang;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,43 +8,58 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
 
 public class CharacterFragment extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
-    public CharacterFragment() {
-        // Required empty public constructor
-    }
-
-    public static CharacterFragment newInstance(String param1, String param2) {
-        CharacterFragment fragment = new CharacterFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    TextView charName;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_character, container, false);
+        charName = (TextView) view.findViewById(R.id.charName);
+        new CharacterAsynkTask(charName).execute();
+
+        return view;
+    }
+
+    class CharacterAsynkTask extends AsyncTask<String, Void, String> {
+        TextView textView;
+
+        public CharacterAsynkTask(TextView textView) {
+            this.textView = textView;
         }
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_character, container, false);
+        @Override
+        protected String doInBackground(String... strings) {
+            String result = "";
+
+            try {
+                Document document = Jsoup.connect("https://lostark.game.onstove.com/Profile/Character/0iloll0").get();
+                Elements elements = document.select("span[class=profile-character-info__name]");
+                for (Element element : elements) {  // for( A : B ) B에서 차례대로 객체를 꺼내서 A에 넣겠다는 뜻
+                    result = result + element.text() + "\n";
+                }
+                return result;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            textView.setText(s);
+        }
     }
 }
