@@ -1,64 +1,61 @@
 package com.cookandroid.loarang;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link InfoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class InfoFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public InfoFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment InfoFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static InfoFragment newInstance(String param1, String param2) {
-        InfoFragment fragment = new InfoFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    WebView info_web;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_info, container, false);
+        info_web = view.findViewById(R.id.info_web);
+
+        /* 이미지 정책 변경 후 조치
+        if(Build.VERSION.SDK_INT >= 21) {
+            info_web.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
+        */
+
+        info_web.setWebViewClient(new infoWebViewClient());
+        WebSettings webSet = info_web.getSettings();
+        webSet.setBuiltInZoomControls(true);
+        info_web.loadUrl("https://loawa.com/");
+        info_web.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if(keyEvent.getAction() == keyEvent.ACTION_DOWN){
+                    if(i == keyEvent.KEYCODE_BACK) {
+                        if(info_web!=null) {
+                            if(info_web.canGoBack()) {
+                                info_web.goBack();
+                            }
+                            else {
+                                getActivity().onBackPressed();
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
+        });
+        return view;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_info, container, false);
+    class infoWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            return super.shouldOverrideUrlLoading(view, url);
+        }
     }
 }
