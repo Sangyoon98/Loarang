@@ -26,11 +26,11 @@ public class InfoFragment extends Fragment {
             info_web.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
         */
-
+        info_web.getSettings().setJavaScriptEnabled(true);
         info_web.setWebViewClient(new infoWebViewClient());
         WebSettings webSet = info_web.getSettings();
         webSet.setBuiltInZoomControls(true);
-        info_web.loadUrl("https://loawa.com/");
+        info_web.loadUrl("https://lostark.inven.co.kr/dataninfo/world/");
         info_web.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
