@@ -1,13 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <WebView
-        android:id="@+id/info_web"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"/>
+        android:orientation="vertical"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="경매 손익 계산기"
+            android:layout_margin="10dp"
+            android:id="@+id/GoldCal"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:text="인원 수 (단위:명)"
+                android:layout_margin="15dp"
+                android:id="@+id/PersonNum"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:width="100dp"
+                android:gravity="center"
+                android:layout_marginLeft="60dp"
+                android:id="@+id/setPerson"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:text="경매장 최저가 (단위:골드)"
+                android:layout_margin="15dp"
+                android:id="@+id/minGold"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:width="100dp"
+                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:id="@+id/setMingold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:text="추천 입찰 금액 (단위:골드)"
+                android:layout_margin="15dp"
+                android:id="@+id/recomGold"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:width="100dp"
+                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:id="@+id/setRecomand"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:text="손익 분기점 (단위:골드)"
+                android:layout_margin="15dp"
+                android:id="@+id/maxGold"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:width="100dp"
+                android:gravity="center"
+                android:lineHeight="10dp"
+                android:layout_marginLeft="40dp"
+                android:id="@+id/setMaxgold"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="거래 수수료 계산기"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:id="@+id/feeGold"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="받는 금액"
+                android:textSize="15dp"
+                android:layout_marginLeft="140dp"
+                android:padding="10dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:width="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:layout_marginLeft="140dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="보낼 금액"
+                android:textSize="15dp"
+                android:layout_marginLeft="140dp"
+                android:padding="10dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:width="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:layout_marginLeft="140dp"/>
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
