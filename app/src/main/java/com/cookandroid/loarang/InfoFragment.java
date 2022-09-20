@@ -23,6 +23,7 @@ public class InfoFragment extends Fragment {
 
         /* 이미지 정책 변경 후 조치
         if(Build.VERSION.SDK_INT >= 21) {
+        sex
             info_web.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
         */
