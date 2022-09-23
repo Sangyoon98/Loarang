@@ -13,7 +13,8 @@
         android:theme="@style/Theme.Loarang"
         android:usesCleartextTraffic="true">
         <activity android:name=".Splash"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
