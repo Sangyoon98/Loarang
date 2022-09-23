@@ -52,7 +52,8 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:width="100dp"
-                    android:layout_marginLeft="20dp"/>
+                    android:layout_marginLeft="20dp"
+                    android:inputType="number"/>
 
             </LinearLayout>
 
@@ -79,7 +80,8 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:width="100dp"
-                    android:layout_marginLeft="20dp"/>
+                    android:layout_marginLeft="20dp"
+                    android:inputType="number"/>
 
             </LinearLayout>
 
@@ -180,7 +182,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:width="100dp"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:inputType="number"/>
 
             </LinearLayout>
 
