@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,17 +20,15 @@ import org.w3c.dom.Text;
 
 public class InfoFragment extends Fragment {
 
-    TextView goldCal;TextView personNum;TextView minGold; TextView recomGold; TextView maxGold;
+    EditText setperson; EditText setmingold;
+    EditText setrecomand; EditText setmaxgold;
+
+    EditText getgold; EditText getfee;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_info, container, false);
 
-        goldCal = (TextView) view.findViewById(R.id.GoldCal);
-        personNum = (TextView) view.findViewById(R.id.PersonNum);
-        minGold = (TextView) view.findViewById(R.id.minGold);
-        recomGold = (TextView) view.findViewById(R.id.recomGold);
-        maxGold = (TextView) view.findViewById(R.id.maxGold);
 
         return view;
     }
