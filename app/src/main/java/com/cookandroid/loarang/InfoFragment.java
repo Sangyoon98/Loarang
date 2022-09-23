@@ -14,9 +14,8 @@ import android.widget.TextView;
 
 public class InfoFragment extends Fragment {
 
-    EditText count; EditText exchange;
-    TextView recommendPrice; TextView breakEvenPoint;
-    TextView formatSendPrice; EditText price;
+    EditText count, exchange, price;
+    TextView recommendPrice, breakEvenPoint, formatSendPrice;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
