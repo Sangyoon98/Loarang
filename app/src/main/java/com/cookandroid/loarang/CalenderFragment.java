@@ -62,5 +62,4 @@ class Actor {
     public String getThumb_url(){
         return thumb_url;
     }
-
 }

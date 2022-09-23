@@ -22,7 +22,7 @@ public class InfoFragment extends Fragment {
 
     EditText setperson; EditText setmingold;
     EditText setrecomand; EditText setmaxgold;
-
+    String name;
     EditText getgold; EditText getfee;
 
     @Override
@@ -30,6 +30,7 @@ public class InfoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_info, container, false);
 
 
+        //수정
         return view;
     }
 
