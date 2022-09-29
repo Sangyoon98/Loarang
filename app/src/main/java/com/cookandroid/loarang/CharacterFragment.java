@@ -63,14 +63,12 @@ public class CharacterFragment extends Fragment {
                         nickname += dlgEdt.getText().toString();
                         addCharText.setVisibility(view.GONE);
                         listView.setVisibility(view.VISIBLE);
-
                         BackgroundTask(nickname);
                     }
                 });
                 dlg.show();
             }
         });
-
         return view;
     }
 
