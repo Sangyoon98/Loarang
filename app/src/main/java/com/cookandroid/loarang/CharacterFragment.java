@@ -91,24 +91,24 @@ public class CharacterFragment extends Fragment {
                 Document document = Jsoup.connect(nickname).get();
                 Elements name_elements = document.select("span[class=profile-character-info__name]");
                 for (Element element : name_elements) {
-                    name_result = name_result + element.text() + "\n";
+                    name_result = name_result + element.text();
                 }
                 Elements server_elements = document.select("span[class=profile-character-info__server]");
                 for (Element element : server_elements) {
-                    server_result = server_result + element.text() + "\n";
+                    server_result = server_result + element.text();
                 }
                 Elements charLevel_elements = document.select("span[class=profile-character-info__lv]");
                 for (Element element : charLevel_elements) {
-                    charLevel_result = charLevel_result + element.text() + "\n";
+                    charLevel_result = charLevel_result + element.text();
                 }
                 Elements itemLevel_elements = document.select("div[class=level-info2__expedition]");
                 for (Element element : itemLevel_elements) {
-                    itemLevel_result = itemLevel_result + element.text() + "\n";
+                    itemLevel_result = itemLevel_result + element.text();
                 }
                 Elements class_elements = document.select("img[class=profile-character-info__img]");
-                class_result = class_elements.attr("alt") + "\n";
+                class_result = class_elements.attr("alt");
                 Elements img_elements = document.select("img[class=profile-character-info__img]");
-                img_result = img_elements.attr("src") + "\n";
+                img_result = img_elements.attr("src");
 
                 listItem = new CharacterFragmentListItem(img_result, name_result, server_result, charLevel_result, itemLevel_result, class_result);
                 return listItem;
