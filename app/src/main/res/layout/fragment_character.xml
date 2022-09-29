@@ -3,14 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#DDDDDD"
     tools:context=".CharacterFragment">
 
     <TextView
-        android:id="@+id/charName"
+        android:id="@+id/addCharText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="30dp"
-        android:text="캐릭터를 추가하세요." />
+        android:text="캐릭터를 추가하세요."/>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addCharBtn"

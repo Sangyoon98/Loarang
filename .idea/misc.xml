@@ -5,6 +5,8 @@
       <map>
         <entry key="app/src/main/res/drawable/round_box.xml" value="0.26" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22056159420289856" />
+        <entry key="app/src/main/res/layout/fragment_character.xml" value="0.28894927536231885" />
+        <entry key="app/src/main/res/layout/fragment_character_listview_item.xml" value="0.28894927536231885" />
         <entry key="app/src/main/res/layout/fragment_info.xml" value="0.22056159420289856" />
       </map>
     </option>

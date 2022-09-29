@@ -42,7 +42,7 @@ public class CustomAdapter extends ArrayAdapter implements AdapterView.OnItemCli
 
         if(convertView == null){
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-            convertView = layoutInflater.inflate(R.layout.cal_item,parent,false);
+            convertView = layoutInflater.inflate(R.layout.fragment_calender_listview_item,parent,false);
         }
         viewHolder = new ViewHolder();
         viewHolder.tv_name = (TextView) convertView.findViewById(R.id.textView_name);
