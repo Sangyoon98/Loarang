@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "62622918082",
+    "firebase_url": "https://loarang-2017-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "loarang-2017",
+    "storage_bucket": "loarang-2017.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:62622918082:android:24e077ec7aff2a1964225b",
+        "android_client_info": {
+          "package_name": "com.cookandroid.loarang"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "62622918082-cml1jd3vfmedle5dbclispm4es9q3a4a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZ3jbTGQIN2cKXzjrrDFndeD6aU_p_Jhg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "62622918082-cml1jd3vfmedle5dbclispm4es9q3a4a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
