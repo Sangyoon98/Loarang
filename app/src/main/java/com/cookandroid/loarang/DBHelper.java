@@ -36,7 +36,6 @@ public class DBHelper extends SQLiteOpenHelper {
         //테이블 생성 쿼리
         private static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE " + FeedEntry.TABLE_NAME + " (" +
-                        FeedEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         FeedEntry.COLUMN_NAME_IMAGE + " TEXT," +
                         FeedEntry.COLUMN_NAME_NAME + " TEXT," +
                         FeedEntry.COLUMN_NAME_CHARACTER_LEVEL + " TEXT," +

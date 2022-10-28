@@ -11,10 +11,12 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +60,7 @@ public class CharacterFragment extends Fragment {
     String nickname = "https://lostark.game.onstove.com/Profile/Character/";
     private DBHelper mDbHelper;
     private SQLiteDatabase db;
+    CharacterFragmentListItem mListItem;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,6 +80,12 @@ public class CharacterFragment extends Fragment {
         //쓰기모드에서 데이터 저장소를 불러옵니다.
         db = mDbHelper.getWritableDatabase ();
 
+        addCharText.setVisibility(view.GONE);
+        listView.setVisibility(view.VISIBLE);
+        OnCreateBackgroundTask();
+        //FragmentTransaction ft = getFragmentManager().beginTransaction();
+        //ft.detach(this).attach(this).commit();
+
         addCharBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,13 +101,28 @@ public class CharacterFragment extends Fragment {
                         addCharText.setVisibility(view.GONE);
                         listView.setVisibility(view.VISIBLE);
                         BackgroundTask(nickname);
-                        setPreference("accToken", nickname);
                     }
                 });
                 dlg.show();
             }
         });
         return view;
+    }
+
+    //BackgroundTask
+    Disposable onCreateBackgroundTask;
+    void OnCreateBackgroundTask() {
+        //onPreExecute
+
+        onCreateBackgroundTask = Observable.fromCallable(() -> {
+            //doInBackground
+            loadData();
+            return null;
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe((result) -> {
+            //onPostExecute
+
+            onCreateBackgroundTask.dispose();
+        }, throwable -> System.out.println("Error"));
     }
 
     //BackgroundTask
@@ -151,7 +176,7 @@ public class CharacterFragment extends Fragment {
 
                     //데이터를 테이블에 삽입합니다.
                     insertNumber(img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result);
-                    listItem = new CharacterFragmentListItem(img_result, name_result, charLevel_result, itemLevel_result, server_result, class_result);
+                    listItem = new CharacterFragmentListItem(img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result);
                     return listItem;
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -192,13 +217,14 @@ public class CharacterFragment extends Fragment {
             @SuppressLint("Range") String class_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_CLASS));
             @SuppressLint("Range") String itemLevel_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_ITEM_LEVEL));
             @SuppressLint("Range") String server_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_SERVER));
-            //Data data = new Data(img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result);
+            mListItem = new CharacterFragmentListItem(img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result);
+            adapter.addItem(mListItem);
 
-
-            //mArrayList.add (data);
+            Log.d("loggg", img_result + name_result + charLevel_result + class_result + itemLevel_result + server_result);
         }
+        listView.setAdapter(adapter);
+        adapter.notifyDataSetChanged ();
 
-        //mAdapter.notifyDataSetChanged ();
     }
 
     //인터넷 연결 확인
@@ -228,18 +254,5 @@ public class CharacterFragment extends Fragment {
             }
         }
         return false;
-    }
-
-    public void setPreference(String key, String value){
-        SharedPreferences pref = this.getActivity().getSharedPreferences("DATA_STORE", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString(key, value);
-        editor.apply();
-    }
-
-    //내부 저장소에 저장된 데이터 가져오기
-    public String getPreferenceString(String key) {
-        SharedPreferences pref = this.getActivity().getSharedPreferences("DATA_STORE", MODE_PRIVATE);
-        return pref.getString(key, "");
     }
 }

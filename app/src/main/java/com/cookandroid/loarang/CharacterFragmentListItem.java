@@ -4,9 +4,10 @@ public class CharacterFragmentListItem {
     private String character_image;
     private String character_nickname;
     private String character_level;
+    private String character_class;
     private String character_itemLevel;
     private String character_server;
-    private String character_class;
+
 
     public String getCharacter_image() {
         return character_image;
@@ -32,6 +33,14 @@ public class CharacterFragmentListItem {
         this.character_level = character_level;
     }
 
+    public String getCharacter_class() {
+        return character_class;
+    }
+
+    public void setCharacter_class(String character_class) {
+        this.character_class = character_class;
+    }
+
     public String getCharacter_itemLevel() {
         return character_itemLevel;
     }
@@ -48,20 +57,12 @@ public class CharacterFragmentListItem {
         this.character_server = character_server;
     }
 
-    public String getCharacter_class() {
-        return character_class;
-    }
-
-    public void setCharacter_class(String character_class) {
-        this.character_class = character_class;
-    }
-
-    CharacterFragmentListItem(String character_image, String character_nickname, String character_level, String character_itemLevel, String character_server, String character_class) {
+    CharacterFragmentListItem(String character_image, String character_nickname, String character_level, String character_class, String character_itemLevel, String character_server) {
         this.character_image = character_image;
         this.character_nickname = character_nickname;
         this.character_level = character_level;
+        this.character_class = character_class;
         this.character_itemLevel = character_itemLevel;
         this.character_server = character_server;
-        this.character_class = character_class;
     }
 }
