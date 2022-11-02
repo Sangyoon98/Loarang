@@ -1,5 +1,7 @@
 package com.cookandroid.loarang;
 
+import android.app.Activity;
+import android.view.ContextMenu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,13 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-public class CharacterFragmentListItemViewHolder extends RecyclerView.ViewHolder {
+public class CharacterFragmentListItemViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
     ImageView character_image;
     TextView character_nickname, character_level, character_class, character_itemLevel, character_server;
 
-    public CharacterFragmentListItemViewHolder(@NonNull View itemView) {
+    public CharacterFragmentListItemViewHolder(@NonNull View itemView, CharacterFragmentListItemAdapter.OnItemLongClickEventListener itemLongClickEventListener) {
         super(itemView);
 
+        itemView.setOnCreateContextMenuListener(this);
         character_image = itemView.findViewById(R.id.character_image);
         character_nickname = itemView.findViewById(R.id.character_nickname);
         character_level = itemView.findViewById(R.id.character_level);
@@ -23,6 +26,16 @@ public class CharacterFragmentListItemViewHolder extends RecyclerView.ViewHolder
         character_itemLevel = itemView.findViewById(R.id.character_itemLevel);
         character_server = itemView.findViewById(R.id.character_server);
 
+        itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                final int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    itemLongClickEventListener.onItemLongClick(position);
+                }
+                return false;
+            }
+        });
     }
 
     public void onBind(CharacterFragmentListItem characterFragmentListItem) {
@@ -37,5 +50,10 @@ public class CharacterFragmentListItemViewHolder extends RecyclerView.ViewHolder
         character_itemLevel.setText(characterFragmentListItem.getCharacter_itemLevel());
         character_server.setText(characterFragmentListItem.getCharacter_server());
 
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+        ((Activity) view.getContext()).getMenuInflater().inflate(R.menu.character_item_menu, contextMenu);
     }
 }

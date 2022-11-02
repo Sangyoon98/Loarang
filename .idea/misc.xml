@@ -3,14 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.209" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1655" />
         <entry key="app/src/main/res/drawable/round_box.xml" value="0.26" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22056159420289856" />
         <entry key="app/src/main/res/layout/fragment_calender.xml" value="0.13541666666666666" />
         <entry key="app/src/main/res/layout/fragment_calender_listview_item.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/fragment_character.xml" value="0.28894927536231885" />
-        <entry key="app/src/main/res/layout/fragment_character_listview_item.xml" value="0.28894927536231885" />
+        <entry key="app/src/main/res/layout/fragment_character_detail.xml" value="0.2512664640324215" />
+        <entry key="app/src/main/res/layout/fragment_character_listview_item.xml" value="0.6403785488958991" />
         <entry key="app/src/main/res/layout/fragment_info.xml" value="0.22056159420289856" />
+        <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.2512664640324215" />
+        <entry key="app/src/main/res/layout/fragment_setting_inquire.xml" value="0.2507598784194529" />
+        <entry key="app/src/main/res/layout/fragment_setting_patch.xml" value="0.2507598784194529" />
+        <entry key="app/src/main/res/menu/character_item_menu.xml" value="0.5222222222222223" />
+        <entry key="app/src/main/res/menu/menu_bottom.xml" value="0.5222222222222223" />
       </map>
     </option>
   </component>

@@ -1,42 +1,33 @@
 package com.cookandroid.loarang;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
-import android.provider.ContactsContract.Data;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -49,7 +40,6 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-
 public class CharacterFragment extends Fragment {
     Context context;
     TextView addCharText;
@@ -61,6 +51,7 @@ public class CharacterFragment extends Fragment {
     private DBHelper mDbHelper;
     private SQLiteDatabase db;
     CharacterFragmentListItem mListItem;
+    ArrayList<CharacterFragmentListItem> mArrayList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,11 +71,7 @@ public class CharacterFragment extends Fragment {
         //쓰기모드에서 데이터 저장소를 불러옵니다.
         db = mDbHelper.getWritableDatabase ();
 
-        addCharText.setVisibility(view.GONE);
-        listView.setVisibility(view.VISIBLE);
         OnCreateBackgroundTask();
-        //FragmentTransaction ft = getFragmentManager().beginTransaction();
-        //ft.detach(this).attach(this).commit();
 
         addCharBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +82,7 @@ public class CharacterFragment extends Fragment {
                 dlg.setTitle("캐릭터 검색");
                 dlg.setView(dlgEdt);
                 dlg.setPositiveButton("검색", new DialogInterface.OnClickListener() {
+                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         nickname += dlgEdt.getText().toString();
@@ -116,11 +104,23 @@ public class CharacterFragment extends Fragment {
 
         onCreateBackgroundTask = Observable.fromCallable(() -> {
             //doInBackground
-            loadData();
+            @SuppressLint("Recycle") Cursor c = db.rawQuery ("SELECT * FROM " + DBHelper.FeedEntry.TABLE_NAME, null);
+            while (c.moveToNext ()) {
+                @SuppressLint("Range") String img_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_IMAGE));
+                @SuppressLint("Range") String name_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_NAME));
+                @SuppressLint("Range") String charLevel_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_CHARACTER_LEVEL));
+                @SuppressLint("Range") String class_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_CLASS));
+                @SuppressLint("Range") String itemLevel_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_ITEM_LEVEL));
+                @SuppressLint("Range") String server_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_SERVER));
+                listItem = new CharacterFragmentListItem(img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result);
+                adapter.addItem(listItem);
+                mArrayList.add(listItem);
+                Log.d("loggg", img_result + name_result + charLevel_result + class_result + itemLevel_result + server_result);
+            }
+            listView.setAdapter(adapter);
             return null;
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe((result) -> {
             //onPostExecute
-
             onCreateBackgroundTask.dispose();
         }, throwable -> System.out.println("Error"));
     }
@@ -150,7 +150,7 @@ public class CharacterFragment extends Fragment {
                 String img_result = "";
 
                 try {
-                    Document document = Jsoup.connect(nickname).get();
+                    Document document = Jsoup.connect(URLs).get();
                     Elements name_elements = document.select("span[class=profile-character-info__name]");
                     for (Element element : name_elements) {
                         name_result = name_result + element.text();
@@ -176,25 +176,21 @@ public class CharacterFragment extends Fragment {
 
                     //데이터를 테이블에 삽입합니다.
                     insertNumber(img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result);
-                    listItem = new CharacterFragmentListItem(img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result);
-                    return listItem;
+                    return null;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 return null;
             }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe((listItem) -> {
                 //onPostExecute
-                adapter.addItem(listItem);
-                listView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
                 backgroundTask.dispose();
             }, throwable -> System.out.println("Error"));
         }
     }
 
-    //데이터 삽입
+    //SQLite 데이터 삽입
     private void insertNumber(String img_result, String name_result, String charLevel_result, String class_result, String itemLevel_result, String server_result){
-        //쿼리를 직접 작성해서 입력하거나 values를 만들어서 하는 방법이 있다
-        //후자를 이용하겠다.
         ContentValues values = new ContentValues();
         values.put(DBHelper.FeedEntry.COLUMN_NAME_IMAGE, img_result);
         values.put(DBHelper.FeedEntry.COLUMN_NAME_NAME, name_result);
@@ -205,26 +201,42 @@ public class CharacterFragment extends Fragment {
         db.insert(DBHelper.FeedEntry.TABLE_NAME, null, values);
     }
 
-    //데이터 불러오기
-    //Cursor를 사용해서 데이터를 불러옵니다.
-    //while문을 사용해서 불러온 데이터를 mArrayList에 삽입합니다.
-    private void loadData() {
-        @SuppressLint("Recycle") Cursor c = db.rawQuery ("SELECT * FROM " + DBHelper.FeedEntry.TABLE_NAME, null);
-        while (c.moveToNext ()) {
-            @SuppressLint("Range") String img_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_IMAGE));
-            @SuppressLint("Range") String name_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_NAME));
-            @SuppressLint("Range") String charLevel_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_CHARACTER_LEVEL));
-            @SuppressLint("Range") String class_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_CLASS));
-            @SuppressLint("Range") String itemLevel_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_ITEM_LEVEL));
-            @SuppressLint("Range") String server_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_SERVER));
-            mListItem = new CharacterFragmentListItem(img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result);
-            adapter.addItem(mListItem);
+    //SQLite 데이터 수정
+    /* 사용하지 않음
+    private void updateNumber(String old_img_result, String old_name_result, String old_charLevel_result, String old_class_result, String old_itemLevel_result, String old_server_result, String new_img_result, String new_name_result, String new_charLevel_result, String new_class_result, String new_itemLevel_result, String new_server_result){
+        //수정된 값들을 values 에 추가한다.
+        ContentValues values = new ContentValues();
+        values.put(DBHelper.FeedEntry.COLUMN_NAME_IMAGE, new_img_result);
+        values.put (DBHelper.FeedEntry.COLUMN_NAME_NAME, new_name_result);
+        values.put (DBHelper.FeedEntry.COLUMN_NAME_CHARACTER_LEVEL, new_charLevel_result);
+        values.put (DBHelper.FeedEntry.COLUMN_NAME_CLASS, new_class_result);
+        values.put (DBHelper.FeedEntry.COLUMN_NAME_ITEM_LEVEL, new_itemLevel_result);
+        values.put (DBHelper.FeedEntry.COLUMN_NAME_SERVER, new_server_result);
 
-            Log.d("loggg", img_result + name_result + charLevel_result + class_result + itemLevel_result + server_result);
-        }
-        listView.setAdapter(adapter);
-        adapter.notifyDataSetChanged ();
+        // WHERE 절 수정될 열을 찾는다.
+        String selection = DBHelper.FeedEntry.COLUMN_NAME_IMAGE + " LIKE ?" +
+                " AND "+ DBHelper.FeedEntry.COLUMN_NAME_NAME + " LIKE ?" +
+                " AND "+ DBHelper.FeedEntry.COLUMN_NAME_CHARACTER_LEVEL + " LIKE ?" +
+                " AND "+ DBHelper.FeedEntry.COLUMN_NAME_CLASS + " LIKE ?" +
+                " AND "+ DBHelper.FeedEntry.COLUMN_NAME_ITEM_LEVEL + " LIKE ?" +
+                " AND "+ DBHelper.FeedEntry.COLUMN_NAME_SERVER + " LIKE ?";
+        String[] selectionArgs = {old_img_result, old_name_result, old_charLevel_result, old_class_result, old_itemLevel_result, old_server_result};
+        db.update(DBHelper.FeedEntry.TABLE_NAME, values, selection, selectionArgs);
+    }
+     */
 
+    //SQLite 데이터 삭제
+    private void deleteNumber(String img_result, String name_result, String charLevel_result, String class_result, String itemLevel_result, String server_result) {
+        //WHERE 절 삭제될 열을 찾는다.
+        String selection = DBHelper.FeedEntry.COLUMN_NAME_IMAGE + " LIKE ?" +
+                " and " + DBHelper.FeedEntry.COLUMN_NAME_NAME + " LIKE ?" +
+                " and " + DBHelper.FeedEntry.COLUMN_NAME_CHARACTER_LEVEL + " LIKE ?" +
+                " and " + DBHelper.FeedEntry.COLUMN_NAME_CLASS + " LIKE ?" +
+                " and " + DBHelper.FeedEntry.COLUMN_NAME_ITEM_LEVEL + " LIKE ?" +
+                " and " + DBHelper.FeedEntry.COLUMN_NAME_SERVER + " LIKE ?";
+        //삭제될 열을 찾을 데이터
+        String[] selectionArgs = {img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result};
+        db.delete(DBHelper.FeedEntry.TABLE_NAME, selection, selectionArgs);
     }
 
     //인터넷 연결 확인
@@ -235,24 +247,47 @@ public class CharacterFragment extends Fragment {
         @SuppressLint("MissingPermission") NetworkInfo wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         @SuppressLint("MissingPermission") NetworkInfo wimax = manager.getNetworkInfo(ConnectivityManager.TYPE_WIMAX);
         boolean bwimax = false;
-        if (wimax != null)
-        {
+        if (wimax != null) {
             bwimax = wimax.isConnected();
         }
-        if (mobile != null)
-        {
-            if (mobile.isConnected() || wifi.isConnected() || bwimax)
-            {
+        if (mobile != null) {
+            if (mobile.isConnected() || wifi.isConnected() || bwimax) {
                 return true;
             }
-        }
-        else
-        {
-            if (wifi.isConnected() || bwimax)
-            {
+        } else {
+            if (wifi.isConnected() || bwimax) {
                 return true;
             }
         }
         return false;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        final int position = adapter.getPosition();
+        String img_result = mArrayList.get(position).getCharacter_image();
+        String name_result = mArrayList.get(position).getCharacter_nickname();
+        String charLevel_result = mArrayList.get(position).getCharacter_level();
+        String class_result = mArrayList.get(position).getCharacter_class();
+        String itemLevel_result = mArrayList.get(position).getCharacter_itemLevel();
+        String server_result = mArrayList.get(position).getCharacter_server();
+
+        switch (item.getItemId()) {
+            case R.id.character_update:
+                Toast.makeText(context, name_result + "의 정보를 갱신하였습니다." , Toast.LENGTH_SHORT).show();
+                mArrayList.remove(position);
+                deleteNumber(img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result);
+                nickname = "https://lostark.game.onstove.com/Profile/Character/";
+                nickname += name_result;
+                BackgroundTask(nickname);
+                break;
+            case R.id.character_delete:
+                Toast.makeText(context, name_result + "의 정보를 삭제하였습니다." , Toast.LENGTH_SHORT).show();
+                mArrayList.remove(position);
+                deleteNumber(img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result);
+                break;
+        }
+        return true;
     }
 }

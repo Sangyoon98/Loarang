@@ -1,5 +1,8 @@
 package com.cookandroid.loarang;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,58 +10,50 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SettingFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SettingFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public SettingFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SettingFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SettingFragment newInstance(String param1, String param2) {
-        SettingFragment fragment = new SettingFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    Context context;
+    Button notice, inquire, patch;
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_setting, container, false);
+        context = view.getContext();
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_setting, container, false);
+        notice = view.findViewById(R.id.notice);
+        inquire = view.findViewById(R.id.inquire);
+        patch = view.findViewById(R.id.patch);
+
+        notice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, SettingNotice.class);
+                startActivity(intent);
+            }
+        });
+
+        inquire.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+
+                intent.setType("*/*");
+
+                intent.setPackage("com.google.android.gm");
+                intent.putExtra(Intent.EXTRA_EMAIL, "qlrqod123123@gmail.com"); // 받는 사람 이메일
+                intent.putExtra(Intent.EXTRA_SUBJECT, "문의할 주제를 입력하세요."); // 메일 제목
+                intent.putExtra(Intent.EXTRA_TEXT, "문의할 내용을 입력하세요."); // 메일 내용
+                startActivity(intent);
+            }
+        });
+
+        patch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, SettingPatch.class);
+                startActivity(intent);
+            }
+        });
+        return view;
     }
 }

@@ -1,15 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingFragment">
+    android:background="#DDDDDD"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <Button
+        android:id="@+id/notice"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="30dp"
-        android:text="설정 탭" />
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/round_box"
+        android:elevation="10dp"
+        android:textSize="20dp"
+        android:text="공지 사항"/>
 
-</FrameLayout>
+    <Button
+        android:id="@+id/inquire"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/round_box"
+        android:elevation="10dp"
+        android:textSize="20dp"
+        android:text="문의 하기" />
+
+    <Button
+        android:id="@+id/patch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/round_box"
+        android:elevation="10dp"
+        android:textSize="20dp"
+        android:text="패치 로그" />
+
+</LinearLayout>

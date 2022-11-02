@@ -23,6 +23,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"/>
+        <activity android:name=".CharacterFragmentDetail"/>
+        <activity android:name=".SettingNotice"/>
+        <activity android:name=".SettingPatch"/>
     </application>
 
 </manifest>
