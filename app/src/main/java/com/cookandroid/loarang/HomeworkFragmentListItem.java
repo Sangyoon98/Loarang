@@ -8,7 +8,6 @@ public class HomeworkFragmentListItem {
     private String character_itemLevel;
     private String character_server;
 
-
     public String getCharacter_image() {
         return character_image;
     }
