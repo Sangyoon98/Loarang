@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class CharacterFragmentListItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    ArrayList<CharacterFragmentListItem> items = new ArrayList<CharacterFragmentListItem>();
+    ArrayList<CharacterFragmentListItem> items = new ArrayList<>();
 
     public interface OnItemLongClickEventListener {
         void onItemLongClick(int position);

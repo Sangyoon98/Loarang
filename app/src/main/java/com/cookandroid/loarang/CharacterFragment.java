@@ -50,7 +50,6 @@ public class CharacterFragment extends Fragment {
     String nickname = "https://lostark.game.onstove.com/Profile/Character/";
     private DBHelper mDbHelper;
     private SQLiteDatabase db;
-    CharacterFragmentListItem mListItem;
     ArrayList<CharacterFragmentListItem> mArrayList = new ArrayList<>();
 
     @Override
@@ -67,9 +66,9 @@ public class CharacterFragment extends Fragment {
         adapter = new CharacterFragmentListItemAdapter();
 
         //DBHelper 객체를 선언해줍니다.
-        mDbHelper = new DBHelper (context);
+        mDbHelper = new DBHelper(context);
         //쓰기모드에서 데이터 저장소를 불러옵니다.
-        db = mDbHelper.getWritableDatabase ();
+        db = mDbHelper.getWritableDatabase();
 
         OnCreateBackgroundTask();
 

@@ -1,64 +1,81 @@
 package com.cookandroid.loarang;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeworkFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class HomeworkFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public HomeworkFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeworkFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeworkFragment newInstance(String param1, String param2) {
-        HomeworkFragment fragment = new HomeworkFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    Context context;
+    RecyclerView listView_homework;
+    HomeworkFragmentListItemAdapter adapter;
+    HomeworkFragmentListItem listItem;
+    ArrayList<HomeworkFragmentListItem> mArrayList = new ArrayList<>();
+    private DBHelper mDbHelper;
+    private SQLiteDatabase db;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_homework, container, false);
+
+        context = view.getContext();
+        listView_homework = view.findViewById(R.id.listView_homework);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        listView_homework.setLayoutManager(linearLayoutManager);
+        adapter = new HomeworkFragmentListItemAdapter();
+
+        //DBHelper 객체를 선언해줍니다.
+        mDbHelper = new DBHelper(context);
+        //쓰기모드에서 데이터 저장소를 불러옵니다.
+        db = mDbHelper.getWritableDatabase();
+
+        OnCreateBackgroundTask();
+
+        return view;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_homework, container, false);
+    //BackgroundTask
+    Disposable onCreateBackgroundTask;
+    void OnCreateBackgroundTask() {
+        //onPreExecute
+
+        onCreateBackgroundTask = Observable.fromCallable(() -> {
+            //doInBackground
+            @SuppressLint("Recycle") Cursor c = db.rawQuery ("SELECT * FROM " + DBHelper.FeedEntry.TABLE_NAME, null);
+            while (c.moveToNext ()) {
+                @SuppressLint("Range") String img_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_IMAGE));
+                @SuppressLint("Range") String name_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_NAME));
+                @SuppressLint("Range") String charLevel_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_CHARACTER_LEVEL));
+                @SuppressLint("Range") String class_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_CLASS));
+                @SuppressLint("Range") String itemLevel_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_ITEM_LEVEL));
+                @SuppressLint("Range") String server_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_SERVER));
+                listItem = new HomeworkFragmentListItem(img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result);
+                adapter.addItem(listItem);
+                mArrayList.add(listItem);
+                Log.d("loggg", img_result + name_result + charLevel_result + class_result + itemLevel_result + server_result);
+            }
+            listView_homework.setAdapter(adapter);
+            return null;
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe((result) -> {
+            //onPostExecute
+            onCreateBackgroundTask.dispose();
+        }, throwable -> System.out.println("Error"));
     }
 }

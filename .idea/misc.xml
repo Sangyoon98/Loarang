@@ -11,7 +11,9 @@
         <entry key="app/src/main/res/layout/fragment_calender_listview_item.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/fragment_character.xml" value="0.28894927536231885" />
         <entry key="app/src/main/res/layout/fragment_character_detail.xml" value="0.2512664640324215" />
-        <entry key="app/src/main/res/layout/fragment_character_listview_item.xml" value="0.6403785488958991" />
+        <entry key="app/src/main/res/layout/fragment_character_listview_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_homework.xml" value="0.24954710144927536" />
+        <entry key="app/src/main/res/layout/fragment_homework_listview_item.xml" value="0.25245513916015627" />
         <entry key="app/src/main/res/layout/fragment_info.xml" value="0.22056159420289856" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.2512664640324215" />
         <entry key="app/src/main/res/layout/fragment_setting_inquire.xml" value="0.2507598784194529" />
