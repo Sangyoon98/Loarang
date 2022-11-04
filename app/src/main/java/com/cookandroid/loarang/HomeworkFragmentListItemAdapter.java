@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class HomeworkFragmentListItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     ArrayList<HomeworkFragmentListItem> items = new ArrayList<>();
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
