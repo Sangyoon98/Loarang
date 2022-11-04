@@ -40,7 +40,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class CalenderFragment extends Fragment {
     Context context;
     CalenderFragmentListItemAdapter adapter;
-    CalenderFragmentListItem listItem;
     RecyclerView recyclerView;
     ArrayList<CalenderFragmentListItem> arrayList;
     FirebaseDatabase firebaseDatabase;

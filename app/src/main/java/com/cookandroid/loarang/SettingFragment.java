@@ -35,14 +35,19 @@ public class SettingFragment extends Fragment {
         inquire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(Intent.ACTION_SEND);
 
                 intent.setType("*/*");
-
+                String[] address = {"qlrqod123123@gmail.com", "avt5560@gmail.com"};
                 intent.setPackage("com.google.android.gm");
-                intent.putExtra(Intent.EXTRA_EMAIL, "qlrqod123123@gmail.com"); // 받는 사람 이메일
-                intent.putExtra(Intent.EXTRA_SUBJECT, "문의할 주제를 입력하세요."); // 메일 제목
-                intent.putExtra(Intent.EXTRA_TEXT, "문의할 내용을 입력하세요."); // 메일 내용
+                intent.putExtra(Intent.EXTRA_EMAIL, address); // 받는 사람 이메일
+                intent.putExtra(Intent.EXTRA_SUBJECT, ""); // 메일 제목
+                intent.putExtra(Intent.EXTRA_TEXT,
+                        "제조사 (Device Manufacturer): " + Build.MANUFACTURER + "\n" +
+                        "기기명 (Device): " + Build.MODEL + "\n" +
+                        "안드로이드 OS (Android OS): " + Build.VERSION.RELEASE + "\n" +
+                        "내용 (Content): \n"); // 메일 내용
                 startActivity(intent);
             }
         });

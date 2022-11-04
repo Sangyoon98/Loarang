@@ -10,24 +10,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class CalenderFragmentListItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ArrayList<CalenderFragmentListItem> items;
+public class SettingNoticeListItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private ArrayList<SettingNoticeListItem> items;
     Context context;
 
-    public CalenderFragmentListItemAdapter(ArrayList<CalenderFragmentListItem> arrayList, Context context) {
+    public SettingNoticeListItemAdapter(ArrayList<SettingNoticeListItem> arrayList, Context context) {
         this.items = arrayList;
         this.context = context;
     }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_calender_listview_item, parent, false);
-        return new CalenderFragmentListItemViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_setting_notice_listview_item, parent, false);
+        return new SettingNoticeListViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((CalenderFragmentListItemViewHolder)holder).onBind(items.get(position));
+        ((SettingNoticeListViewHolder)holder).onBind(items.get(position));
     }
 
     @Override
