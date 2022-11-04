@@ -15,7 +15,6 @@ public class HomeworkFragmentListItemViewHolder extends RecyclerView.ViewHolder 
 
     public HomeworkFragmentListItemViewHolder(@NonNull View itemView) {
         super(itemView);
-
         character_image = itemView.findViewById(R.id.character_image);
         character_nickname = itemView.findViewById(R.id.character_nickname);
         character_level = itemView.findViewById(R.id.character_level);
