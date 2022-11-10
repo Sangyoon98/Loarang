@@ -60,6 +60,12 @@ public class CharacterFragmentListItemAdapter extends RecyclerView.Adapter<Recyc
         return mPosition;
     }
 
+    public void removeItem(int mPosition) {
+        items.remove(mPosition);
+        notifyItemRemoved(mPosition);
+        notifyDataSetChanged();
+    }
+
     void addItem(CharacterFragmentListItem item) {
         items.add(item);
     }

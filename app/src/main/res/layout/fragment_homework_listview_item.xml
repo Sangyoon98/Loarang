@@ -88,16 +88,19 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/epona1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
 
                     <CheckBox
+                        android:id="@+id/epona2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
 
                     <CheckBox
+                        android:id="@+id/epona3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
@@ -126,16 +129,13 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/chaos_dungeon1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
 
                     <CheckBox
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"/>
-
-                    <CheckBox
+                        android:id="@+id/chaos_dungeon2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
@@ -163,16 +163,13 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/gadian_rade1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
 
                     <CheckBox
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"/>
-
-                    <CheckBox
+                        android:id="@+id/gadian_rade2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
@@ -223,16 +220,19 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/boss_rade1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
 
                     <CheckBox
+                        android:id="@+id/boss_rade2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
 
                     <CheckBox
+                        android:id="@+id/boss_rade3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
@@ -242,7 +242,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical"
@@ -253,7 +253,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="아르고스"/>
+                    android:text="어비스 레이드"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -261,6 +261,7 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/abis_rade"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
@@ -288,6 +289,7 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/abis_dungeon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>

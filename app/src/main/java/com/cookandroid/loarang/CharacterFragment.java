@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,6 +44,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class CharacterFragment extends Fragment {
     Context context;
+    SwipeRefreshLayout swipeRefreshLayout;
     TextView addCharText;
     FloatingActionButton addCharBtn;
     RecyclerView listView;
@@ -87,7 +90,10 @@ public class CharacterFragment extends Fragment {
                         nickname += dlgEdt.getText().toString();
                         addCharText.setVisibility(view.GONE);
                         listView.setVisibility(view.VISIBLE);
-                        BackgroundTask(nickname);
+                        AddCharacter(nickname);
+                        Toast.makeText(context, dlgEdt.getText().toString() + "의 정보를 추가하였습니다." , Toast.LENGTH_SHORT).show();
+                        adapter.notifyDataSetChanged();
+                        //OnRecreateBackgroundTask();
                     }
                 });
                 dlg.show();
@@ -100,7 +106,6 @@ public class CharacterFragment extends Fragment {
     Disposable onCreateBackgroundTask;
     void OnCreateBackgroundTask() {
         //onPreExecute
-
         onCreateBackgroundTask = Observable.fromCallable(() -> {
             //doInBackground
             @SuppressLint("Recycle") Cursor c = db.rawQuery ("SELECT * FROM " + DBHelper.FeedEntry.TABLE_NAME, null);
@@ -124,9 +129,37 @@ public class CharacterFragment extends Fragment {
         }, throwable -> System.out.println("Error"));
     }
 
+    //ReCreateBackgroundTask
+    Disposable onRecreateBackgroundTask;
+    void OnRecreateBackgroundTask() {
+        //onPreExecute
+        //adapter.removeItem();
+        onRecreateBackgroundTask = Observable.fromCallable(() -> {
+            //doInBackground
+            @SuppressLint("Recycle") Cursor c = db.rawQuery ("SELECT * FROM " + DBHelper.FeedEntry.TABLE_NAME, null);
+            while (c.moveToNext ()) {
+                @SuppressLint("Range") String img_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_IMAGE));
+                @SuppressLint("Range") String name_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_NAME));
+                @SuppressLint("Range") String charLevel_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_CHARACTER_LEVEL));
+                @SuppressLint("Range") String class_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_CLASS));
+                @SuppressLint("Range") String itemLevel_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_ITEM_LEVEL));
+                @SuppressLint("Range") String server_result = c.getString (c.getColumnIndex (DBHelper.FeedEntry.COLUMN_NAME_SERVER));
+                listItem = new CharacterFragmentListItem(img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result);
+                adapter.addItem(listItem);
+                mArrayList.add(listItem);
+                Log.d("loggg", img_result + name_result + charLevel_result + class_result + itemLevel_result + server_result);
+            }
+            listView.setAdapter(adapter);
+            return null;
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe((result) -> {
+            //onPostExecute
+            onRecreateBackgroundTask.dispose();
+        }, throwable -> System.out.println("Error"));
+    }
+
     //BackgroundTask
-    Disposable backgroundTask;
-    void BackgroundTask(String URLs) {
+    Disposable addCharacter;
+    void AddCharacter(String URLs) {
         //onPreExecute
 
         boolean isConnected = isNetworkConnected(context);
@@ -139,7 +172,7 @@ public class CharacterFragment extends Fragment {
                     .create()
                     .show();
         } else {
-            backgroundTask = Observable.fromCallable(() -> {
+            addCharacter = Observable.fromCallable(() -> {
                 //doInBackground
                 String name_result = "";
                 String server_result = "";
@@ -182,8 +215,7 @@ public class CharacterFragment extends Fragment {
                 return null;
             }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe((listItem) -> {
                 //onPostExecute
-                adapter.notifyDataSetChanged();
-                backgroundTask.dispose();
+                addCharacter.dispose();
             }, throwable -> System.out.println("Error"));
         }
     }
@@ -279,14 +311,18 @@ public class CharacterFragment extends Fragment {
                 deleteNumber(img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result);
                 nickname = "https://lostark.game.onstove.com/Profile/Character/";
                 nickname += name_result;
-                BackgroundTask(nickname);
+                AddCharacter(nickname);
+                //OnRecreateBackgroundTask();
                 break;
             case R.id.character_delete:
                 Toast.makeText(context, name_result + "의 정보를 삭제하였습니다." , Toast.LENGTH_SHORT).show();
                 mArrayList.remove(position);
                 deleteNumber(img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result);
+                //OnRecreateBackgroundTask();
                 break;
         }
+        Intent in = new Intent(context, MainActivity.class);
+        startActivity(in);
         return true;
     }
 }
