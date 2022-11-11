@@ -8,7 +8,12 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/character"/>
+        android:layout_margin="10dp"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:elevation="10dp"
+        android:src="@drawable/icon_small"
+        android:background="@color/loa"/>
 
     <Button
         android:id="@+id/notice"
