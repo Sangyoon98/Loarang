@@ -1,5 +1,7 @@
 package com.cookandroid.loarang;
 
+import static android.view.View.GONE;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -44,8 +46,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class CharacterFragment extends Fragment {
     Context context;
-    SwipeRefreshLayout swipeRefreshLayout;
-    TextView addCharText;
     FloatingActionButton addCharBtn;
     RecyclerView listView;
     CharacterFragmentListItemAdapter adapter;
@@ -60,7 +60,6 @@ public class CharacterFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_character, container, false);
 
         context = view.getContext();
-        addCharText = view.findViewById(R.id.addCharText);
         addCharBtn = view.findViewById(R.id.addCharBtn);
         listView = view.findViewById(R.id.listView);
 
@@ -87,13 +86,15 @@ public class CharacterFragment extends Fragment {
                     @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        nickname += dlgEdt.getText().toString();
-                        addCharText.setVisibility(view.GONE);
-                        listView.setVisibility(view.VISIBLE);
-                        AddCharacter(nickname);
-                        Toast.makeText(context, dlgEdt.getText().toString() + "의 정보를 추가하였습니다." , Toast.LENGTH_SHORT).show();
-                        adapter.notifyDataSetChanged();
-                        //OnRecreateBackgroundTask();
+                        if (dlgEdt.getText().toString().equals("")) {
+                            Toast.makeText(context, "닉네임을 다시 입력해주세요." , Toast.LENGTH_SHORT).show();
+                        } else {
+                            nickname += dlgEdt.getText().toString();
+                            AddCharacter(nickname);
+                            adapter.notifyDataSetChanged();
+                            Toast.makeText(context, dlgEdt.getText().toString() + "의 정보를 추가하였습니다." , Toast.LENGTH_SHORT).show();
+                            //OnRecreateBackgroundTask();
+                        }
                     }
                 });
                 dlg.show();
