@@ -32,27 +32,22 @@ public class MainActivity extends AppCompatActivity {
     class TabSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-            switch (menuItem.getItemId()) {
-                case R.id.tab_character: {
-                    getSupportFragmentManager().beginTransaction() .replace(R.id.home_ly, new CharacterFragment()) .commit();
-                    return true;
-                }
-                case R.id.tab_homework: {
-                    getSupportFragmentManager().beginTransaction() .replace(R.id.home_ly, new HomeworkFragment()) .commit();
-                    return true;
-                }
-                case R.id.tab_calender: {
-                    getSupportFragmentManager().beginTransaction() .replace(R.id.home_ly, new CalenderFragment()) .commit();
-                    return true;
-                }
-                case R.id.tab_info: {
-                    getSupportFragmentManager().beginTransaction() .replace(R.id.home_ly, new InfoFragment()) .commit();
-                    return true;
-                }
-                case R.id.tab_setting: {
-                    getSupportFragmentManager().beginTransaction() .replace(R.id.home_ly, new SettingFragment()) .commit();
-                    return true;
-                }
+            int itemId = menuItem.getItemId();
+            if (itemId == R.id.tab_character) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.home_ly, new CharacterFragment()).commit();
+                return true;
+            } else if (itemId == R.id.tab_homework) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.home_ly, new HomeworkFragment()).commit();
+                return true;
+            } else if (itemId == R.id.tab_calender) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.home_ly, new CalenderFragment()).commit();
+                return true;
+            } else if (itemId == R.id.tab_info) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.home_ly, new InfoFragment()).commit();
+                return true;
+            } else if (itemId == R.id.tab_setting) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.home_ly, new SettingFragment()).commit();
+                return true;
             }
             return false;
         }

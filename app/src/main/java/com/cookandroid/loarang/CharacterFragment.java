@@ -305,22 +305,20 @@ public class CharacterFragment extends Fragment {
         String itemLevel_result = mArrayList.get(position).getCharacter_itemLevel();
         String server_result = mArrayList.get(position).getCharacter_server();
 
-        switch (item.getItemId()) {
-            case R.id.character_update:
-                Toast.makeText(context, name_result + "의 정보를 갱신하였습니다." , Toast.LENGTH_SHORT).show();
-                mArrayList.remove(position);
-                deleteNumber(img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result);
-                nickname = "https://lostark.game.onstove.com/Profile/Character/";
-                nickname += name_result;
-                AddCharacter(nickname);
-                //OnRecreateBackgroundTask();
-                break;
-            case R.id.character_delete:
-                Toast.makeText(context, name_result + "의 정보를 삭제하였습니다." , Toast.LENGTH_SHORT).show();
-                mArrayList.remove(position);
-                deleteNumber(img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result);
-                //OnRecreateBackgroundTask();
-                break;
+        int itemId = item.getItemId();
+        if (itemId == R.id.character_update) {
+            Toast.makeText(context, name_result + "의 정보를 갱신하였습니다.", Toast.LENGTH_SHORT).show();
+            mArrayList.remove(position);
+            deleteNumber(img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result);
+            nickname = "https://lostark.game.onstove.com/Profile/Character/";
+            nickname += name_result;
+            AddCharacter(nickname);
+            //OnRecreateBackgroundTask();
+        } else if (itemId == R.id.character_delete) {
+            Toast.makeText(context, name_result + "의 정보를 삭제하였습니다.", Toast.LENGTH_SHORT).show();
+            mArrayList.remove(position);
+            deleteNumber(img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result);
+            //OnRecreateBackgroundTask();
         }
         Intent in = new Intent(context, MainActivity.class);
         startActivity(in);
