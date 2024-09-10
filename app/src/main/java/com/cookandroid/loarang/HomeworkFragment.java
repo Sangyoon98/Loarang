@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -72,6 +73,9 @@ public class HomeworkFragment extends Fragment {
                 setPreference("chaos_gate", "false");
                 setPreference("field_boss", "false");
                 setPreference("adventure_island", "false");
+                chaos_gate.setChecked(false);
+                field_boss.setChecked(false);
+                adventure_island.setChecked(false);
 
                 for (int pos = 0; pos <= adapter.getItemCount(); pos++){
                     setPreference("epona1" + pos, "false");
@@ -82,6 +86,7 @@ public class HomeworkFragment extends Fragment {
                     setPreference("gadian_rade1" + pos, "false");
                     setPreference("gadian_rade2" + pos, "false");
                 }
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -95,6 +100,13 @@ public class HomeworkFragment extends Fragment {
                 setPreference("dogato2", "false");
                 setPreference("dobis1", "false");
                 setPreference("dobis2", "false");
+                chaos_gate.setChecked(false);
+                field_boss.setChecked(false);
+                adventure_island.setChecked(false);
+                dogato1.setChecked(false);
+                dogato2.setChecked(false);
+                dobis1.setChecked(false);
+                dobis2.setChecked(false);
 
                 for (int pos = 0; pos <= adapter.getItemCount(); pos++){
                     setPreference("epona1" + pos, "false");
@@ -110,6 +122,7 @@ public class HomeworkFragment extends Fragment {
                     setPreference("abis_rade" + pos, "false");
                     setPreference("abis_dungeon" + pos, "false");
                 }
+                adapter.notifyDataSetChanged();
             }
         });
 

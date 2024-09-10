@@ -127,6 +127,7 @@ public class CharacterFragment extends Fragment {
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe((result) -> {
             //onPostExecute
             onCreateBackgroundTask.dispose();
+            adapter.notifyDataSetChanged();
         }, throwable -> System.out.println("Error"));
     }
 
@@ -155,6 +156,7 @@ public class CharacterFragment extends Fragment {
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe((result) -> {
             //onPostExecute
             onRecreateBackgroundTask.dispose();
+            adapter.notifyDataSetChanged();
         }, throwable -> System.out.println("Error"));
     }
 
@@ -209,6 +211,8 @@ public class CharacterFragment extends Fragment {
 
                     //데이터를 테이블에 삽입합니다.
                     insertNumber(img_result, name_result, charLevel_result, class_result, itemLevel_result, server_result);
+                    Intent in = new Intent(context, MainActivity.class);
+                    startActivity(in);
                     return null;
                 } catch (IOException e) {
                     e.printStackTrace();
