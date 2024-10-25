@@ -1,55 +1,51 @@
-package com.cookandroid.loarang;
+package com.cookandroid.loarang
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import android.os.Bundle
+import android.view.MenuItem
+import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.LinearLayout;
+class MainActivity : AppCompatActivity() {
+    var home_ly: LinearLayout? = null
+    var bottomNavigationView: BottomNavigationView? = null
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-public class MainActivity extends AppCompatActivity {
-    LinearLayout home_ly;
-    BottomNavigationView bottomNavigationView;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        home_ly = findViewById(R.id.home_ly);
-        bottomNavigationView = findViewById(R.id.menu_bottom);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new TabSelectedListener());
-        bottomNavigationView.setSelectedItemId(R.id.tab_character);
+        home_ly = findViewById(R.id.home_ly)
+        bottomNavigationView = findViewById(R.id.menu_bottom)
+        //bottomNavigationView.setOnNavigationItemSelectedListener(TabSelectedListener())
+        //bottomNavigationView.setSelectedItemId(R.id.tab_character)
     }
 
-    class TabSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-            int itemId = menuItem.getItemId();
+    internal inner class TabSelectedListener :
+        BottomNavigationView.OnNavigationItemSelectedListener {
+        override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
+            val itemId = menuItem.itemId
             if (itemId == R.id.tab_character) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.home_ly, new CharacterFragment()).commit();
-                return true;
+                supportFragmentManager.beginTransaction().replace(R.id.home_ly, CharacterFragment())
+                    .commit()
+                return true
             } else if (itemId == R.id.tab_homework) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.home_ly, new HomeworkFragment()).commit();
-                return true;
+                supportFragmentManager.beginTransaction().replace(R.id.home_ly, HomeworkFragment())
+                    .commit()
+                return true
             } else if (itemId == R.id.tab_calender) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.home_ly, new CalenderFragment()).commit();
-                return true;
+                supportFragmentManager.beginTransaction().replace(R.id.home_ly, CalenderFragment())
+                    .commit()
+                return true
             } else if (itemId == R.id.tab_info) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.home_ly, new InfoFragment()).commit();
-                return true;
+                supportFragmentManager.beginTransaction().replace(R.id.home_ly, InfoFragment())
+                    .commit()
+                return true
             } else if (itemId == R.id.tab_setting) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.home_ly, new SettingFragment()).commit();
-                return true;
+                supportFragmentManager.beginTransaction().replace(R.id.home_ly, SettingFragment())
+                    .commit()
+                return true
             }
-            return false;
+            return false
         }
     }
 }

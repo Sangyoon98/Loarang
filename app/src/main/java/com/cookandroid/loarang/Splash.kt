@@ -1,29 +1,22 @@
-package com.cookandroid.loarang;
+package com.cookandroid.loarang
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
+import android.content.Intent
+import android.os.Bundle
+import android.os.Handler
+import androidx.appcompat.app.AppCompatActivity
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-public class Splash extends AppCompatActivity {
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        startLoading();
+class Splash : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        startLoading()
     }
 
-    private void startLoading() {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }, 1000);
+    private fun startLoading() {
+        val handler = Handler()
+        handler.postDelayed({
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }, 1000)
     }
 }
