@@ -78,7 +78,7 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation("org.jsoup:jsoup:1.16.2")
     implementation("com.github.bumptech.glide:glide:4.12.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.9.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation("io.reactivex.rxjava3:rxandroid:3.0.0")
     implementation("io.reactivex.rxjava3:rxjava:3.0.7")
     implementation("androidx.appcompat:appcompat:1.7.0")
