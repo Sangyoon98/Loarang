@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Loarang"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Splash"
+        <activity android:name=".ui.Splash"
             android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
