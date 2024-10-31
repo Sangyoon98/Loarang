@@ -12,7 +12,16 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.jetbrains.annotations.NotNull;
+
 public class InfoFragment extends Fragment {
+
+    @NotNull
+    public static Fragment newInstance() {
+        return new InfoFragment();
+    }
+
+    public static String TAG = "InfoFragment";
 
     EditText count, exchange, price;
     TextView recommendPrice, breakEvenPoint, formatSendPrice;

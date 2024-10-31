@@ -1,7 +1,5 @@
 package com.cookandroid.loarang;
 
-import static android.view.View.GONE;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -16,10 +14,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,11 +23,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cookandroid.loarang.ui.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -45,6 +42,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class CharacterFragment extends Fragment {
+    public static String TAG = "CharacterFragment";
     Context context;
     FloatingActionButton addCharBtn;
     RecyclerView listView;
@@ -54,6 +52,11 @@ public class CharacterFragment extends Fragment {
     private DBHelper mDbHelper;
     private SQLiteDatabase db;
     ArrayList<CharacterFragmentListItem> mArrayList = new ArrayList<>();
+
+    @NotNull
+    public static Fragment newInstance() {
+        return new CharacterFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

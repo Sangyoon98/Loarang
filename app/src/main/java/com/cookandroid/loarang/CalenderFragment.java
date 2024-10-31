@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -38,6 +39,12 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class CalenderFragment extends Fragment {
+    @NotNull
+    public static Fragment newInstance() {
+        return new CalenderFragment();
+    }
+
+    public static String TAG = "CalenderFragment";
     Context context;
     CalenderFragmentListItemAdapter adapter;
     RecyclerView recyclerView;

@@ -12,7 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import org.jetbrains.annotations.NotNull;
+
 public class SettingFragment extends Fragment {
+
+    @NotNull
+    public static Fragment newInstance() {
+        return new SettingFragment();
+    }
+
+    public static String TAG = "SettingFragment";
     Context context;
     Button notice, inquire, patch;
     @Override

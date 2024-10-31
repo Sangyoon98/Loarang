@@ -15,12 +15,12 @@ val keystoreProperties = Properties()
 keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 fun getApiKey(propertyKey: String): String {
-    return gradleLocalProperties(rootDir).getProperty(propertyKey)
+    return gradleLocalProperties(rootDir, providers).getProperty(propertyKey)
 }
 
 android {
     namespace = "com.cookandroid.loarang"
-    compileSdk = 34
+    compileSdk = 35
 
     signingConfigs {
         create("release") {
@@ -34,7 +34,7 @@ android {
     defaultConfig {
         applicationId = "com.cookandroid.loarang"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 5
         versionName = "1.2"
         multiDexEnabled = true
@@ -50,7 +50,7 @@ android {
     buildTypes {
         release {
             isDefault = true
-            isDebuggable = false
+            isDebuggable = true
             isMinifyEnabled = true
             proguardFiles (
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -73,17 +73,17 @@ android {
 
 dependencies {
 
-    implementation("com.github.bumptech.glide:glide:4.12.0")
-    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    implementation("androidx.core:core-ktx:1.15.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation("org.jsoup:jsoup:1.16.2")
-    implementation("com.github.bumptech.glide:glide:4.12.0")
+    implementation("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation("io.reactivex.rxjava3:rxandroid:3.0.0")
     implementation("io.reactivex.rxjava3:rxjava:3.0.7")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")

@@ -11,4 +11,5 @@
     <color name="loa_main">#8bc34a</color>
     <color name="loa_sub">#5a9216</color>
     <color name="loa_sub_text">#bef67a</color>
+    <color name="background">#131524</color>
 </resources>

@@ -21,6 +21,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -29,6 +31,12 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class HomeworkFragment extends Fragment {
+    @NotNull
+    public static Fragment newInstance() {
+        return new HomeworkFragment();
+    }
+
+    public static String TAG = "HomeworkFragment";
     Context context;
     RecyclerView listView_homework;
     HomeworkFragmentListItemAdapter adapter;
