@@ -5,17 +5,15 @@ import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.cookandroid.loarang.CalenderFragment
 import com.cookandroid.loarang.CharacterFragment
 import com.cookandroid.loarang.HomeworkFragment
 import com.cookandroid.loarang.InfoFragment
 import com.cookandroid.loarang.R
-import com.cookandroid.loarang.SettingFragment
+import com.cookandroid.loarang.ui.setting.SettingFragment
 import com.cookandroid.loarang.base.BaseActivity
 import com.cookandroid.loarang.databinding.ActivityMainBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : BaseActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -34,7 +32,8 @@ class MainActivity : BaseActivity() {
                 HomeworkFragment.TAG -> showFragment(HomeworkFragment(), HomeworkFragment.TAG)
                 CalenderFragment.TAG -> showFragment(CalenderFragment(), CalenderFragment.TAG)
                 InfoFragment.TAG -> showFragment(InfoFragment(), InfoFragment.TAG)
-                SettingFragment.TAG -> showFragment(SettingFragment(), SettingFragment.TAG)
+                SettingFragment.TAG -> showFragment(
+                    SettingFragment(), SettingFragment.TAG)
             }
         } else showFragment(CharacterFragment(), CharacterFragment.TAG)
     }

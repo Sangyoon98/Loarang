@@ -1,4 +1,4 @@
-package com.cookandroid.loarang;
+package com.cookandroid.loarang.ui.setting;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.cookandroid.loarang.R;
+import com.cookandroid.loarang.SettingNotice;
+import com.cookandroid.loarang.SettingPatch;
 
 import org.jetbrains.annotations.NotNull;
 
