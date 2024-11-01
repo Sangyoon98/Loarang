@@ -17,15 +17,14 @@ import com.cookandroid.loarang.base.BaseActivity
 import com.cookandroid.loarang.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private var currentFragment: String = CharacterFragment.TAG
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        binding.menuBottom.setOnItemSelectedListener(this@MainActivity)
+        initNavigationBar()
 
         // 화면 재구성 될 경우 현재 fragment 유지
         if (savedInstanceState != null) {
@@ -45,44 +44,46 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         outState.putString("currentFragment", currentFragment)
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.tab_character -> {
-                showFragment(CharacterFragment.newInstance(), CharacterFragment.TAG)
-                currentFragment = CharacterFragment.TAG
-                vibrateShort()
-                true
-            }
+    private fun initNavigationBar() {
+        binding.menuBottom.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.tab_character -> {
+                    showFragment(CharacterFragment.newInstance(), CharacterFragment.TAG)
+                    currentFragment = CharacterFragment.TAG
+                    vibrateShort()
+                    true
+                }
 
-            R.id.tab_homework -> {
-                showFragment(HomeworkFragment.newInstance(), HomeworkFragment.TAG)
-                currentFragment = HomeworkFragment.TAG
-                vibrateShort()
-                true
-            }
+                R.id.tab_homework -> {
+                    showFragment(HomeworkFragment.newInstance(), HomeworkFragment.TAG)
+                    currentFragment = HomeworkFragment.TAG
+                    vibrateShort()
+                    true
+                }
 
-            R.id.tab_calender -> {
-                showFragment(CalenderFragment.newInstance(), CalenderFragment.TAG)
-                currentFragment = CalenderFragment.TAG
-                vibrateShort()
-                true
-            }
+                R.id.tab_calender -> {
+                    showFragment(CalenderFragment.newInstance(), CalenderFragment.TAG)
+                    currentFragment = CalenderFragment.TAG
+                    vibrateShort()
+                    true
+                }
 
-            R.id.tab_info -> {
-                showFragment(InfoFragment.newInstance(), InfoFragment.TAG)
-                currentFragment = InfoFragment.TAG
-                vibrateShort()
-                true
-            }
+                R.id.tab_info -> {
+                    showFragment(InfoFragment.newInstance(), InfoFragment.TAG)
+                    currentFragment = InfoFragment.TAG
+                    vibrateShort()
+                    true
+                }
 
-            R.id.tab_setting -> {
-                showFragment(SettingFragment.newInstance(), SettingFragment.TAG)
-                currentFragment = SettingFragment.TAG
-                vibrateShort()
-                true
-            }
+                R.id.tab_setting -> {
+                    showFragment(SettingFragment.newInstance(), SettingFragment.TAG)
+                    currentFragment = SettingFragment.TAG
+                    vibrateShort()
+                    true
+                }
 
-            else -> false
+                else -> false
+            }
         }
     }
 
