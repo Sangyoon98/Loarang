@@ -5,7 +5,7 @@
     android:background="#DDDDDD"
     android:orientation="vertical">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -22,8 +22,8 @@
         android:layout_margin="10dp"
         android:background="@drawable/round_box"
         android:elevation="10dp"
-        android:textSize="20dp"
-        android:text="공지 사항"/>
+        android:textSize="20sp"
+        android:text="@string/setting_notice_title"/>
 
     <Button
         android:id="@+id/inquire"
@@ -32,8 +32,8 @@
         android:layout_margin="10dp"
         android:background="@drawable/round_box"
         android:elevation="10dp"
-        android:textSize="20dp"
-        android:text="문의 하기" />
+        android:textSize="20sp"
+        android:text="@string/setting_inquire_title" />
 
     <Button
         android:id="@+id/patch"
@@ -42,7 +42,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/round_box"
         android:elevation="10dp"
-        android:textSize="20dp"
-        android:text="패치 로그" />
+        android:textSize="20sp"
+        android:text="@string/setting_patch_title" />
 
 </LinearLayout>

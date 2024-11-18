@@ -1,77 +1,69 @@
-package com.cookandroid.loarang.ui.setting;
+package com.cookandroid.loarang.ui.setting
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
+import android.content.Intent
+import android.os.Build
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.cookandroid.loarang.SettingPatch
+import com.cookandroid.loarang.base.BaseFragment
+import com.cookandroid.loarang.databinding.FragmentSettingBinding
+import com.cookandroid.loarang.ui.MainActivity
+import com.cookandroid.loarang.ui.notice.NoticeActivity
 
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-
-import com.cookandroid.loarang.R;
-import com.cookandroid.loarang.SettingNotice;
-import com.cookandroid.loarang.SettingPatch;
-
-import org.jetbrains.annotations.NotNull;
-
-public class SettingFragment extends Fragment {
-
-    @NotNull
-    public static Fragment newInstance() {
-        return new SettingFragment();
+class SettingFragment : BaseFragment() {
+    companion object {
+        fun newInstance() = SettingFragment()
+        const val TAG = "SettingFragment"
     }
 
-    public static String TAG = "SettingFragment";
-    Context context;
-    Button notice, inquire, patch;
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_setting, container, false);
-        context = view.getContext();
+    private var _binding: FragmentSettingBinding? = null
+    private val binding get() = _binding!!
+    lateinit var context: MainActivity
 
-        notice = view.findViewById(R.id.notice);
-        inquire = view.findViewById(R.id.inquire);
-        patch = view.findViewById(R.id.patch);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        context = activity as MainActivity
+    }
 
-        notice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, SettingNotice.class);
-                startActivity(intent);
-            }
-        });
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentSettingBinding.inflate(inflater, container, false)
 
-        inquire.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        binding.notice.setOnClickListener {
+            val intent = Intent(context, NoticeActivity::class.java)
+            startActivity(intent)
+        }
 
-                Intent intent = new Intent(Intent.ACTION_SEND);
+        binding.inquire.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SEND)
+            val address = arrayOf("qlrqod123123@gmail.com", "avt5560@gmail.com")
 
-                intent.setType("*/*");
-                String[] address = {"qlrqod123123@gmail.com", "avt5560@gmail.com"};
-                intent.setPackage("com.google.android.gm");
-                intent.putExtra(Intent.EXTRA_EMAIL, address); // 받는 사람 이메일
-                intent.putExtra(Intent.EXTRA_SUBJECT, ""); // 메일 제목
-                intent.putExtra(Intent.EXTRA_TEXT,
-                        "제조사 (Device Manufacturer): " + Build.MANUFACTURER + "\n" +
-                        "기기명 (Device): " + Build.MODEL + "\n" +
-                        "안드로이드 OS (Android OS): " + Build.VERSION.RELEASE + "\n" +
-                        "내용 (Content): \n"); // 메일 내용
-                startActivity(intent);
-            }
-        });
+            intent.setType("*/*")
+            intent.setPackage("com.google.android.gm")
+            intent.putExtra(Intent.EXTRA_EMAIL, address) // 받는 사람 이메일
+            intent.putExtra(Intent.EXTRA_SUBJECT, "") // 메일 제목
+            intent.putExtra(
+                Intent.EXTRA_TEXT,
+                """
+                    제조사 (Device Manufacturer): ${Build.MANUFACTURER}
+                    기기명 (Device): ${Build.MODEL}
+                    안드로이드 OS (Android OS): ${Build.VERSION.RELEASE}
+                    내용 (Content): 
+                    
+                    """.trimIndent()
+            ) // 메일 내용
+            startActivity(intent)
+        }
 
-        patch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, SettingPatch.class);
-                startActivity(intent);
-            }
-        });
-        return view;
+        binding.patch.setOnClickListener {
+            val intent = Intent(context, SettingPatch::class.java)
+            startActivity(intent)
+        }
+
+        return binding.root
     }
 }

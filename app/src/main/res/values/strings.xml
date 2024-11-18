@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">로아랑</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Setting -->
+    <string name="setting_notice_title">공지 사항</string>
+    <string name="setting_inquire_title">문의 하기</string>
+    <string name="setting_patch_title">패지 로그</string>
 </resources>

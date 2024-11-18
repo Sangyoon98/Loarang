@@ -1,38 +1,31 @@
-package com.cookandroid.loarang;
+package com.cookandroid.loarang.ui.notice
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.cookandroid.loarang.databinding.ItemNoticeBinding
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
-
-public class SettingNoticeListItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ArrayList<SettingNoticeListItem> items;
-    Context context;
-
-    public SettingNoticeListItemAdapter(ArrayList<SettingNoticeListItem> arrayList, Context context) {
-        this.items = arrayList;
-        this.context = context;
+class NoticeAdapter(
+    private val items: ArrayList<NoticeModel>,
+    val context: Context
+) : RecyclerView.Adapter<ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val binding = ItemNoticeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_setting_notice_listview_item, parent, false);
-        return new SettingNoticeListViewHolder(view);
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        (holder as ViewHolder).bind(items[position])
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((SettingNoticeListViewHolder)holder).onBind(items.get(position));
-    }
+    override fun getItemCount(): Int = items.size
 
-    @Override
-    public int getItemCount() {
-        return items.size();
+    inner class ViewHolder(private val binding: ItemNoticeBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: NoticeModel) {
+            binding.noticeName.text = item.name
+            binding.contextNotice.text = item.context_notice
+        }
     }
 }
