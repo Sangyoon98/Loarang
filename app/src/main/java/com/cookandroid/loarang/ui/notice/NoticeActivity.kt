@@ -21,8 +21,6 @@ class NoticeActivity : BaseActivity() {
     private lateinit var noticeAdapter : NoticeAdapter
     private var noticeList : ArrayList<NoticeModel> = ArrayList()
 
-    private lateinit var database: DatabaseReference
-
     private var firebaseDatabase: FirebaseDatabase? = null
     private var databaseReference: DatabaseReference? = null
 
@@ -32,30 +30,6 @@ class NoticeActivity : BaseActivity() {
 
         noticeAdapter = NoticeAdapter(noticeList, this)
         binding.noticeList.adapter = noticeAdapter
-
-        /*database = Firebase.database.reference.child("notice")
-
-        val postListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val post = snapshot.children
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.w(TAG, "loadPost:onCancelled", error.toException())
-            }
-
-        }
-
-        database.addValueEventListener(postListener)*/
-
-//        arrayList = ArrayList()
-//
-//        val linearLayoutManager = LinearLayoutManager(this)
-//        binding.noticeList.setLayoutManager(linearLayoutManager)
-//
-//        adapter = SettingNoticeListItemAdapter(noticeList, this)
-//        binding.noticeList.layoutManager = LinearLayoutManager(this)
-//        binding.noticeList.adapter = adapter
 
         lifecycleScope.launch {
             firebaseDatabase = FirebaseDatabase.getInstance()
@@ -78,8 +52,5 @@ class NoticeActivity : BaseActivity() {
                 }
             })
         }
-
-        /*adapter = SettingNoticeListItemAdapter(arrayList, this)
-        binding.noticeList.setAdapter(adapter)*/
     }
 }
