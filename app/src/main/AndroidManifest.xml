@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/icon"
@@ -13,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Loarang"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Splash"
+        <activity android:name=".ui.Splash"
             android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
@@ -21,10 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".CharacterFragmentDetail"/>
-        <activity android:name=".SettingNotice"/>
-        <activity android:name=".SettingPatch"/>
+        <activity android:name=".ui.MainActivity"/>
+        <activity android:name=".ui.character.CharacterFragmentDetail"/>
+        <activity android:name=".ui.setting.notice.NoticeActivity"/>
+        <activity android:name=".ui.setting.patch.PatchActivity"/>
     </application>
 
 </manifest>
