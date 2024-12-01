@@ -1,4 +1,4 @@
-package com.cookandroid.loarang;
+package com.cookandroid.loarang.ui.character;
 
 public class CharacterFragmentListItem {
     private String character_image;

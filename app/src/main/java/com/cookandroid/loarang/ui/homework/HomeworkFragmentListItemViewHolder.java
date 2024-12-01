@@ -1,13 +1,10 @@
-package com.cookandroid.loarang;
+package com.cookandroid.loarang.ui.homework;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.cookandroid.loarang.R;
 
 public class HomeworkFragmentListItemViewHolder extends RecyclerView.ViewHolder {
     Context context;

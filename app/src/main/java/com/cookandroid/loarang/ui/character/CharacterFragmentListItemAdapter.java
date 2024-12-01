@@ -1,4 +1,4 @@
-package com.cookandroid.loarang;
+package com.cookandroid.loarang.ui.character;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.cookandroid.loarang.R;
 
 import java.util.ArrayList;
 

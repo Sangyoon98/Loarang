@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import androidx.fragment.app.Fragment
-import com.cookandroid.loarang.CalenderFragment
-import com.cookandroid.loarang.CharacterFragment
-import com.cookandroid.loarang.HomeworkFragment
-import com.cookandroid.loarang.InfoFragment
+import com.cookandroid.loarang.ui.schedule.ScheduleFragment
+import com.cookandroid.loarang.ui.character.CharacterFragment
+import com.cookandroid.loarang.ui.homework.HomeworkFragment
+import com.cookandroid.loarang.ui.info.InfoFragment
 import com.cookandroid.loarang.R
 import com.cookandroid.loarang.ui.setting.SettingFragment
 import com.cookandroid.loarang.base.BaseActivity
@@ -28,9 +28,12 @@ class MainActivity : BaseActivity() {
         if (savedInstanceState != null) {
             currentFragment = savedInstanceState.getString("currentFragment").toString()
             when (currentFragment) {
-                CharacterFragment.TAG -> showFragment(CharacterFragment(), CharacterFragment.TAG)
-                HomeworkFragment.TAG -> showFragment(HomeworkFragment(), HomeworkFragment.TAG)
-                CalenderFragment.TAG -> showFragment(CalenderFragment(), CalenderFragment.TAG)
+                CharacterFragment.TAG -> showFragment(
+                    CharacterFragment(), CharacterFragment.TAG)
+                HomeworkFragment.TAG -> showFragment(
+                    HomeworkFragment(), HomeworkFragment.TAG)
+                ScheduleFragment.TAG -> showFragment(
+                    ScheduleFragment(), ScheduleFragment.TAG)
                 InfoFragment.TAG -> showFragment(InfoFragment(), InfoFragment.TAG)
                 SettingFragment.TAG -> showFragment(
                     SettingFragment(), SettingFragment.TAG)
@@ -61,8 +64,8 @@ class MainActivity : BaseActivity() {
                 }
 
                 R.id.tab_calender -> {
-                    showFragment(CalenderFragment.newInstance(), CalenderFragment.TAG)
-                    currentFragment = CalenderFragment.TAG
+                    showFragment(ScheduleFragment.newInstance(), ScheduleFragment.TAG)
+                    currentFragment = ScheduleFragment.TAG
                     vibrateShort()
                     true
                 }

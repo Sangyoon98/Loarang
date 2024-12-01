@@ -24,9 +24,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.MainActivity"/>
-        <activity android:name=".CharacterFragmentDetail"/>
-        <activity android:name=".ui.notice.NoticeActivity"/>
-        <activity android:name=".SettingPatch"/>
+        <activity android:name=".ui.character.CharacterFragmentDetail"/>
+        <activity android:name=".ui.setting.notice.NoticeActivity"/>
+        <activity android:name=".ui.setting.patch.PatchActivity"/>
     </application>
 
 </manifest>

@@ -1,93 +1,80 @@
-package com.cookandroid.loarang;
+package com.cookandroid.loarang.ui.info
 
-import android.os.Bundle;
+import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.cookandroid.loarang.base.BaseFragment
+import com.cookandroid.loarang.databinding.FragmentInfoBinding
+import com.cookandroid.loarang.ui.MainActivity
+import kotlin.math.ceil
+import kotlin.math.floor
 
-import androidx.fragment.app.Fragment;
-
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
-
-import org.jetbrains.annotations.NotNull;
-
-public class InfoFragment extends Fragment {
-
-    @NotNull
-    public static Fragment newInstance() {
-        return new InfoFragment();
+class InfoFragment : BaseFragment() {
+    companion object {
+        fun newInstance() = InfoFragment()
+        const val TAG = "InfoFragment"
     }
 
-    public static String TAG = "InfoFragment";
+    private var _binding: FragmentInfoBinding? = null
+    private val binding get() = _binding!!
+    lateinit var context: MainActivity
 
-    EditText count, exchange, price;
-    TextView recommendPrice, breakEvenPoint, formatSendPrice;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_info, container, false);
-
-        count = view.findViewById(R.id.count); // 인원수
-        exchange = view.findViewById(R.id.exchange); // 거래소가격
-        recommendPrice = view.findViewById(R.id.recommendPrice); // 입찰추천가
-        breakEvenPoint = view.findViewById(R.id.breakEvenPoint); // 손익분기점
-        formatSendPrice = view.findViewById(R.id.formatSendPrice); // 보낼 금액
-        price = view.findViewById(R.id.price); // 받는 금액
-
-        count.addTextChangedListener(auctionLoss);
-        exchange.addTextChangedListener(auctionLoss);
-        price.addTextChangedListener(transactionFee);
-
-        return view;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        context = activity as MainActivity
     }
 
-    private final TextWatcher auctionLoss = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentInfoBinding.inflate(inflater, container, false)
 
+        binding.count.addTextChangedListener(auctionLoss)
+        binding.exchange.addTextChangedListener(auctionLoss)
+        binding.price.addTextChangedListener(transactionFee)
+
+        return binding.root
+    }
+
+    private val auctionLoss: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
         }
 
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            if (count.length() > 0 && exchange.length() > 0) {
-                Double doubleCount = Double.parseDouble(count.getText().toString());
-                Double doubleExchange = Double.parseDouble(exchange.getText().toString());
-                Double doubleBreakEvenPoint = Math.floor((doubleExchange - Math.ceil(doubleExchange / 20)) * (doubleCount - 1) / doubleCount);
-                Double doubleRecommendPrice = Math.floor(doubleBreakEvenPoint * 0.91);
+        override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            if (binding.count.length() > 0 && binding.exchange.length() > 0) {
+                val doubleCount = binding.count.text.toString().toDouble()
+                val doubleExchange = binding.exchange.text.toString().toDouble()
+                val doubleBreakEvenPoint =
+                    floor((doubleExchange - ceil(doubleExchange / 20)) * (doubleCount - 1) / doubleCount)
+                val doubleRecommendPrice = floor(doubleBreakEvenPoint * 0.91)
 
-                breakEvenPoint.setText(doubleBreakEvenPoint.toString());
-                recommendPrice.setText(doubleRecommendPrice.toString());
+                binding.breakEvenPoint.text = doubleBreakEvenPoint.toString()
+                binding.recommendPrice.text = doubleRecommendPrice.toString()
             }
         }
 
-        @Override
-        public void afterTextChanged(Editable editable) {
-
+        override fun afterTextChanged(editable: Editable) {
         }
-    };
+    }
 
-    private final TextWatcher transactionFee = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+    private val transactionFee: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
         }
 
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            if (price.length() > 0) {
-                Double doublePrice = Double.parseDouble(price.getText().toString());
-                Double doubleFormatSendPrice = Math.ceil(doublePrice * 1.0526315789);
+        override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            if (binding.price.length() > 0) {
+                val doublePrice = binding.price.text.toString().toDouble()
+                val doubleFormatSendPrice = ceil(doublePrice * 1.0526315789)
 
-                formatSendPrice.setText(doubleFormatSendPrice.toString());
+                binding.formatSendPrice.text = doubleFormatSendPrice.toString()
             }
         }
 
-        @Override
-        public void afterTextChanged(Editable editable) {
-
+        override fun afterTextChanged(editable: Editable) {
         }
-    };
+    }
 }

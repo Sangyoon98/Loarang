@@ -1,4 +1,4 @@
-package com.cookandroid.loarang;
+package com.cookandroid.loarang.ui.character;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -25,6 +25,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.cookandroid.loarang.DBHelper;
+import com.cookandroid.loarang.R;
 import com.cookandroid.loarang.ui.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

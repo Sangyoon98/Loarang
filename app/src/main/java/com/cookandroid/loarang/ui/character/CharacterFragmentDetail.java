@@ -1,4 +1,4 @@
-package com.cookandroid.loarang;
+package com.cookandroid.loarang.ui.character;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,6 +10,8 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.cookandroid.loarang.R;
 
 public class CharacterFragmentDetail extends AppCompatActivity {
     WebView wView; // 웹뷰

@@ -6,11 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.cookandroid.loarang.SettingPatch
+import com.cookandroid.loarang.ui.setting.patch.PatchActivity
 import com.cookandroid.loarang.base.BaseFragment
 import com.cookandroid.loarang.databinding.FragmentSettingBinding
 import com.cookandroid.loarang.ui.MainActivity
-import com.cookandroid.loarang.ui.notice.NoticeActivity
+import com.cookandroid.loarang.ui.setting.notice.NoticeActivity
 
 class SettingFragment : BaseFragment() {
     companion object {
@@ -60,7 +60,7 @@ class SettingFragment : BaseFragment() {
         }
 
         binding.patch.setOnClickListener {
-            val intent = Intent(context, SettingPatch::class.java)
+            val intent = Intent(context, PatchActivity::class.java)
             startActivity(intent)
         }
 

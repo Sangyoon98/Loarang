@@ -12,13 +12,13 @@
         android:id="@+id/patch_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/context_patch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15dp"/>
+        android:textSize="15sp"/>
 
 </LinearLayout>

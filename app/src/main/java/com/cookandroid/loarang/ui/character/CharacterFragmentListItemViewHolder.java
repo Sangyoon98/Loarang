@@ -1,4 +1,4 @@
-package com.cookandroid.loarang;
+package com.cookandroid.loarang.ui.character;
 
 import android.app.Activity;
 import android.view.ContextMenu;
@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.cookandroid.loarang.R;
 
 public class CharacterFragmentListItemViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
     ImageView character_image;

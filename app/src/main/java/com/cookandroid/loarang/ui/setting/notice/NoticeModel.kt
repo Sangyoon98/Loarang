@@ -1,4 +1,4 @@
-package com.cookandroid.loarang.ui.notice
+package com.cookandroid.loarang.ui.setting.notice
 
 import com.google.firebase.database.IgnoreExtraProperties
 

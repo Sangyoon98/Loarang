@@ -1,4 +1,4 @@
-package com.cookandroid.loarang;
+package com.cookandroid.loarang.ui.homework;
 
 public class HomeworkFragmentListItem {
     private String character_image;

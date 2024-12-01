@@ -1,18 +1,18 @@
-package com.cookandroid.loarang.ui.notice
+package com.cookandroid.loarang.ui.setting.patch
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.cookandroid.loarang.databinding.ItemNoticeBinding
+import com.cookandroid.loarang.databinding.ItemPatchBinding
 
-class NoticeAdapter(
-    private val items: ArrayList<NoticeModel>,
-    val context: Context
+class PatchAdapter(
+    private val items: ArrayList<PatchModel>,
+    var context: Context
 ) : RecyclerView.Adapter<ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding = ItemNoticeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemPatchBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -22,10 +22,10 @@ class NoticeAdapter(
 
     override fun getItemCount(): Int = items.size
 
-    inner class ViewHolder(private val binding: ItemNoticeBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: NoticeModel) {
-            binding.noticeName.text = item.name
-            binding.contextNotice.text = item.context_notice
+    inner class ViewHolder(private val binding: ItemPatchBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: PatchModel) {
+            binding.patchName.text = item.name
+            binding.contextPatch.text = item.context_patch
         }
     }
 }
