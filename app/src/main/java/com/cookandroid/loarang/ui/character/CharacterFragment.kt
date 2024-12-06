@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.loarang.DBHelper
 import com.cookandroid.loarang.R
+import com.cookandroid.loarang.base.BaseFragment
+import com.cookandroid.loarang.databinding.FragmentCharacterBinding
 import com.cookandroid.loarang.ui.MainActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -29,9 +31,21 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import org.jsoup.Jsoup
 import java.io.IOException
 
-class CharacterFragment : Fragment() {
-    var context: Context? = null
-    var addCharBtn: FloatingActionButton? = null
+class CharacterFragment : BaseFragment() {
+    companion object {
+        fun newInstance() = CharacterFragment()
+        const val TAG = "CharacterFragment"
+    }
+
+    private var _binding: FragmentCharacterBinding? = null
+    private val binding get() = _binding!!
+    lateinit var context: MainActivity
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        context = activity as MainActivity
+    }
+
     var listView: RecyclerView? = null
     var adapter: CharacterFragmentListItemAdapter? = null
     var listItem: CharacterFragmentListItem? = null
@@ -41,18 +55,11 @@ class CharacterFragment : Fragment() {
     var mArrayList: ArrayList<CharacterFragmentListItem> = ArrayList()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_character, container, false)
+        _binding = FragmentCharacterBinding.inflate(inflater, container, false)
 
-        context = view.context
-        addCharBtn = view.findViewById(R.id.addCharBtn)
-        listView = view.findViewById(R.id.listView)
-
-        val linearLayoutManager = LinearLayoutManager(context)
-        listView.setLayoutManager(linearLayoutManager)
         adapter = CharacterFragmentListItemAdapter()
 
         //DBHelper 객체를 선언해줍니다.
@@ -62,7 +69,7 @@ class CharacterFragment : Fragment() {
 
         OnCreateBackgroundTask()
 
-        addCharBtn.setOnClickListener(View.OnClickListener {
+        binding.addCharBtn.setOnClickListener(View.OnClickListener {
             val dlgEdt = EditText(activity)
             nickname = "https://lostark.game.onstove.com/Profile/Character/"
             val dlg = AlertDialog.Builder(activity)
@@ -85,7 +92,7 @@ class CharacterFragment : Fragment() {
             }
             dlg.show()
         })
-        return view
+        return binding.root
     }
 
     //BackgroundTask
@@ -188,9 +195,7 @@ class CharacterFragment : Fragment() {
 
         val isConnected = isNetworkConnected(context)
         if (!isConnected) {
-            val builder = androidx.appcompat.app.AlertDialog.Builder(
-                context!!
-            )
+            val builder = androidx.appcompat.app.AlertDialog.Builder(context)
             builder.setTitle("알림")
                 .setMessage("네트워크 연결 상태를 확인해 주세요.")
                 .setPositiveButton("확인", null)
@@ -333,7 +338,7 @@ class CharacterFragment : Fragment() {
     //인터넷 연결 확인
     fun isNetworkConnected(context: Context?): Boolean {
         val manager =
-            context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         @SuppressLint("MissingPermission") val mobile =
             manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
         @SuppressLint("MissingPermission") val wifi =
@@ -398,12 +403,5 @@ class CharacterFragment : Fragment() {
         val `in` = Intent(context, MainActivity::class.java)
         startActivity(`in`)
         return true
-    }
-
-    companion object {
-        var TAG: String = "CharacterFragment"
-        fun newInstance(): Fragment {
-            return CharacterFragment()
-        }
     }
 }
