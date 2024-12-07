@@ -41,6 +41,9 @@ class CharacterFragment : BaseFragment() {
     private val binding get() = _binding!!
     lateinit var context: MainActivity
 
+    private lateinit var characterAdapter: CharacterFragmentListItemAdapter
+    private val characterList: ArrayList<CharacterFragmentListItem> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         context = activity as MainActivity
@@ -59,6 +62,10 @@ class CharacterFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCharacterBinding.inflate(inflater, container, false)
+
+        characterAdapter = CharacterFragmentListItemAdapter(characterList, this)
+        binding.listView.adapter = characterAdapter
+
 
         adapter = CharacterFragmentListItemAdapter()
 
