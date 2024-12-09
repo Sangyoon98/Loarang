@@ -15,15 +15,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.loarang.DBHelper
 import com.cookandroid.loarang.R
 import com.cookandroid.loarang.base.BaseFragment
 import com.cookandroid.loarang.databinding.FragmentCharacterBinding
 import com.cookandroid.loarang.ui.MainActivity
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
@@ -41,7 +38,7 @@ class CharacterFragment : BaseFragment() {
     private val binding get() = _binding!!
     lateinit var context: MainActivity
 
-    private lateinit var characterAdapter: CharacterFragmentListItemAdapter
+    private lateinit var characterAdapter: CharacterAdapter
     private val characterList: ArrayList<CharacterFragmentListItem> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +47,7 @@ class CharacterFragment : BaseFragment() {
     }
 
     var listView: RecyclerView? = null
-    var adapter: CharacterFragmentListItemAdapter? = null
+    var adapter: CharacterAdapter? = null
     var listItem: CharacterFragmentListItem? = null
     var nickname: String = "https://lostark.game.onstove.com/Profile/Character/"
     private var mDbHelper: DBHelper? = null
@@ -60,14 +57,27 @@ class CharacterFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCharacterBinding.inflate(inflater, container, false)
 
-        characterAdapter = CharacterFragmentListItemAdapter(characterList, this)
+        characterAdapter = CharacterAdapter(characterList, context)
         binding.listView.adapter = characterAdapter
 
+        binding.addCharBtn.setOnClickListener {
+            AddCharacterDialog(context) { dlgEdt ->
+                AddCharacter(nickname)
+                characterAdapter.notifyDataSetChanged()
+                Toast.makeText(context, dlgEdt + getString(R.string.add_character_success), Toast.LENGTH_SHORT).show()
+            }
+        }
 
-        adapter = CharacterFragmentListItemAdapter()
+
+
+
+
+
+
+
 
         //DBHelper 객체를 선언해줍니다.
         mDbHelper = DBHelper(context)

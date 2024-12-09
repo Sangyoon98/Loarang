@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">로아랑</string>
 
+    <!-- Character -->
+    <string name="add_character_title">캐릭터 추가</string>
+    <string name="search_character">캐릭터 닉네임 검색</string>
+    <string name="search">검색</string>
+    <string name="search_error">닉네임을 다시 입력해주세요.</string>
+    <string name="add_character_success">의 정보를 추가하였습니다.</string>
+
+
     <!-- Setting -->
     <string name="setting_notice_title">공지 사항</string>
     <string name="setting_inquire_title">문의 하기</string>
