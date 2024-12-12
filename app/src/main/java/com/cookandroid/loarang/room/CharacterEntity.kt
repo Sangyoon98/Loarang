@@ -8,7 +8,7 @@ data class CharacterEntity(
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
     var serverName: String,
     var characterName: String,
-    var characterLevel: Int,
+    var characterLevel: String,
     var characterClassName: String,
     var itemLevel: String,
     var characterImage: String

@@ -15,16 +15,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.loarang.DBHelper
 import com.cookandroid.loarang.R
 import com.cookandroid.loarang.base.BaseFragment
 import com.cookandroid.loarang.databinding.FragmentCharacterBinding
+import com.cookandroid.loarang.room.CharacterDatabase
+import com.cookandroid.loarang.room.CharacterEntity
 import com.cookandroid.loarang.ui.MainActivity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.jsoup.Jsoup
 import java.io.IOException
 
@@ -65,10 +70,8 @@ class CharacterFragment : BaseFragment() {
 
         binding.addCharBtn.setOnClickListener {
             AddCharacterDialog(context) { dlgEdt ->
-                AddCharacter(nickname)
-                characterAdapter.notifyDataSetChanged()
-                Toast.makeText(context, dlgEdt + getString(R.string.add_character_success), Toast.LENGTH_SHORT).show()
-            }
+                addCharacter(dlgEdt)
+            }.showDialog()
         }
 
 
@@ -84,9 +87,9 @@ class CharacterFragment : BaseFragment() {
         //쓰기모드에서 데이터 저장소를 불러옵니다.
         db = mDbHelper!!.writableDatabase
 
-        OnCreateBackgroundTask()
+        //OnCreateBackgroundTask()
 
-        binding.addCharBtn.setOnClickListener(View.OnClickListener {
+        /*binding.addCharBtn.setOnClickListener(View.OnClickListener {
             val dlgEdt = EditText(activity)
             nickname = "https://lostark.game.onstove.com/Profile/Character/"
             val dlg = AlertDialog.Builder(activity)
@@ -108,101 +111,151 @@ class CharacterFragment : BaseFragment() {
                 }
             }
             dlg.show()
-        })
+        })*/
         return binding.root
     }
 
+
+
     //BackgroundTask
-    var onCreateBackgroundTask: Disposable? = null
-    fun OnCreateBackgroundTask() {
-        //onPreExecute
-        onCreateBackgroundTask = Observable.fromCallable<Any?> {
-            //doInBackground
-            @SuppressLint("Recycle") val c =
-                db!!.rawQuery("SELECT * FROM " + DBHelper.FeedEntry.TABLE_NAME, null)
-            while (c.moveToNext()) {
-                @SuppressLint("Range") val img_result =
-                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_IMAGE))
-                @SuppressLint("Range") val name_result =
-                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_NAME))
-                @SuppressLint("Range") val charLevel_result =
-                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_CHARACTER_LEVEL))
-                @SuppressLint("Range") val class_result =
-                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_CLASS))
-                @SuppressLint("Range") val itemLevel_result =
-                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_ITEM_LEVEL))
-                @SuppressLint("Range") val server_result =
-                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_SERVER))
-                listItem = CharacterFragmentListItem(
-                    img_result,
-                    name_result,
-                    charLevel_result,
-                    class_result,
-                    itemLevel_result,
-                    server_result
-                )
-                adapter!!.addItem(listItem)
-                mArrayList.add(listItem!!)
-                Log.d(
-                    "loggg",
-                    img_result + name_result + charLevel_result + class_result + itemLevel_result + server_result
-                )
-            }
-            listView!!.adapter = adapter
-            null
-        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ result: Any? ->
-                //onPostExecute
-                onCreateBackgroundTask!!.dispose()
-                adapter!!.notifyDataSetChanged()
-            }, { throwable: Throwable? -> println("Error") })
-    }
+//    var onCreateBackgroundTask: Disposable? = null
+//    fun OnCreateBackgroundTask() {
+//        //onPreExecute
+//        onCreateBackgroundTask = Observable.fromCallable<Any?> {
+//            //doInBackground
+//            @SuppressLint("Recycle") val c =
+//                db!!.rawQuery("SELECT * FROM " + DBHelper.FeedEntry.TABLE_NAME, null)
+//            while (c.moveToNext()) {
+//                @SuppressLint("Range") val img_result =
+//                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_IMAGE))
+//                @SuppressLint("Range") val name_result =
+//                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_NAME))
+//                @SuppressLint("Range") val charLevel_result =
+//                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_CHARACTER_LEVEL))
+//                @SuppressLint("Range") val class_result =
+//                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_CLASS))
+//                @SuppressLint("Range") val itemLevel_result =
+//                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_ITEM_LEVEL))
+//                @SuppressLint("Range") val server_result =
+//                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_SERVER))
+//                listItem = CharacterFragmentListItem(
+//                    img_result,
+//                    name_result,
+//                    charLevel_result,
+//                    class_result,
+//                    itemLevel_result,
+//                    server_result
+//                )
+//                adapter!!.addItem(listItem)
+//                mArrayList.add(listItem!!)
+//                Log.d(
+//                    "loggg",
+//                    img_result + name_result + charLevel_result + class_result + itemLevel_result + server_result
+//                )
+//            }
+//            listView!!.adapter = adapter
+//            null
+//        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+//            .subscribe({ result: Any? ->
+//                //onPostExecute
+//                onCreateBackgroundTask!!.dispose()
+//                adapter!!.notifyDataSetChanged()
+//            }, { throwable: Throwable? -> println("Error") })
+//    }
 
     //ReCreateBackgroundTask
-    var onRecreateBackgroundTask: Disposable? = null
-    fun OnRecreateBackgroundTask() {
-        //onPreExecute
-        //adapter.removeItem();
-        onRecreateBackgroundTask = Observable.fromCallable<Any?> {
-            //doInBackground
-            @SuppressLint("Recycle") val c =
-                db!!.rawQuery("SELECT * FROM " + DBHelper.FeedEntry.TABLE_NAME, null)
-            while (c.moveToNext()) {
-                @SuppressLint("Range") val img_result =
-                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_IMAGE))
-                @SuppressLint("Range") val name_result =
-                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_NAME))
-                @SuppressLint("Range") val charLevel_result =
-                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_CHARACTER_LEVEL))
-                @SuppressLint("Range") val class_result =
-                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_CLASS))
-                @SuppressLint("Range") val itemLevel_result =
-                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_ITEM_LEVEL))
-                @SuppressLint("Range") val server_result =
-                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_SERVER))
-                listItem = CharacterFragmentListItem(
-                    img_result,
-                    name_result,
-                    charLevel_result,
-                    class_result,
-                    itemLevel_result,
-                    server_result
-                )
-                adapter!!.addItem(listItem)
-                mArrayList.add(listItem!!)
-                Log.d(
-                    "loggg",
-                    img_result + name_result + charLevel_result + class_result + itemLevel_result + server_result
-                )
-            }
-            listView!!.adapter = adapter
-            null
-        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ result: Any? ->
-                //onPostExecute
-                onRecreateBackgroundTask!!.dispose()
-                adapter!!.notifyDataSetChanged()
-            }, { throwable: Throwable? -> println("Error") })
+//    var onRecreateBackgroundTask: Disposable? = null
+//    fun OnRecreateBackgroundTask() {
+//        //onPreExecute
+//        //adapter.removeItem();
+//        onRecreateBackgroundTask = Observable.fromCallable<Any?> {
+//            //doInBackground
+//            @SuppressLint("Recycle") val c =
+//                db!!.rawQuery("SELECT * FROM " + DBHelper.FeedEntry.TABLE_NAME, null)
+//            while (c.moveToNext()) {
+//                @SuppressLint("Range") val img_result =
+//                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_IMAGE))
+//                @SuppressLint("Range") val name_result =
+//                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_NAME))
+//                @SuppressLint("Range") val charLevel_result =
+//                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_CHARACTER_LEVEL))
+//                @SuppressLint("Range") val class_result =
+//                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_CLASS))
+//                @SuppressLint("Range") val itemLevel_result =
+//                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_ITEM_LEVEL))
+//                @SuppressLint("Range") val server_result =
+//                    c.getString(c.getColumnIndex(DBHelper.FeedEntry.COLUMN_NAME_SERVER))
+//                listItem = CharacterFragmentListItem(
+//                    img_result,
+//                    name_result,
+//                    charLevel_result,
+//                    class_result,
+//                    itemLevel_result,
+//                    server_result
+//                )
+//                adapter!!.addItem(listItem)
+//                mArrayList.add(listItem!!)
+//                Log.d(
+//                    "loggg",
+//                    img_result + name_result + charLevel_result + class_result + itemLevel_result + server_result
+//                )
+//            }
+//            listView!!.adapter = adapter
+//            null
+//        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+//            .subscribe({ result: Any? ->
+//                //onPostExecute
+//                onRecreateBackgroundTask!!.dispose()
+//                adapter!!.notifyDataSetChanged()
+//            }, { throwable: Throwable? -> println("Error") })
+//    }
+
+    fun addCharacter(nickname: String) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val url = "https://lostark.game.onstove.com/Profile/Character/$nickname"
+            val document = Jsoup.connect(url).get()
+
+            var name = ""
+            var server = ""
+            var charLevel = ""
+            var itemLevel = ""
+            var classInfo = ""
+            var image = ""
+
+            val nameElements = document.select("span[class=profile-character-info__name]")
+            for (element in nameElements) name += element.text()
+
+            val serverElements = document.select("span[class=profile-character-info__server]")
+            for (element in serverElements) server += element.text()
+
+            val charLevelElements = document.select("span[class=profile-character-info__lv]")
+            for (element in charLevelElements) charLevel += element.text()
+
+            var temp = ""
+            val itemLevelElements = document.select("div[class=level-info2__expedition]")
+            for (element in itemLevelElements) temp += element.text()
+            val arr = temp.split("벨".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            itemLevel = arr[1]
+
+            val classElements = document.select("img[class=profile-character-info__img]")
+            classInfo = classElements.attr("alt")
+
+            val imgElements = document.select("img[class=profile-character-info__img]")
+            image = imgElements.attr("src")
+
+            val characterDao = CharacterDatabase.getInstance(context)!!.characterDao()
+            characterDao.addCharacter(CharacterEntity(
+                serverName = server,
+                characterName = name,
+                characterLevel = charLevel,
+                characterClassName = classInfo,
+                itemLevel = itemLevel,
+                characterImage = image
+            ))
+
+            characterAdapter.notifyDataSetChanged()
+            Toast.makeText(context, nickname + getString(R.string.add_character_success), Toast.LENGTH_SHORT).show()
+        }
     }
 
     //BackgroundTask
@@ -378,47 +431,47 @@ class CharacterFragment : BaseFragment() {
         return false
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-        val position = adapter!!.position
-        val img_result = mArrayList[position].character_image
-        val name_result = mArrayList[position].character_nickname
-        val charLevel_result = mArrayList[position].character_level
-        val class_result = mArrayList[position].character_class
-        val itemLevel_result = mArrayList[position].character_itemLevel
-        val server_result = mArrayList[position].character_server
-
-        val itemId = item.itemId
-        if (itemId == R.id.character_update) {
-            Toast.makeText(context, name_result + "의 정보를 갱신하였습니다.", Toast.LENGTH_SHORT).show()
-            mArrayList.removeAt(position)
-            deleteNumber(
-                img_result,
-                name_result,
-                charLevel_result,
-                class_result,
-                itemLevel_result,
-                server_result
-            )
-            nickname = "https://lostark.game.onstove.com/Profile/Character/"
-            nickname += name_result
-            AddCharacter(nickname)
-            //OnRecreateBackgroundTask();
-        } else if (itemId == R.id.character_delete) {
-            Toast.makeText(context, name_result + "의 정보를 삭제하였습니다.", Toast.LENGTH_SHORT).show()
-            mArrayList.removeAt(position)
-            deleteNumber(
-                img_result,
-                name_result,
-                charLevel_result,
-                class_result,
-                itemLevel_result,
-                server_result
-            )
-            //OnRecreateBackgroundTask();
-        }
-        val `in` = Intent(context, MainActivity::class.java)
-        startActivity(`in`)
-        return true
-    }
+//    @SuppressLint("NotifyDataSetChanged")
+//    override fun onContextItemSelected(item: MenuItem): Boolean {
+//        val position = adapter!!.position
+//        val img_result = mArrayList[position].character_image
+//        val name_result = mArrayList[position].character_nickname
+//        val charLevel_result = mArrayList[position].character_level
+//        val class_result = mArrayList[position].character_class
+//        val itemLevel_result = mArrayList[position].character_itemLevel
+//        val server_result = mArrayList[position].character_server
+//
+//        val itemId = item.itemId
+//        if (itemId == R.id.character_update) {
+//            Toast.makeText(context, name_result + "의 정보를 갱신하였습니다.", Toast.LENGTH_SHORT).show()
+//            mArrayList.removeAt(position)
+//            deleteNumber(
+//                img_result,
+//                name_result,
+//                charLevel_result,
+//                class_result,
+//                itemLevel_result,
+//                server_result
+//            )
+//            nickname = "https://lostark.game.onstove.com/Profile/Character/"
+//            nickname += name_result
+//            AddCharacter(nickname)
+//            //OnRecreateBackgroundTask();
+//        } else if (itemId == R.id.character_delete) {
+//            Toast.makeText(context, name_result + "의 정보를 삭제하였습니다.", Toast.LENGTH_SHORT).show()
+//            mArrayList.removeAt(position)
+//            deleteNumber(
+//                img_result,
+//                name_result,
+//                charLevel_result,
+//                class_result,
+//                itemLevel_result,
+//                server_result
+//            )
+//            //OnRecreateBackgroundTask();
+//        }
+//        val `in` = Intent(context, MainActivity::class.java)
+//        startActivity(`in`)
+//        return true
+//    }
 }
