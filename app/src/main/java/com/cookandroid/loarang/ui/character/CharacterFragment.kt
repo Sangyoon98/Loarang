@@ -1,19 +1,15 @@
 package com.cookandroid.loarang.ui.character
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -44,7 +40,7 @@ class CharacterFragment : BaseFragment() {
     lateinit var context: MainActivity
 
     private lateinit var characterAdapter: CharacterAdapter
-    private val characterList: ArrayList<CharacterFragmentListItem> = ArrayList()
+    private val characterList: ArrayList<CharacterEntity> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,11 +49,11 @@ class CharacterFragment : BaseFragment() {
 
     var listView: RecyclerView? = null
     var adapter: CharacterAdapter? = null
-    var listItem: CharacterFragmentListItem? = null
+    var listItem: CharacterModel? = null
     var nickname: String = "https://lostark.game.onstove.com/Profile/Character/"
     private var mDbHelper: DBHelper? = null
     private var db: SQLiteDatabase? = null
-    var mArrayList: ArrayList<CharacterFragmentListItem> = ArrayList()
+    var mArrayList: ArrayList<CharacterModel> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +62,7 @@ class CharacterFragment : BaseFragment() {
         _binding = FragmentCharacterBinding.inflate(inflater, container, false)
 
         characterAdapter = CharacterAdapter(characterList, context)
-        binding.listView.adapter = characterAdapter
+        binding.characterList.adapter = characterAdapter
 
         binding.addCharBtn.setOnClickListener {
             AddCharacterDialog(context) { dlgEdt ->
@@ -115,7 +111,60 @@ class CharacterFragment : BaseFragment() {
         return binding.root
     }
 
+    private fun addCharacter(nickname: String) {
+        try {
+            lifecycleScope.launch(Dispatchers.IO) {
+                val url = "https://lostark.game.onstove.com/Profile/Character/$nickname"
+                val document = Jsoup.connect(url).get()
 
+                var name = ""
+                var server = ""
+                var charLevel = ""
+                var itemLevel = ""
+                var classInfo = ""
+                var image = ""
+
+                val nameElements = document.select("span[class=profile-character-info__name]")
+                for (element in nameElements) name += element.text()
+
+                val serverElements = document.select("span[class=profile-character-info__server]")
+                for (element in serverElements) server += element.text()
+
+                val charLevelElements = document.select("span[class=profile-character-info__lv]")
+                for (element in charLevelElements) charLevel += element.text()
+
+                var temp = ""
+                val itemLevelElements = document.select("div[class=level-info2__expedition]")
+                for (element in itemLevelElements) temp += element.text()
+                val arr = temp.split("벨".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                itemLevel = arr[1]
+
+                val classElements = document.select("img[class=profile-character-info__img]")
+                classInfo = classElements.attr("alt")
+
+                val imgElements = document.select("img[class=profile-character-info__img]")
+                image = imgElements.attr("src")
+
+                val characterDao = CharacterDatabase.getInstance(context)!!.characterDao()
+                characterDao.addCharacter(CharacterEntity(
+                    serverName = server,
+                    characterName = name,
+                    characterLevel = charLevel,
+                    characterClassName = classInfo,
+                    itemLevel = itemLevel,
+                    characterImage = image
+                ))
+
+                characterList.clear()
+                characterList.addAll(characterDao.getAll())
+                characterAdapter.notifyDataSetChanged()
+                Toast.makeText(context, nickname + getString(R.string.add_character_success), Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
 
     //BackgroundTask
 //    var onCreateBackgroundTask: Disposable? = null
@@ -209,54 +258,6 @@ class CharacterFragment : BaseFragment() {
 //                adapter!!.notifyDataSetChanged()
 //            }, { throwable: Throwable? -> println("Error") })
 //    }
-
-    fun addCharacter(nickname: String) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val url = "https://lostark.game.onstove.com/Profile/Character/$nickname"
-            val document = Jsoup.connect(url).get()
-
-            var name = ""
-            var server = ""
-            var charLevel = ""
-            var itemLevel = ""
-            var classInfo = ""
-            var image = ""
-
-            val nameElements = document.select("span[class=profile-character-info__name]")
-            for (element in nameElements) name += element.text()
-
-            val serverElements = document.select("span[class=profile-character-info__server]")
-            for (element in serverElements) server += element.text()
-
-            val charLevelElements = document.select("span[class=profile-character-info__lv]")
-            for (element in charLevelElements) charLevel += element.text()
-
-            var temp = ""
-            val itemLevelElements = document.select("div[class=level-info2__expedition]")
-            for (element in itemLevelElements) temp += element.text()
-            val arr = temp.split("벨".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            itemLevel = arr[1]
-
-            val classElements = document.select("img[class=profile-character-info__img]")
-            classInfo = classElements.attr("alt")
-
-            val imgElements = document.select("img[class=profile-character-info__img]")
-            image = imgElements.attr("src")
-
-            val characterDao = CharacterDatabase.getInstance(context)!!.characterDao()
-            characterDao.addCharacter(CharacterEntity(
-                serverName = server,
-                characterName = name,
-                characterLevel = charLevel,
-                characterClassName = classInfo,
-                itemLevel = itemLevel,
-                characterImage = image
-            ))
-
-            characterAdapter.notifyDataSetChanged()
-            Toast.makeText(context, nickname + getString(R.string.add_character_success), Toast.LENGTH_SHORT).show()
-        }
-    }
 
     //BackgroundTask
     var addCharacter: Disposable? = null

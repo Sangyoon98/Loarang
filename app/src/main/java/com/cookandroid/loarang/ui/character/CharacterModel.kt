@@ -1,6 +1,6 @@
 package com.cookandroid.loarang.ui.character
 
-data class CharacterFragmentListItem (
+data class CharacterModel (
     var characterImage: String,
     var characterNickname: String,
     var characterLevel: String,

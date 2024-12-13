@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cookandroid.loarang.R
 import com.cookandroid.loarang.databinding.ItemCharacterBinding
+import com.cookandroid.loarang.room.CharacterEntity
 
 class CharacterAdapter(
-    private val items: ArrayList<CharacterFragmentListItem>,
+    private val items: ArrayList<CharacterEntity>,
     val context: Context
 ) : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
 
@@ -27,7 +28,7 @@ class CharacterAdapter(
             val context = view.context
             if (pos != RecyclerView.NO_POSITION) {
                 val characterFragmentDetail = Intent(context, CharacterFragmentDetail::class.java)
-                characterFragmentDetail.putExtra("nickname", items[pos].characterNickname)
+                characterFragmentDetail.putExtra("nickname", items[pos].characterName)
                 context.startActivity(characterFragmentDetail)
             }
         }
@@ -36,17 +37,17 @@ class CharacterAdapter(
     override fun getItemCount(): Int = items.size
 
     inner class ViewHolder(private val binding: ItemCharacterBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: CharacterFragmentListItem) {
+        fun bind(item: CharacterEntity) {
             Glide.with(itemView).load(item.characterImage)
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_foreground)
                 .centerCrop()
                 .into(binding.characterImage)
-            binding.characterNickname.text = item.characterNickname
+            binding.characterNickname.text = item.characterName
             binding.characterLevel.text = item.characterLevel
-            binding.characterClass.text = item.characterClass
-            binding.characterItemLevel.text = item.characterItemLevel
-            binding.characterServer.text = item.characterServer
+            binding.characterClass.text = item.characterClassName
+            binding.characterItemLevel.text = item.itemLevel
+            binding.characterServer.text = item.serverName
         }
     }
 }
