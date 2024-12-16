@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cookandroid.loarang.R
@@ -11,9 +13,27 @@ import com.cookandroid.loarang.databinding.ItemCharacterBinding
 import com.cookandroid.loarang.room.CharacterEntity
 
 class CharacterAdapter(
-    private val items: ArrayList<CharacterEntity>,
+    //private val items: ArrayList<CharacterEntity>,
     val context: Context
-) : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
+) : ListAdapter<CharacterEntity, CharacterAdapter.ViewHolder>(diffCallback) {
+
+    companion object {
+        val diffCallback = object : DiffUtil.ItemCallback<CharacterEntity>() {
+            override fun areItemsTheSame(
+                oldItem: CharacterEntity,
+                newItem: CharacterEntity
+            ): Boolean {
+                return oldItem == newItem
+            }
+
+            override fun areContentsTheSame(
+                oldItem: CharacterEntity,
+                newItem: CharacterEntity
+            ): Boolean {
+                return oldItem.characterName == newItem.characterName
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemCharacterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -21,20 +41,18 @@ class CharacterAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(getItem(position))
 
         holder.itemView.setOnClickListener { view ->
             val pos = holder.getAdapterPosition()
             val context = view.context
             if (pos != RecyclerView.NO_POSITION) {
                 val characterFragmentDetail = Intent(context, CharacterFragmentDetail::class.java)
-                characterFragmentDetail.putExtra("nickname", items[pos].characterName)
+                characterFragmentDetail.putExtra("nickname", getItem(pos).characterName)
                 context.startActivity(characterFragmentDetail)
             }
         }
     }
-
-    override fun getItemCount(): Int = items.size
 
     inner class ViewHolder(private val binding: ItemCharacterBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: CharacterEntity) {

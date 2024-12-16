@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.loarang.DBHelper
@@ -20,6 +21,7 @@ import com.cookandroid.loarang.databinding.FragmentCharacterBinding
 import com.cookandroid.loarang.room.CharacterDatabase
 import com.cookandroid.loarang.room.CharacterEntity
 import com.cookandroid.loarang.ui.MainActivity
+import com.cookandroid.loarang.ui.MainViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
@@ -38,6 +40,7 @@ class CharacterFragment : BaseFragment() {
     private var _binding: FragmentCharacterBinding? = null
     private val binding get() = _binding!!
     lateinit var context: MainActivity
+    private val viewModel: MainViewModel by viewModels()
 
     private lateinit var characterAdapter: CharacterAdapter
     private val characterList: ArrayList<CharacterEntity> = ArrayList()
@@ -61,12 +64,16 @@ class CharacterFragment : BaseFragment() {
     ): View {
         _binding = FragmentCharacterBinding.inflate(inflater, container, false)
 
-        characterAdapter = CharacterAdapter(characterList, context)
+        characterAdapter = CharacterAdapter(context)
         binding.characterList.adapter = characterAdapter
 
         binding.addCharBtn.setOnClickListener {
             AddCharacterDialog(context) { dlgEdt ->
-                addCharacter(dlgEdt)
+                viewModel.addCharacter(dlgEdt)
+                viewModel.characterList.observe(viewLifecycleOwner) {
+                    characterAdapter.submitList(it)
+                }
+                //addCharacter(dlgEdt)
             }.showDialog()
         }
 
@@ -82,88 +89,15 @@ class CharacterFragment : BaseFragment() {
         mDbHelper = DBHelper(context)
         //쓰기모드에서 데이터 저장소를 불러옵니다.
         db = mDbHelper!!.writableDatabase
-
-        //OnCreateBackgroundTask()
-
-        /*binding.addCharBtn.setOnClickListener(View.OnClickListener {
-            val dlgEdt = EditText(activity)
-            nickname = "https://lostark.game.onstove.com/Profile/Character/"
-            val dlg = AlertDialog.Builder(activity)
-            dlg.setTitle("캐릭터 검색")
-            dlg.setView(dlgEdt)
-            dlg.setPositiveButton("검색") { dialogInterface, i ->
-                if (dlgEdt.text.toString() == "") {
-                    Toast.makeText(context, "닉네임을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
-                } else {
-                    nickname += dlgEdt.text.toString()
-                    AddCharacter(nickname)
-                    adapter!!.notifyDataSetChanged()
-                    Toast.makeText(
-                        context,
-                        dlgEdt.text.toString() + "의 정보를 추가하였습니다.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    //OnRecreateBackgroundTask();
-                }
-            }
-            dlg.show()
-        })*/
         return binding.root
     }
 
-    private fun addCharacter(nickname: String) {
-        try {
-            lifecycleScope.launch(Dispatchers.IO) {
-                val url = "https://lostark.game.onstove.com/Profile/Character/$nickname"
-                val document = Jsoup.connect(url).get()
-
-                var name = ""
-                var server = ""
-                var charLevel = ""
-                var itemLevel = ""
-                var classInfo = ""
-                var image = ""
-
-                val nameElements = document.select("span[class=profile-character-info__name]")
-                for (element in nameElements) name += element.text()
-
-                val serverElements = document.select("span[class=profile-character-info__server]")
-                for (element in serverElements) server += element.text()
-
-                val charLevelElements = document.select("span[class=profile-character-info__lv]")
-                for (element in charLevelElements) charLevel += element.text()
-
-                var temp = ""
-                val itemLevelElements = document.select("div[class=level-info2__expedition]")
-                for (element in itemLevelElements) temp += element.text()
-                val arr = temp.split("벨".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                itemLevel = arr[1]
-
-                val classElements = document.select("img[class=profile-character-info__img]")
-                classInfo = classElements.attr("alt")
-
-                val imgElements = document.select("img[class=profile-character-info__img]")
-                image = imgElements.attr("src")
-
-                val characterDao = CharacterDatabase.getInstance(context)!!.characterDao()
-                characterDao.addCharacter(CharacterEntity(
-                    serverName = server,
-                    characterName = name,
-                    characterLevel = charLevel,
-                    characterClassName = classInfo,
-                    itemLevel = itemLevel,
-                    characterImage = image
-                ))
-
-                characterList.clear()
-                characterList.addAll(characterDao.getAll())
-                characterAdapter.notifyDataSetChanged()
-                Toast.makeText(context, nickname + getString(R.string.add_character_success), Toast.LENGTH_SHORT).show()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
+    override fun onResume() {
+        super.onResume()
+        viewModel.getCharacterList()
+        viewModel.characterList.observe(viewLifecycleOwner) {
+            characterAdapter.submitList(it)
         }
-
     }
 
     //BackgroundTask
