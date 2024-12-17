@@ -3,7 +3,11 @@ package com.cookandroid.loarang.ui.character
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
+import androidx.annotation.MenuRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +18,9 @@ import com.cookandroid.loarang.room.CharacterEntity
 
 class CharacterAdapter(
     //private val items: ArrayList<CharacterEntity>,
-    val context: Context
+    val context: Context,
+    val deleteClick: (nickname: String) -> Unit,
+    val updateClick: (nickname: String) -> Unit
 ) : ListAdapter<CharacterEntity, CharacterAdapter.ViewHolder>(diffCallback) {
 
     companion object {
@@ -66,6 +72,34 @@ class CharacterAdapter(
             binding.characterClass.text = item.characterClassName
             binding.characterItemLevel.text = item.itemLevel
             binding.characterServer.text = item.serverName
+
+            binding.btnMore.setOnClickListener { v: View ->
+                showMenu(v, R.menu.character_item_menu, item.characterName)
+            }
+        }
+
+        private fun showMenu(v: View, @MenuRes menuRes: Int, nickname: String) {
+            val popup = PopupMenu(context, v)
+            popup.menuInflater.inflate(menuRes, popup.menu)
+
+            popup.setOnMenuItemClickListener { menuItem: MenuItem ->
+                when (menuItem.itemId) {
+                    R.id.character_update -> {
+                        updateClick(nickname)
+                        true
+                    }
+                    R.id.character_delete -> {
+                        deleteClick(nickname)
+                        true
+                    }
+                    else -> false
+                }
+            }
+            popup.setOnDismissListener {
+                // Respond to popup being dismissed.
+            }
+            // Show the popup menu.
+            popup.show()
         }
     }
 }

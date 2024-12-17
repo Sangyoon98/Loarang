@@ -33,5 +33,9 @@ class AddCharacterDialog(
             click(binding.content.text.toString())
             dialog.dismiss()
         }
+
+        binding.cancel.setOnClickListener {
+            dialog.dismiss()
+        }
     }
 }
