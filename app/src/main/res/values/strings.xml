@@ -11,6 +11,22 @@
     <string name="add_character_success">의 정보를 추가하였습니다.</string>
 
 
+    <!-- Homework -->
+    <string name="character_class_image">캐릭터 클래스 이미지</string>
+    <string name="homework_daily_title">일일 숙제</string>
+    <string name="homework_daily_epona">에포나</string>
+    <string name="homework_daily_chaos">카오스 던전</string>
+    <string name="homework_daily_gadian">가디언 토벌</string>
+    <string name="homework_weekly_title">주간 숙제</string>
+    <string name="homework_weekly_end">엔드 컨텐츠</string>
+    <string name="homework_event_title">일일 이벤트</string>
+    <string name="homework_gate">카오스 게이트</string>
+    <string name="homework_field">필드 보스</string>
+    <string name="homework_adventure">모험섬</string>
+    <string name="homework_delete_today">일일 숙제 해제</string>
+    <string name="homework_delete_all">체크 모두 해제</string>
+
+
     <!-- Setting -->
     <string name="setting_notice_title">공지 사항</string>
     <string name="setting_inquire_title">문의 하기</string>

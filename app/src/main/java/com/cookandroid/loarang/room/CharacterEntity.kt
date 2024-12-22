@@ -11,5 +11,9 @@ data class CharacterEntity(
     var characterLevel: String,
     var characterClassName: String,
     var itemLevel: String,
-    var characterImage: String
+    var characterImage: String,
+    var epona: Int,
+    var chaos: Int,
+    var gadian: Int,
+    var endContent: Int
 )

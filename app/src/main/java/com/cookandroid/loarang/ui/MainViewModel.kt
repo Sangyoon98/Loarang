@@ -65,7 +65,11 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
                     characterLevel = charLevel,
                     characterClassName = classInfo,
                     itemLevel = itemLevel,
-                    characterImage = image
+                    characterImage = image,
+                    epona = 0,
+                    chaos = 0,
+                    gadian = 0,
+                    endContent = 0
                 ))
 
                 _characterList.postValue(characterDao.getAll())
@@ -88,6 +92,48 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
     fun deleteCharacter(nickname: String) {
         viewModelScope.launch {
             characterDao.delete(nickname)
+            _characterList.postValue(characterDao.getAll())
+        }
+    }
+
+    fun updateEpona(nickname: String, count: Int) {
+        viewModelScope.launch {
+            characterDao.updateEpona(nickname, count)
+            _characterList.postValue(characterDao.getAll())
+        }
+    }
+
+    fun updateChaos(nickname: String, count: Int) {
+        viewModelScope.launch {
+            characterDao.updateChaos(nickname, count)
+            _characterList.postValue(characterDao.getAll())
+        }
+    }
+
+    fun updateGadian(nickname: String, count: Int) {
+        viewModelScope.launch {
+            characterDao.updateGadian(nickname, count)
+            _characterList.postValue(characterDao.getAll())
+        }
+    }
+
+    fun updateEnd(nickname: String, count: Int) {
+        viewModelScope.launch {
+            characterDao.updateEnd(nickname, count)
+            _characterList.postValue(characterDao.getAll())
+        }
+    }
+
+    fun resetAllHomework() {
+        viewModelScope.launch {
+            characterDao.resetAllHomework()
+            _characterList.postValue(characterDao.getAll())
+        }
+    }
+
+    fun resetDailyHomework() {
+        viewModelScope.launch {
+            characterDao.resetDailyHomework()
             _characterList.postValue(characterDao.getAll())
         }
     }

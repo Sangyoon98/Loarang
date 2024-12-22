@@ -8,8 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="loa">#D8E9A2</color>
+    <color name="loa_container">#F0FFDD</color>
     <color name="loa_main">#8bc34a</color>
     <color name="loa_sub">#5a9216</color>
     <color name="loa_sub_text">#bef67a</color>
     <color name="background">#131524</color>
+    <color name="half_transparent">#33000000</color>
 </resources>

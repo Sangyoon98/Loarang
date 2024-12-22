@@ -90,7 +90,10 @@ class MainActivity : BaseActivity() {
     }
 
     private fun showFragment(fragment: Fragment, tag: String) {
-        val findFragment = supportFragmentManager.findFragmentByTag(tag)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frameLayout, fragment, tag)
+            .commitAllowingStateLoss()
+        /*val findFragment = supportFragmentManager.findFragmentByTag(tag)
 
         supportFragmentManager.fragments.forEach { fm ->
             if (fm != fragment) {
@@ -104,7 +107,7 @@ class MainActivity : BaseActivity() {
             supportFragmentManager.beginTransaction()
                 .add(R.id.frameLayout, fragment, tag)
                 .commit()
-        }
+        }*/
     }
 
     private fun vibrateShort() {

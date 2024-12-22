@@ -22,8 +22,14 @@ class CharacterFragment : BaseFragment() {
     private val binding get() = _binding!!
     lateinit var context: MainActivity
     private val viewModel: MainViewModel by viewModels()
-
     private lateinit var characterAdapter: CharacterAdapter
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.characterList.observe(viewLifecycleOwner) {
+            characterAdapter.submitList(it)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,8 +73,5 @@ class CharacterFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         viewModel.getCharacterList()
-        viewModel.characterList.observe(viewLifecycleOwner) {
-            characterAdapter.submitList(it)
-        }
     }
 }
