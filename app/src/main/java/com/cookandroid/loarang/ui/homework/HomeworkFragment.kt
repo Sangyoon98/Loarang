@@ -43,6 +43,7 @@ class HomeworkFragment : BaseFragment() {
     ): View {
         _binding = FragmentHomeworkBinding.inflate(inflater, container, false)
 
+        binding.homeworkList.itemAnimator = null
         val animator = binding.homeworkList.itemAnimator     //리사이클러뷰 애니메이터 get
         if (animator is SimpleItemAnimator){          //아이템 애니메이커 기본 하위클래스
             animator.supportsChangeAnimations = false  //애니메이션 값 false (리사이클러뷰가 화면을 다시 갱신 했을때 뷰들의 깜빡임 방지)

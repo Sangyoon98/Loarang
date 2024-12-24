@@ -4,26 +4,26 @@
     <item
         android:id="@+id/tab_character"
         android:icon="@drawable/character"
-        android:title="캐릭터" />
+        android:title="@string/tab_character" />
 
     <item
         android:id="@+id/tab_homework"
         android:icon="@drawable/homework"
-        android:title="주간숙제" />
+        android:title="@string/tab_homework" />
 
     <item
         android:id="@+id/tab_calender"
         android:icon="@drawable/calender"
-        android:title="일정표" />
+        android:title="@string/tab_calender" />
 
     <item
         android:id="@+id/tab_info"
         android:icon="@drawable/info"
-        android:title="정보실" />
+        android:title="@string/tab_info" />
 
     <item
         android:id="@+id/tab_setting"
         android:icon="@drawable/setting"
-        android:title="설정" />
+        android:title="@string/tab_setting" />
 
 </menu>

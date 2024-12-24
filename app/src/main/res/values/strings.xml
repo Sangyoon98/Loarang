@@ -10,7 +10,6 @@
     <string name="search_empty">캐릭터 닉네임을 입력하세요.</string>
     <string name="add_character_success">의 정보를 추가하였습니다.</string>
 
-
     <!-- Homework -->
     <string name="character_class_image">캐릭터 클래스 이미지</string>
     <string name="homework_daily_title">일일 숙제</string>
@@ -26,9 +25,15 @@
     <string name="homework_delete_today">일일 숙제 해제</string>
     <string name="homework_delete_all">체크 모두 해제</string>
 
-
     <!-- Setting -->
     <string name="setting_notice_title">공지 사항</string>
     <string name="setting_inquire_title">문의 하기</string>
     <string name="setting_patch_title">패지 로그</string>
+
+    <!-- Bottom Menu -->
+    <string name="tab_character">캐릭터</string>
+    <string name="tab_homework">주간 숙제</string>
+    <string name="tab_calender">일정표</string>
+    <string name="tab_info">정보실</string>
+    <string name="tab_setting">설정</string>
 </resources>
