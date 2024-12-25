@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.cookandroid.loarang.ui.setting.patch.PatchActivity
 import com.cookandroid.loarang.base.BaseFragment
 import com.cookandroid.loarang.databinding.FragmentSettingBinding
-import com.cookandroid.loarang.ui.MainActivity
+import com.cookandroid.loarang.ui.main.MainActivity
 import com.cookandroid.loarang.ui.setting.notice.NoticeActivity
 
 class SettingFragment : BaseFragment() {

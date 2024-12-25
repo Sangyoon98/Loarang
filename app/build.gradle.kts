@@ -35,8 +35,8 @@ android {
         applicationId = "com.cookandroid.loarang"
         minSdk = 24
         targetSdk = 35
-        versionCode = 5
-        versionName = "1.2"
+        versionCode = 6
+        versionName = "1.3"
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -50,7 +50,7 @@ android {
     buildTypes {
         release {
             isDefault = true
-            isDebuggable = true
+            isDebuggable = false
             isMinifyEnabled = true
             proguardFiles (
                 getDefaultProguardFile("proguard-android-optimize.txt"),

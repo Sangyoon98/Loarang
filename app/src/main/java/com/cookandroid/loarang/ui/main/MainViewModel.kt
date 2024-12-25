@@ -1,4 +1,4 @@
-package com.cookandroid.loarang.ui
+package com.cookandroid.loarang.ui.main
 
 import android.app.Application
 import androidx.lifecycle.LiveData

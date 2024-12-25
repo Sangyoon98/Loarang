@@ -30,7 +30,7 @@ class ScheduleAdapter(
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_foreground)
                 .centerCrop()
-                .into(binding.calenderImage)
+                .into(binding.scheduleContentImage)
             binding.calenderLocation.text = item.location
             binding.calenderName.text = item.name
             binding.calenderTime.text = item.time

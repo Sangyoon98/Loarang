@@ -25,7 +25,7 @@ class NoticeAdapter(
     inner class ViewHolder(private val binding: ItemNoticeBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: NoticeModel) {
             binding.noticeName.text = item.name
-            binding.contextNotice.text = item.context_notice
+            binding.noticeContext.text = item.context_notice
         }
     }
 }

@@ -10,8 +10,8 @@ import com.cookandroid.loarang.R
 import com.cookandroid.loarang.application.BaseApplication.Companion.sharedPreferenceUtil
 import com.cookandroid.loarang.base.BaseFragment
 import com.cookandroid.loarang.databinding.FragmentHomeworkBinding
-import com.cookandroid.loarang.ui.MainActivity
-import com.cookandroid.loarang.ui.MainViewModel
+import com.cookandroid.loarang.ui.main.MainActivity
+import com.cookandroid.loarang.ui.main.MainViewModel
 
 class HomeworkFragment : BaseFragment() {
     companion object {
@@ -43,6 +43,7 @@ class HomeworkFragment : BaseFragment() {
     ): View {
         _binding = FragmentHomeworkBinding.inflate(inflater, container, false)
 
+        binding.homeworkList.itemAnimator = null
         val animator = binding.homeworkList.itemAnimator     //리사이클러뷰 애니메이터 get
         if (animator is SimpleItemAnimator){          //아이템 애니메이커 기본 하위클래스
             animator.supportsChangeAnimations = false  //애니메이션 값 false (리사이클러뷰가 화면을 다시 갱신 했을때 뷰들의 깜빡임 방지)
@@ -93,17 +94,17 @@ class HomeworkFragment : BaseFragment() {
 
     private fun getEvent() {
         when (sharedPreferenceUtil.getBooleanPreference("CHAOS_GATE")) {
-            true -> binding.gate.setBackgroundColor(context.getColor(R.color.loa_main))
+            true -> binding.gate.setBackgroundColor(context.getColor(R.color.component_green))
             else -> binding.gate.setBackgroundColor(context.getColor(R.color.white))
         }
 
         when (sharedPreferenceUtil.getBooleanPreference("FIELD_BOSS")) {
-            true -> binding.field.setBackgroundColor(context.getColor(R.color.loa_main))
+            true -> binding.field.setBackgroundColor(context.getColor(R.color.component_green))
             else -> binding.field.setBackgroundColor(context.getColor(R.color.white))
         }
 
         when (sharedPreferenceUtil.getBooleanPreference("ADVENTURE_ISLAND")) {
-            true -> binding.adventure.setBackgroundColor(context.getColor(R.color.loa_main))
+            true -> binding.adventure.setBackgroundColor(context.getColor(R.color.component_green))
             else -> binding.adventure.setBackgroundColor(context.getColor(R.color.white))
         }
     }
@@ -116,7 +117,7 @@ class HomeworkFragment : BaseFragment() {
             }
             else -> {
                 sharedPreferenceUtil.setBooleanPreference(sharedName, true)
-                view.setBackgroundColor(context.getColor(R.color.loa_main))
+                view.setBackgroundColor(context.getColor(R.color.component_green))
             }
         }
     }

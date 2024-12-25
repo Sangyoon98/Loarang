@@ -1,7 +1,7 @@
 package com.cookandroid.loarang.application
 
 import android.app.Application
-import com.cookandroid.loarang.SharedPreferenceUtil
+import com.cookandroid.loarang.util.SharedPreferenceUtil
 
 class BaseApplication: Application() {
     companion object {
