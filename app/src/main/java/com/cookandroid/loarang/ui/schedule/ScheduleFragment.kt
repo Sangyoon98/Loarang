@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import com.cookandroid.loarang.base.BaseFragment
 import com.cookandroid.loarang.databinding.FragmentScheduleBinding
-import com.cookandroid.loarang.ui.MainActivity
+import com.cookandroid.loarang.ui.main.MainActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference

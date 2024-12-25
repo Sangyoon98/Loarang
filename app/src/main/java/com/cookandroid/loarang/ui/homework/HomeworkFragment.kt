@@ -10,8 +10,8 @@ import com.cookandroid.loarang.R
 import com.cookandroid.loarang.application.BaseApplication.Companion.sharedPreferenceUtil
 import com.cookandroid.loarang.base.BaseFragment
 import com.cookandroid.loarang.databinding.FragmentHomeworkBinding
-import com.cookandroid.loarang.ui.MainActivity
-import com.cookandroid.loarang.ui.MainViewModel
+import com.cookandroid.loarang.ui.main.MainActivity
+import com.cookandroid.loarang.ui.main.MainViewModel
 
 class HomeworkFragment : BaseFragment() {
     companion object {
@@ -94,17 +94,17 @@ class HomeworkFragment : BaseFragment() {
 
     private fun getEvent() {
         when (sharedPreferenceUtil.getBooleanPreference("CHAOS_GATE")) {
-            true -> binding.gate.setBackgroundColor(context.getColor(R.color.loa_main))
+            true -> binding.gate.setBackgroundColor(context.getColor(R.color.component_green))
             else -> binding.gate.setBackgroundColor(context.getColor(R.color.white))
         }
 
         when (sharedPreferenceUtil.getBooleanPreference("FIELD_BOSS")) {
-            true -> binding.field.setBackgroundColor(context.getColor(R.color.loa_main))
+            true -> binding.field.setBackgroundColor(context.getColor(R.color.component_green))
             else -> binding.field.setBackgroundColor(context.getColor(R.color.white))
         }
 
         when (sharedPreferenceUtil.getBooleanPreference("ADVENTURE_ISLAND")) {
-            true -> binding.adventure.setBackgroundColor(context.getColor(R.color.loa_main))
+            true -> binding.adventure.setBackgroundColor(context.getColor(R.color.component_green))
             else -> binding.adventure.setBackgroundColor(context.getColor(R.color.white))
         }
     }
@@ -117,7 +117,7 @@ class HomeworkFragment : BaseFragment() {
             }
             else -> {
                 sharedPreferenceUtil.setBooleanPreference(sharedName, true)
-                view.setBackgroundColor(context.getColor(R.color.loa_main))
+                view.setBackgroundColor(context.getColor(R.color.component_green))
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.cookandroid.loarang
+package com.cookandroid.loarang.util
 
 import android.content.Context
 import android.content.SharedPreferences

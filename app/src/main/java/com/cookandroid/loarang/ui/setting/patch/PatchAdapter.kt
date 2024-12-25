@@ -25,7 +25,7 @@ class PatchAdapter(
     inner class ViewHolder(private val binding: ItemPatchBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: PatchModel) {
             binding.patchName.text = item.name
-            binding.contextPatch.text = item.context_patch
+            binding.patchContext.text = item.context_patch
         }
     }
 }

@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:background="@drawable/round_box"
-    android:elevation="10dp"
-    android:padding="10dp">
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    android:background="@drawable/background_card"
+    android:elevation="12dp"
+    android:padding="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_character"
@@ -27,20 +28,22 @@
             app:layout_constraintBottom_toBottomOf="@id/character_item_level"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/black" />
+            app:tint="@color/icon_color"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/character_nickname"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:textColor="@color/black"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/character_image"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="0iloll0" />
+            tools:text="Nickname Sample" />
 
         <TextView
             android:id="@+id/character_item_level"
@@ -80,6 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:background="@drawable/background_card"
+            android:backgroundTint="@color/background_light_green"
             android:padding="10dp"
             app:layout_constraintEnd_toStartOf="@id/container_chaos"
             app:layout_constraintHorizontal_chainStyle="spread"
@@ -92,7 +96,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/homework_daily_epona"
-                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -102,7 +105,7 @@
                 android:layout_width="0dp"
                 android:layout_height="3dp"
                 android:layout_marginTop="5dp"
-                android:background="@color/white"
+                android:background="@color/background_grey"
                 app:layout_constraintEnd_toStartOf="@id/epona_2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/homework_daily_epona" />
@@ -113,7 +116,7 @@
                 android:layout_height="3dp"
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@color/white"
+                android:background="@color/background_grey"
                 app:layout_constraintEnd_toStartOf="@id/epona_3"
                 app:layout_constraintStart_toEndOf="@id/epona_1"
                 app:layout_constraintTop_toBottomOf="@id/homework_daily_epona" />
@@ -123,7 +126,7 @@
                 android:layout_width="0dp"
                 android:layout_height="3dp"
                 android:layout_marginTop="5dp"
-                android:background="@color/white"
+                android:background="@color/background_grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/epona_2"
                 app:layout_constraintTop_toBottomOf="@id/homework_daily_epona" />
@@ -137,6 +140,7 @@
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/background_card"
+            android:backgroundTint="@color/background_light_green"
             android:padding="10dp"
             app:layout_constraintEnd_toStartOf="@id/container_gadian"
             app:layout_constraintStart_toEndOf="@id/container_epona"
@@ -148,7 +152,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/homework_daily_chaos"
-                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -158,7 +161,7 @@
                 android:layout_width="0dp"
                 android:layout_height="3dp"
                 android:layout_marginTop="5dp"
-                android:background="@color/white"
+                android:background="@color/background_grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/homework_daily_chaos" />
@@ -171,6 +174,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:background="@drawable/background_card"
+            android:backgroundTint="@color/background_light_green"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/container_chaos"
@@ -182,7 +186,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/homework_daily_gadian"
-                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -192,7 +195,7 @@
                 android:layout_width="0dp"
                 android:layout_height="3dp"
                 android:layout_marginTop="5dp"
-                android:background="@color/white"
+                android:background="@color/background_grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/homework_daily_gadian" />
@@ -226,6 +229,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:background="@drawable/background_card"
+            android:backgroundTint="@color/background_light_green"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -237,7 +241,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/homework_weekly_end"
-                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -247,7 +250,7 @@
                 android:layout_width="0dp"
                 android:layout_height="3dp"
                 android:layout_marginTop="5dp"
-                android:background="@color/white"
+                android:background="@color/background_grey"
                 app:layout_constraintEnd_toStartOf="@id/end_2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/homework_weekly_end" />
@@ -258,7 +261,7 @@
                 android:layout_height="3dp"
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@color/white"
+                android:background="@color/background_grey"
                 app:layout_constraintEnd_toStartOf="@id/end_3"
                 app:layout_constraintStart_toEndOf="@id/end_1"
                 app:layout_constraintTop_toBottomOf="@id/homework_weekly_end" />
@@ -268,7 +271,7 @@
                 android:layout_width="0dp"
                 android:layout_height="3dp"
                 android:layout_marginTop="5dp"
-                android:background="@color/white"
+                android:background="@color/background_grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/end_2"
                 app:layout_constraintTop_toBottomOf="@id/homework_weekly_end" />

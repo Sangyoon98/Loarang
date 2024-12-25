@@ -9,8 +9,8 @@ import androidx.fragment.app.viewModels
 import com.cookandroid.loarang.R
 import com.cookandroid.loarang.base.BaseFragment
 import com.cookandroid.loarang.databinding.FragmentCharacterBinding
-import com.cookandroid.loarang.ui.MainActivity
-import com.cookandroid.loarang.ui.MainViewModel
+import com.cookandroid.loarang.ui.main.MainActivity
+import com.cookandroid.loarang.ui.main.MainViewModel
 
 class CharacterFragment : BaseFragment() {
     companion object {

@@ -1,4 +1,4 @@
-package com.cookandroid.loarang.ui
+package com.cookandroid.loarang.ui.main
 
 import android.content.Context
 import android.os.Build
@@ -91,7 +91,7 @@ class MainActivity : BaseActivity() {
 
     private fun showFragment(fragment: Fragment, tag: String) {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.frameLayout, fragment, tag)
+            .replace(R.id.fragment_container, fragment, tag)
             .commitAllowingStateLoss()
         /*val findFragment = supportFragmentManager.findFragmentByTag(tag)
 

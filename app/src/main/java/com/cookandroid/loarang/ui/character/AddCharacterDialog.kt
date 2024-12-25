@@ -30,7 +30,7 @@ class AddCharacterDialog(
         dialog.show()
 
         binding.confirm.setOnClickListener {
-            click(binding.content.text.toString())
+            click(binding.content.editText?.text.toString())
             dialog.dismiss()
         }
 

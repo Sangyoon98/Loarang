@@ -58,10 +58,10 @@ class HomeworkAdapter(
             binding.characterNickname.text = item.characterName
             binding.characterItemLevel.text = item.itemLevel
 
-            setBackground(binding.epona1, binding.epona2, binding.epona3, R.color.loa_main, item.epona)
-            setBackground(binding.chaos, R.color.loa_main, item.chaos)
-            setBackground(binding.gadian, R.color.loa_main, item.gadian)
-            setBackground(binding.end1, binding.end2, binding.end3, R.color.loa_main, item.endContent)
+            setBackground(binding.epona1, binding.epona2, binding.epona3, R.color.component_green, item.epona)
+            setBackground(binding.chaos, R.color.component_green, item.chaos)
+            setBackground(binding.gadian, R.color.component_green, item.gadian)
+            setBackground(binding.end1, binding.end2, binding.end3, R.color.component_green, item.endContent)
 
             binding.containerEpona.setOnClickListener {
                 if (item.epona == 3) epona(item.characterName, 0)

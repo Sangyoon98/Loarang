@@ -2,8 +2,12 @@
     <string name="app_name">로아랑</string>
 
     <!-- Character -->
+    <string name="character_image_description">캐릭터 이미지</string>
+    <string name="character_more_menu_description">캐릭터 작업 더보기</string>
+
+    <!-- Add Character -->
     <string name="add_character_title">캐릭터 추가</string>
-    <string name="search_character">캐릭터 닉네임 검색</string>
+    <string name="search_character">캐릭터 닉네임 입력</string>
     <string name="search">검색</string>
     <string name="cancel">취소</string>
     <string name="search_error">닉네임을 다시 입력해주세요.</string>
@@ -24,6 +28,19 @@
     <string name="homework_adventure">모험섬</string>
     <string name="homework_delete_today">일일 숙제 해제</string>
     <string name="homework_delete_all">체크 모두 해제</string>
+
+    <!-- Info -->
+    <string name="info_auction_title">경매 손익 계산기</string>
+    <string name="info_auction_number_of_people_title">인원 수 (단위: 명)</string>
+    <string name="info_auction_lowest_price_title">경매장 최저가 (단위:골드)</string>
+    <string name="info_auction_recommended_bid_amount_title">추천 입찰 금액 (단위:골드)</string>
+    <string name="info_auction_break_even_point_title">손익 분기점 (단위:골드)</string>
+    <string name="info_fee_title">거래 수수료 계산기</string>
+    <string name="info_fee_amount_received_title">받는 금액</string>
+    <string name="info_fee_amount_to_send_title">보낼 금액</string>
+
+    <!-- Schedule -->
+    <string name="schedule_content_image">일정표 콘텐츠 이미지</string>
 
     <!-- Setting -->
     <string name="setting_notice_title">공지 사항</string>
