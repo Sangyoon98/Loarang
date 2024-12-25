@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#C8C8C8</color>
+    <color name="icon_color">#C8C8C8</color>
+    <color name="background_list_item">#282828</color>
+    <color name="background_grey">#141414</color>
+    <color name="background_light_green">#3C4038</color>
+    <color name="main_green">#616A45</color>
+    <color name="component_green">#8bc34a</color>
+
+    <color name="loa_sub">#5a9216</color>
+    <color name="loa_sub_text">#bef67a</color>
+    <color name="background">#131524</color>
+    <color name="half_transparent">#33000000</color>
+</resources>
