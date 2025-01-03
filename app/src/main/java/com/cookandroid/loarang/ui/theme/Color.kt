@@ -1,6 +1,30 @@
 package com.cookandroid.loarang.ui.theme
 import androidx.compose.ui.graphics.Color
 
+/** Custom Color +*/
+val blackLight = Color(0xFF000000)
+val whiteLight = Color(0xFFFFFFFF)
+val iconColorLight = Color(0xFF000000)
+val backgroundListItemLight = Color(0xFFFFFFFF)
+val backgroundGreyLight = Color(0xFFDDDDDD)
+val backgroundLightGreenLight = Color(0xFFF0FFDD)
+val mainGreenLight = Color(0xFFD8E9A2)
+
+val blackDark = Color(0xFF000000)
+val whiteDark = Color(0xFFC8C8C8)
+val iconColorDark = Color(0xFFC8C8C8)
+val backgroundListItemDark = Color(0xFF282828)
+val backgroundGreyDark = Color(0xFF141414)
+val backgroundLightGreenDark = Color(0xFF3C4038)
+val mainGreenDark = Color(0xFF616A45)
+
+val component_green = Color(0xFF8bc34a)
+val loa_sub = Color(0xFF5a9216)
+val loa_sub_text = Color(0xFFbef67a)
+val background = Color(0xFF131524)
+val half_transparent = Color(0x33000000)
+
+/**===================================**/
 val primaryLight = Color(0xFF4C662B)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFFCDEDA3)

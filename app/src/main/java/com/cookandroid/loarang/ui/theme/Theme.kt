@@ -1,6 +1,7 @@
 package com.cookandroid.loarang.ui.theme
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
@@ -10,6 +11,38 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+
+val ColorScheme.black: Color
+    @Composable
+    get() = if(isSystemInDarkTheme()) blackDark else blackLight
+
+val ColorScheme.white: Color
+    @Composable
+    get() = if(isSystemInDarkTheme()) whiteDark else whiteLight
+
+val ColorScheme.iconColor: Color
+    @Composable
+    get() = if(isSystemInDarkTheme()) iconColorDark else iconColorLight
+
+val ColorScheme.backgroundListItem: Color
+    @Composable
+    get() = if(isSystemInDarkTheme()) backgroundListItemDark else backgroundListItemLight
+
+val ColorScheme.backgroundGrey: Color
+    @Composable
+    get() = if(isSystemInDarkTheme()) backgroundGreyDark else backgroundGreyLight
+
+val ColorScheme.backgroundLightGreen: Color
+    @Composable
+    get() = if(isSystemInDarkTheme()) backgroundLightGreenDark else backgroundLightGreenLight
+
+val ColorScheme.mainGreen: Color
+    @Composable
+    get() = if(isSystemInDarkTheme()) mainGreenDark else mainGreenLight
+
+val ColorScheme.textColor: Color
+    @Composable
+    get() = if(isSystemInDarkTheme()) white else black
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,

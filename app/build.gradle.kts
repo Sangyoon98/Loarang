@@ -60,6 +60,11 @@ android {
             )
             signingConfig = signingConfigs.getByName("release")
         }
+        debug {
+            isDefault = false
+            isDebuggable = true
+            isMinifyEnabled = false
+        }
     }
 
     compileOptions {
@@ -91,6 +96,18 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.core)
     implementation(libs.firebase.database)
+
+    // compose
+    val composeBom = platform("androidx.compose:compose-bom:2024.12.01")
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+    implementation(libs.androidx.material3)
+    implementation(libs.ui.tooling.preview)
+    debugImplementation(libs.ui.tooling)
+
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.runtime.livedata)
 
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
