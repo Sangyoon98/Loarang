@@ -1,5 +1,6 @@
 package com.cookandroid.loarang.ui.setting.notice
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -24,7 +25,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
-import com.cookandroid.loarang.databinding.FragmentNoticeBinding
 import com.cookandroid.loarang.ui.theme.AppTheme
 import com.cookandroid.loarang.ui.theme.AppTypography
 import com.cookandroid.loarang.ui.theme.backgroundGrey
@@ -38,12 +38,7 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.launch
 
 class NoticeActivity : ComponentActivity() {
-    private val binding by lazy { FragmentNoticeBinding.inflate(layoutInflater) }
-
-    //private lateinit var noticeAdapter : NoticeAdapter
     private var noticeList = mutableStateListOf<NoticeModel>()
-    //private var noticeList : ArrayList<NoticeModel> = ArrayList()
-
     private var firebaseDatabase: FirebaseDatabase? = null
     private var databaseReference: DatabaseReference? = null
 
@@ -54,12 +49,6 @@ class NoticeActivity : ComponentActivity() {
                 NoticeScreen(noticeList)
             }
         }
-
-
-        /*setContentView(binding.root)
-
-        noticeAdapter = NoticeAdapter(noticeList, this)
-        binding.noticeList.adapter = noticeAdapter*/
 
         lifecycleScope.launch {
             firebaseDatabase = FirebaseDatabase.getInstance()
@@ -75,7 +64,6 @@ class NoticeActivity : ComponentActivity() {
                             noticeList.add(noticeModel)
                         }
                     }
-                    //noticeAdapter.notifyDataSetChanged()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -126,6 +114,10 @@ class NoticeActivity : ComponentActivity() {
     }
 
     @Preview
+    @Preview(
+        uiMode = UI_MODE_NIGHT_YES,
+        name = "NoticePreview (Dark)"
+    )
     @Composable
     fun NoticePreview() {
         AppTheme {
