@@ -87,6 +87,7 @@ dependencies {
 
     // Glide
     implementation(libs.glide)
+    implementation(libs.glideCompose)
     annotationProcessor(libs.compiler)
 
     // Jsoup

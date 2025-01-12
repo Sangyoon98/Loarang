@@ -71,73 +71,70 @@ class PatchActivity : ComponentActivity() {
             })
         }
     }
+}
 
-    @Composable
-    fun PatchScreen(patchList: List<PatchModel>) {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.backgroundGrey
-        ) {
-            LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
-                items(patchList) { patch ->
-                    PatchItem(patch)
-                }
+@Composable
+private fun PatchScreen(patchList: List<PatchModel>) {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.backgroundGrey
+    ) {
+        LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
+            items(patchList) { patch ->
+                PatchItem(patch)
             }
         }
     }
+}
 
-    @Composable
-    fun PatchItem(patch: PatchModel) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
-                .shadow(12.dp, RoundedCornerShape(8.dp)),
-            shape = RoundedCornerShape(8.dp),
-            elevation = CardDefaults.cardElevation(8.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.backgroundListItem)
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = patch.name ?: "no name",
-                    style = AppTypography.titleLarge,
-                    color = MaterialTheme.colorScheme.textColor
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = patch.context_patch ?: "no context",
-                    style = AppTypography.bodyMedium,
-                    color = MaterialTheme.colorScheme.textColor
-                )
-            }
-        }
-    }
-
-
-    @Preview
-    @Preview(
-        uiMode = UI_MODE_NIGHT_YES,
-        name = "PatchPreview (Dark)"
-    )
-    @Composable
-    fun PatchPreview() {
-        AppTheme {
-            PatchScreen(
-                listOf(
-                    PatchModel(name = "[업데이트]", context_patch = "업데이트 내역"),
-                    PatchModel(name = "[업데이트]", context_patch = "업데이트 내역"),
-                    PatchModel(name = "[업데이트]", context_patch = "업데이트 내역"),
-                    PatchModel(name = "[업데이트]", context_patch = "업데이트 내역")
-                )
+@Composable
+private fun PatchItem(patch: PatchModel) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+            .shadow(12.dp, RoundedCornerShape(8.dp)),
+        shape = RoundedCornerShape(8.dp),
+        elevation = CardDefaults.cardElevation(8.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.backgroundListItem)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = patch.name ?: "no name",
+                style = AppTypography.titleLarge,
+                color = MaterialTheme.colorScheme.textColor
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = patch.context_patch ?: "no context",
+                style = AppTypography.bodyMedium,
+                color = MaterialTheme.colorScheme.textColor
             )
         }
     }
+}
 
-    @Preview
-    @Composable
-    fun PatchItemPreview() {
-        AppTheme {
-            PatchItem(PatchModel(name = "[업데이트]", context_patch = "업데이트 내역"))
-        }
+
+@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES, name = "PatchPreview (Dark)")
+@Composable
+private fun PatchPreview() {
+    AppTheme {
+        PatchScreen(
+            listOf(
+                PatchModel(name = "[업데이트]", context_patch = "업데이트 내역"),
+                PatchModel(name = "[업데이트]", context_patch = "업데이트 내역"),
+                PatchModel(name = "[업데이트]", context_patch = "업데이트 내역"),
+                PatchModel(name = "[업데이트]", context_patch = "업데이트 내역")
+            )
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun PatchItemPreview() {
+    AppTheme {
+        PatchItem(PatchModel(name = "[업데이트]", context_patch = "업데이트 내역"))
     }
 }

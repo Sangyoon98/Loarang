@@ -71,72 +71,69 @@ class NoticeActivity : ComponentActivity() {
             })
         }
     }
+}
 
-    @Composable
-    fun NoticeScreen(noticeList: List<NoticeModel>) {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.backgroundGrey
-        ) {
-            LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
-                items(noticeList) { notice ->
-                    NoticeItem(notice)
-                }
+@Composable
+private fun NoticeScreen(noticeList: List<NoticeModel>) {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.backgroundGrey
+    ) {
+        LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
+            items(noticeList) { notice ->
+                NoticeItem(notice)
             }
         }
     }
+}
 
-    @Composable
-    fun NoticeItem(notice: NoticeModel) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
-                .shadow(12.dp, RoundedCornerShape(8.dp)),
-            shape = RoundedCornerShape(8.dp),
-            elevation = CardDefaults.cardElevation(8.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.backgroundListItem)
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = notice.name ?: "no name",
-                    style = AppTypography.titleLarge,
-                    color = MaterialTheme.colorScheme.textColor
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = notice.context_notice ?: "no context",
-                    style = AppTypography.bodyMedium,
-                    color = MaterialTheme.colorScheme.textColor
-                )
-            }
-        }
-    }
-
-    @Preview
-    @Preview(
-        uiMode = UI_MODE_NIGHT_YES,
-        name = "NoticePreview (Dark)"
-    )
-    @Composable
-    fun NoticePreview() {
-        AppTheme {
-            NoticeScreen(
-                listOf(
-                    NoticeModel(name = "[로아랑 공지]", context_notice = "공지 사항 내용 테스트"),
-                    NoticeModel(name = "[로아랑 공지]", context_notice = "공지 사항 내용 테스트"),
-                    NoticeModel(name = "[로아랑 공지]", context_notice = "공지 사항 내용 테스트"),
-                    NoticeModel(name = "[로아랑 공지]", context_notice = "공지 사항 내용 테스트")
-                )
+@Composable
+private fun NoticeItem(notice: NoticeModel) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+            .shadow(12.dp, RoundedCornerShape(8.dp)),
+        shape = RoundedCornerShape(8.dp),
+        elevation = CardDefaults.cardElevation(8.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.backgroundListItem)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = notice.name ?: "no name",
+                style = AppTypography.titleLarge,
+                color = MaterialTheme.colorScheme.textColor
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = notice.context_notice ?: "no context",
+                style = AppTypography.bodyMedium,
+                color = MaterialTheme.colorScheme.textColor
             )
         }
     }
+}
 
-    @Preview
-    @Composable
-    fun NoticeItemPreview() {
-        AppTheme {
-            NoticeItem(NoticeModel(name = "[로아랑 공지]", context_notice = "공지 사항 내용 테스트"))
-        }
+@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES, name = "NoticePreview (Dark)")
+@Composable
+private fun NoticePreview() {
+    AppTheme {
+        NoticeScreen(
+            listOf(
+                NoticeModel(name = "[로아랑 공지]", context_notice = "공지 사항 내용 테스트"),
+                NoticeModel(name = "[로아랑 공지]", context_notice = "공지 사항 내용 테스트"),
+                NoticeModel(name = "[로아랑 공지]", context_notice = "공지 사항 내용 테스트"),
+                NoticeModel(name = "[로아랑 공지]", context_notice = "공지 사항 내용 테스트")
+            )
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun NoticeItemPreview() {
+    AppTheme {
+        NoticeItem(NoticeModel(name = "[로아랑 공지]", context_notice = "공지 사항 내용 테스트"))
     }
 }

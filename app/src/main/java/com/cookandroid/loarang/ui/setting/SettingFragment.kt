@@ -97,7 +97,7 @@ class SettingFragment : BaseFragment() {
 }
 
 @Composable
-fun SettingScreen() {
+private fun SettingScreen() {
     val context = LocalContext.current
 
     Column(
@@ -190,12 +190,9 @@ fun SettingScreen() {
 
 
 @Preview
-@Preview(
-    uiMode = UI_MODE_NIGHT_YES,
-    name = "SettingPreview (Dark)"
-)
+@Preview(uiMode = UI_MODE_NIGHT_YES, name = "SettingPreview (Dark)")
 @Composable
-fun SettingPreview() {
+private fun SettingPreview() {
     AppTheme {
         SettingScreen()
     }
