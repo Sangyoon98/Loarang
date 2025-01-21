@@ -4,10 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Space
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -21,7 +26,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
@@ -35,7 +43,12 @@ import com.cookandroid.loarang.databinding.FragmentHomeworkBinding
 import com.cookandroid.loarang.ui.main.MainActivity
 import com.cookandroid.loarang.ui.main.MainViewModel
 import com.cookandroid.loarang.ui.theme.AppTheme
+import com.cookandroid.loarang.ui.theme.AppTypography
+import com.cookandroid.loarang.ui.theme.backgroundGrey
+import com.cookandroid.loarang.ui.theme.backgroundLightGreen
 import com.cookandroid.loarang.ui.theme.backgroundListItem
+import com.cookandroid.loarang.ui.theme.mainGreen
+import com.cookandroid.loarang.ui.theme.textColor
 
 class HomeworkFragment : BaseFragment() {
     companion object {
@@ -173,10 +186,7 @@ private fun HomeworkItem(homework: HomeworkModel) {
         elevation = CardDefaults.cardElevation(8.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.backgroundListItem)
     ) {
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
-        ) {
+        Row(modifier = Modifier.padding(16.dp)) {
             GlideImage(
                 model = homework.characterImage,
                 contentDescription = context.getString(R.string.character_class_image),
@@ -188,20 +198,188 @@ private fun HomeworkItem(homework: HomeworkModel) {
                     .fillMaxWidth()
                     .align(Alignment.CenterVertically)
             ) {
-
+                Text(
+                    text = homework.characterNickname ?: "no nickname",
+                    style = AppTypography.titleLarge,
+                    color = MaterialTheme.colorScheme.textColor
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(
+                    text = homework.characterLevel ?: "no level",
+                    style = AppTypography.bodyMedium.copy(
+                        fontStyle = FontStyle.Italic
+                    ),
+                    color = MaterialTheme.colorScheme.textColor
+                )
             }
         }
+        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+            Text(
+                text = context.getString(R.string.homework_daily_title),
+                style = AppTypography.bodyMedium.copy(
+                    fontWeight = FontWeight.Bold
+                )
+            )
+            Spacer(modifier = Modifier.height(5.dp))
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Card(
+                    modifier = Modifier.weight(1f),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.backgroundLightGreen)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(10.dp)
+                    ) {
+                        Text(
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            text = context.getString(R.string.homework_daily_epona),
+                            style = AppTypography.bodyMedium,
+                            color = MaterialTheme.colorScheme.textColor
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Row {
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(3.dp)
+                                    .background(color = MaterialTheme.colorScheme.backgroundGrey)
+                            )
+                            Spacer(modifier = Modifier.width(5.dp))
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(3.dp)
+                                    .background(color = MaterialTheme.colorScheme.backgroundGrey)
+                            )
+                            Spacer(modifier = Modifier.width(5.dp))
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(3.dp)
+                                    .background(color = MaterialTheme.colorScheme.backgroundGrey)
+                            )
+                        }
+                    }
+                }
+                Spacer(modifier = Modifier.width(10.dp))
+                Card(
+                    modifier = Modifier.weight(1f),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.backgroundLightGreen)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(10.dp)
+                    ) {
+                        Text(
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            text = context.getString(R.string.homework_daily_chaos),
+                            style = AppTypography.bodyMedium,
+                            color = MaterialTheme.colorScheme.textColor
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Row {
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(3.dp)
+                                    .background(color = MaterialTheme.colorScheme.backgroundGrey)
+                            )
+                        }
+                    }
+                }
+                Spacer(modifier = Modifier.width(10.dp))
+                Card(
+                    modifier = Modifier.weight(1f),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.backgroundLightGreen)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(10.dp)
+                    ) {
+                        Text(
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            text = context.getString(R.string.homework_daily_gadian),
+                            style = AppTypography.bodyMedium,
+                            color = MaterialTheme.colorScheme.textColor
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Row {
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(3.dp)
+                                    .background(color = MaterialTheme.colorScheme.backgroundGrey)
+                            )
+                        }
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = context.getString(R.string.homework_weekly_title),
+                style = AppTypography.bodyMedium.copy(
+                    fontWeight = FontWeight.Bold
+                )
+            )
+            Spacer(modifier = Modifier.height(5.dp))
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Card(
+                    modifier = Modifier.weight(1f),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.backgroundLightGreen)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(10.dp)
+                    ) {
+                        Text(
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            text = context.getString(R.string.homework_weekly_end),
+                            style = AppTypography.bodyMedium,
+                            color = MaterialTheme.colorScheme.textColor
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Row {
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(3.dp)
+                                    .background(color = MaterialTheme.colorScheme.backgroundGrey)
+                            )
+                            Spacer(modifier = Modifier.width(5.dp))
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(3.dp)
+                                    .background(color = MaterialTheme.colorScheme.backgroundGrey)
+                            )
+                            Spacer(modifier = Modifier.width(5.dp))
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(3.dp)
+                                    .background(color = MaterialTheme.colorScheme.backgroundGrey)
+                            )
+                        }
+                    }
+                }
+            }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
-//@Preview
+@Preview
 @Composable
 private fun HomeworkItemPreview() {
     AppTheme {
         HomeworkItem(
             HomeworkModel(
-                characterNickname = "ddd",
-                characterLevel = "1111",
+                characterNickname = "0iloll0",
+                characterLevel = "1643.40",
                 characterItemLevel = "13",
                 characterClass = "dd",
                 characterImage = "dd",
