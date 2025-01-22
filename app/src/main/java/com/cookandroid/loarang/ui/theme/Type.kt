@@ -24,7 +24,7 @@ val AppTypography = Typography(
     ),
     bodyMedium = TextStyle(
         fontWeight = FontWeight.Normal,
-        fontSize = 15.sp
+        fontSize = 14.sp
     ),
     bodySmall = TextStyle(
         fontWeight = FontWeight.Normal,

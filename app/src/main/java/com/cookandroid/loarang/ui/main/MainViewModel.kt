@@ -1,25 +1,40 @@
 package com.cookandroid.loarang.ui.main
 
 import android.app.Application
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cookandroid.loarang.base.BaseViewModel
 import com.cookandroid.loarang.room.CharacterDatabase
 import com.cookandroid.loarang.room.CharacterEntity
 import androidx.lifecycle.viewModelScope
+import com.cookandroid.loarang.ui.schedule.ScheduleModel
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.jsoup.Jsoup
 
 class MainViewModel(application: Application) : BaseViewModel(application) {
     private val characterDao = CharacterDatabase.getInstance(application.applicationContext)!!.characterDao()
 
-    private val _characterList = MutableLiveData<List<CharacterEntity>>()
-    val characterList get() = _characterList
+    private val _characterList = MutableStateFlow<List<CharacterEntity>>(emptyList())
+    val characterList: StateFlow<List<CharacterEntity>> get() = _characterList
+
+    init {
+        addCharacter("0iloll0")
+        addCharacter("0il홀리나이트ll0")
+        getCharacterList()
+    }
 
     fun getCharacterList() {
         viewModelScope.launch {
-            _characterList.postValue(characterDao.getAll())
+            _characterList.value = characterDao.getAll()
         }
     }
 
@@ -72,7 +87,7 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
                     endContent = 0
                 ))
 
-                _characterList.postValue(characterDao.getAll())
+                _characterList.value = characterDao.getAll()
 
                 resultLiveData.postValue(Result.success(Unit))
             } catch (e: Exception) {
@@ -92,49 +107,49 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
     fun deleteCharacter(nickname: String) {
         viewModelScope.launch {
             characterDao.delete(nickname)
-            _characterList.postValue(characterDao.getAll())
+            _characterList.value = characterDao.getAll()
         }
     }
 
     fun updateEpona(nickname: String, count: Int) {
         viewModelScope.launch {
             characterDao.updateEpona(nickname, count)
-            _characterList.postValue(characterDao.getAll())
+            _characterList.value = characterDao.getAll()
         }
     }
 
     fun updateChaos(nickname: String, count: Int) {
         viewModelScope.launch {
             characterDao.updateChaos(nickname, count)
-            _characterList.postValue(characterDao.getAll())
+            _characterList.value = characterDao.getAll()
         }
     }
 
     fun updateGadian(nickname: String, count: Int) {
         viewModelScope.launch {
             characterDao.updateGadian(nickname, count)
-            _characterList.postValue(characterDao.getAll())
+            _characterList.value = characterDao.getAll()
         }
     }
 
     fun updateEnd(nickname: String, count: Int) {
         viewModelScope.launch {
             characterDao.updateEnd(nickname, count)
-            _characterList.postValue(characterDao.getAll())
+            _characterList.value = characterDao.getAll()
         }
     }
 
     fun resetAllHomework() {
         viewModelScope.launch {
             characterDao.resetAllHomework()
-            _characterList.postValue(characterDao.getAll())
+            _characterList.value = characterDao.getAll()
         }
     }
 
     fun resetDailyHomework() {
         viewModelScope.launch {
             characterDao.resetDailyHomework()
-            _characterList.postValue(characterDao.getAll())
+            _characterList.value = characterDao.getAll()
         }
     }
 }

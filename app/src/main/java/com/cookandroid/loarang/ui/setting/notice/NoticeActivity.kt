@@ -19,62 +19,35 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cookandroid.loarang.ui.theme.AppTheme
 import com.cookandroid.loarang.ui.theme.AppTypography
 import com.cookandroid.loarang.ui.theme.backgroundGrey
 import com.cookandroid.loarang.ui.theme.backgroundListItem
 import com.cookandroid.loarang.ui.theme.textColor
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import kotlinx.coroutines.launch
 
 class NoticeActivity : ComponentActivity() {
-    private var noticeList = mutableStateListOf<NoticeModel>()
-    private var firebaseDatabase: FirebaseDatabase? = null
-    private var databaseReference: DatabaseReference? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             AppTheme {
-                NoticeScreen(noticeList)
+                NoticeScreen()
             }
-        }
-
-        lifecycleScope.launch {
-            firebaseDatabase = FirebaseDatabase.getInstance()
-            databaseReference = firebaseDatabase!!.getReference("notice")
-            databaseReference!!.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    noticeList.clear()
-                    for (snapshot1 in snapshot.children) {
-                        val noticeModel = snapshot1.getValue(
-                            NoticeModel::class.java
-                        )
-                        if (noticeModel != null) {
-                            noticeList.add(noticeModel)
-                        }
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                }
-            })
         }
     }
 }
 
 @Composable
-private fun NoticeScreen(noticeList: List<NoticeModel>) {
+fun NoticeScreen() {
+    val viewModel: NoticeViewModel = viewModel() // ViewModel 생성
+    val noticeList by viewModel.noticeList.collectAsState()
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.backgroundGrey
@@ -119,14 +92,7 @@ private fun NoticeItem(notice: NoticeModel) {
 @Composable
 private fun NoticePreview() {
     AppTheme {
-        NoticeScreen(
-            listOf(
-                NoticeModel(name = "[로아랑 공지]", context_notice = "공지 사항 내용 테스트"),
-                NoticeModel(name = "[로아랑 공지]", context_notice = "공지 사항 내용 테스트"),
-                NoticeModel(name = "[로아랑 공지]", context_notice = "공지 사항 내용 테스트"),
-                NoticeModel(name = "[로아랑 공지]", context_notice = "공지 사항 내용 테스트")
-            )
-        )
+        NoticeScreen()
     }
 }
 

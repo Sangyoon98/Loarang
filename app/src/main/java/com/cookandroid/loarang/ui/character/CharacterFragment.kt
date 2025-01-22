@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.compose.runtime.Composable
 import androidx.fragment.app.viewModels
 import com.cookandroid.loarang.R
 import com.cookandroid.loarang.base.BaseFragment
@@ -26,9 +27,9 @@ class CharacterFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.characterList.observe(viewLifecycleOwner) {
+        /*viewModel.characterList.observe(viewLifecycleOwner) {
             characterAdapter.submitList(it)
-        }
+        }*/
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +50,7 @@ class CharacterFragment : BaseFragment() {
         })
         binding.characterList.adapter = characterAdapter
 
-        binding.addCharBtn.setOnClickListener {
+        /*binding.addCharBtn.setOnClickListener {
             AddCharacterDialog(context) { dlgEdt ->
                 if (dlgEdt.isEmpty()) {
                     Toast.makeText(context, getString(R.string.search_empty), Toast.LENGTH_SHORT).show()
@@ -65,7 +66,7 @@ class CharacterFragment : BaseFragment() {
                     }
                 }
             }.showDialog()
-        }
+        }*/
 
         return binding.root
     }
@@ -74,4 +75,8 @@ class CharacterFragment : BaseFragment() {
         super.onResume()
         viewModel.getCharacterList()
     }
+}
+
+@Composable
+fun CharacterScreen(name: String) {
 }

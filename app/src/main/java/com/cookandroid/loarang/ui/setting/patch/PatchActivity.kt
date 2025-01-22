@@ -19,62 +19,35 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cookandroid.loarang.ui.theme.AppTheme
 import com.cookandroid.loarang.ui.theme.AppTypography
 import com.cookandroid.loarang.ui.theme.backgroundGrey
 import com.cookandroid.loarang.ui.theme.backgroundListItem
 import com.cookandroid.loarang.ui.theme.textColor
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import kotlinx.coroutines.launch
 
 class PatchActivity : ComponentActivity() {
-    private var patchList = mutableStateListOf<PatchModel>()
-    private var firebaseDatabase: FirebaseDatabase? = null
-    private var databaseReference: DatabaseReference? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             AppTheme {
-                PatchScreen(patchList)
+                PatchScreen()
             }
-        }
-
-        lifecycleScope.launch {
-            firebaseDatabase = FirebaseDatabase.getInstance()
-            databaseReference = firebaseDatabase!!.getReference("patch")
-            databaseReference!!.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    patchList.clear()
-                    for (snapshot1 in snapshot.children) {
-                        val patchModel = snapshot1.getValue(
-                            PatchModel::class.java
-                        )
-                        if (patchModel != null) {
-                            patchList.add(patchModel)
-                        }
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                }
-            })
         }
     }
 }
 
 @Composable
-private fun PatchScreen(patchList: List<PatchModel>) {
+fun PatchScreen() {
+    val viewModel: PatchViewModel = viewModel() // ViewModel 생성
+    val patchList by viewModel.patchList.collectAsState()
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.backgroundGrey
@@ -120,14 +93,7 @@ private fun PatchItem(patch: PatchModel) {
 @Composable
 private fun PatchPreview() {
     AppTheme {
-        PatchScreen(
-            listOf(
-                PatchModel(name = "[업데이트]", context_patch = "업데이트 내역"),
-                PatchModel(name = "[업데이트]", context_patch = "업데이트 내역"),
-                PatchModel(name = "[업데이트]", context_patch = "업데이트 내역"),
-                PatchModel(name = "[업데이트]", context_patch = "업데이트 내역")
-            )
-        )
+        PatchScreen()
     }
 }
 
