@@ -1,6 +1,7 @@
 package com.cookandroid.loarang.ui.homework
 
 import android.app.Application
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -207,7 +208,6 @@ fun HomeworkScreen(name: String, modifier: Modifier = Modifier) {
     var fieldBoss by remember { mutableStateOf(sharedPreferenceUtil.getBooleanPreference("FIELD_BOSS")) }
     var adventureIsland by remember { mutableStateOf(sharedPreferenceUtil.getBooleanPreference("ADVENTURE_ISLAND")) }
 
-
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.backgroundGrey
@@ -353,7 +353,7 @@ fun HomeworkScreen(name: String, modifier: Modifier = Modifier) {
                     items = homeworkList,
                     key = { homework -> homework.characterName }
                 ) { homework ->
-                    HomeworkItem(homework, viewModel)
+                    HomeworkItem(homework, viewModel, context)
                 }
             }
             Row(
@@ -410,8 +410,7 @@ fun HomeworkScreen(name: String, modifier: Modifier = Modifier) {
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel) {
-    val context = LocalContext.current
+private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel, context: Context) {
     var boxEpona by remember { mutableIntStateOf(homework.epona) }
     var boxChaos by remember { mutableIntStateOf(homework.chaos) }
     var boxGadian by remember { mutableIntStateOf(homework.gadian) }
@@ -681,7 +680,8 @@ private fun HomeworkItemPreview() {
                 gadian = 0,
                 endContent = 0
             ),
-            viewModel = MainViewModel(application = Application())
+            viewModel = MainViewModel(application = Application()),
+            context = LocalContext.current
         )
     }
 }
