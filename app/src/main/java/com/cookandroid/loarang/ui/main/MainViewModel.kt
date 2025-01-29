@@ -27,8 +27,6 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
     val characterList: StateFlow<List<CharacterEntity>> get() = _characterList
 
     init {
-        addCharacter("0iloll0")
-        addCharacter("0il홀리나이트ll0")
         getCharacterList()
     }
 

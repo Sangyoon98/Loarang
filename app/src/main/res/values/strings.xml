@@ -4,6 +4,8 @@
     <!-- Character -->
     <string name="character_image_description">캐릭터 이미지</string>
     <string name="character_more_menu_description">캐릭터 작업 더보기</string>
+    <string name="character_delete">삭제</string>
+    <string name="character_reload">갱신</string>
 
     <!-- Add Character -->
     <string name="add_character_title">캐릭터 추가</string>

@@ -21,7 +21,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.compose.rememberNavController
-import com.cookandroid.loarang.ui.character.CharacterFragment
 import com.cookandroid.loarang.base.BaseActivity
 import com.cookandroid.loarang.databinding.ActivityMainBinding
 import com.cookandroid.loarang.ui.theme.AppTheme
@@ -29,7 +28,7 @@ import com.cookandroid.loarang.ui.theme.backgroundListItem
 
 class MainActivity : BaseActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private var currentFragment: String = CharacterFragment.TAG
+    //private var currentFragment: String = CharacterFragment.TAG
     private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
