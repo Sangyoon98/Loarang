@@ -34,9 +34,11 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -50,6 +52,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -73,75 +76,12 @@ import com.cookandroid.loarang.ui.theme.backgroundListItem
 import com.cookandroid.loarang.ui.theme.iconColor
 import com.cookandroid.loarang.ui.theme.textColor
 
-/*class CharacterFragment : BaseFragment() {
-    companion object {
-        fun newInstance() = CharacterFragment()
-        const val TAG = "CharacterFragment"
-    }
-
-    private var _binding: FragmentCharacterBinding? = null
-    private val binding get() = _binding!!
-    lateinit var context: MainActivity
-    private val viewModel: MainViewModel by viewModels()
-    private lateinit var characterAdapter: CharacterAdapter
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        *//*viewModel.characterList.observe(viewLifecycleOwner) {
-            characterAdapter.submitList(it)
-        }*//*
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        context = activity as MainActivity
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentCharacterBinding.inflate(inflater, container, false)
-
-        characterAdapter = CharacterAdapter(context, { deleteNickname ->
-            viewModel.deleteCharacter(deleteNickname)
-        }, { updateNickname ->
-            viewModel.updateCharacter(updateNickname)
-        })
-        binding.characterList.adapter = characterAdapter
-
-        *//*binding.addCharBtn.setOnClickListener {
-            AddCharacterDialog(context) { dlgEdt ->
-                if (dlgEdt.isEmpty()) {
-                    Toast.makeText(context, getString(R.string.search_empty), Toast.LENGTH_SHORT).show()
-                } else {
-                    viewModel.addCharacter(dlgEdt).observe(viewLifecycleOwner) { result ->
-                        result.onSuccess {
-                            viewModel.characterList.observe(viewLifecycleOwner) {
-                                characterAdapter.submitList(it)
-                            }
-                        }.onFailure {
-                            Toast.makeText(context, getString(R.string.search_error), Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-            }.showDialog()
-        }*//*
-
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getCharacterList()
-    }
-}*/
-
 @Composable
 fun CharacterScreen(name: String, modifier: Modifier = Modifier) {
     val viewModel: MainViewModel = viewModel() // ViewModel 생성
     val characterList by viewModel.characterList.collectAsState()
     val context = LocalContext.current
+    val openAlertDialog = remember { mutableStateOf(false) }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -162,17 +102,39 @@ fun CharacterScreen(name: String, modifier: Modifier = Modifier) {
                         context = context
                     )
                 }
+                item {
+                    Spacer(modifier = Modifier.height(80.dp))
+                }
             }
             FloatingActionButton(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(16.dp),
-                onClick = {  }
+                onClick = { openAlertDialog.value = true }
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.icon_add),
                     contentDescription = stringResource(id = R.string.add_character_title)
                 )
+            }
+            
+            when {
+                openAlertDialog.value -> {
+                    DialogScreen(
+                        context,
+                        onDismissRequest = { openAlertDialog.value = false },
+                        onConfirmation = { nickname ->
+                            openAlertDialog.value = false
+                            viewModel.addCharacter(nickname).observeForever { result ->
+                                result.onSuccess {
+                                    Toast.makeText(context, nickname + context.getString(R.string.add_character_success), Toast.LENGTH_SHORT).show()
+                                }.onFailure {
+                                    Toast.makeText(context, context.getString(R.string.search_error), Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+                    )
+                }
             }
         }
     }
@@ -211,32 +173,34 @@ private fun CharacterItem(character: CharacterEntity, viewModel: MainViewModel, 
                 modifier = Modifier.weight(1f)
             )
             Spacer(modifier = Modifier.width(16.dp))
-            Image(
-                painter = painterResource(id = R.drawable.icon_dots),
-                contentDescription = stringResource(id = R.string.character_more_menu_description),
-                modifier = Modifier
-                    .size(24.dp)
-                    .clickable { isDropDownMenuExpanded = true }
-            )
-            DropdownMenu(
-                modifier = Modifier.wrapContentSize(),
-                expanded = isDropDownMenuExpanded,
-                onDismissRequest = { isDropDownMenuExpanded = false }
-            ) {
-                DropdownMenuItem(
-                    text = { Text(text = stringResource(id = R.string.character_reload)) },
-                    onClick = {
-                        viewModel.updateCharacter(character.characterName)
-                        isDropDownMenuExpanded = false
-                    }
+            Box {
+                Image(
+                    painter = painterResource(id = R.drawable.icon_dots),
+                    contentDescription = stringResource(id = R.string.character_more_menu_description),
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clickable { isDropDownMenuExpanded = true }
                 )
-                DropdownMenuItem(
-                    text = { Text(text = stringResource(id = R.string.character_delete)) },
-                    onClick = {
-                        viewModel.deleteCharacter(character.characterName)
-                        isDropDownMenuExpanded = false
-                    }
-                )
+                DropdownMenu(
+                    modifier = Modifier.wrapContentSize(),
+                    expanded = isDropDownMenuExpanded,
+                    onDismissRequest = { isDropDownMenuExpanded = false }
+                ) {
+                    DropdownMenuItem(
+                        text = { Text(text = stringResource(id = R.string.character_reload)) },
+                        onClick = {
+                            viewModel.updateCharacter(character.characterName)
+                            isDropDownMenuExpanded = false
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(text = stringResource(id = R.string.character_delete)) },
+                        onClick = {
+                            viewModel.deleteCharacter(character.characterName)
+                            isDropDownMenuExpanded = false
+                        }
+                    )
+                }
             }
         }
         Row(
@@ -282,43 +246,59 @@ private fun CharacterItem(character: CharacterEntity, viewModel: MainViewModel, 
 
 @Composable
 fun DialogScreen(
+    context: Context,
     onDismissRequest: () -> Unit,
-    onConfirmation: () -> Unit
+    onConfirmation: (String) -> Unit
 ) {
+    var text by remember { mutableStateOf("") }
+
     Dialog(onDismissRequest = { onDismissRequest() }) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(375.dp)
                 .padding(16.dp),
             shape = RoundedCornerShape(16.dp),
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(
-                    text = "This is a dialog with buttons and an image.",
-                    modifier = Modifier.padding(16.dp),
+                OutlinedTextField(
+                    value = text,
+                    onValueChange = { text = it },
+                    label = {
+                        Text(
+                            text = stringResource(id = R.string.search_character),
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Normal
+                        )
+                    }
                 )
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
+                    horizontalArrangement = Arrangement.End,
                 ) {
                     TextButton(
                         onClick = { onDismissRequest() },
                         modifier = Modifier.padding(8.dp),
                     ) {
-                        Text("Dismiss")
+                        Text(stringResource(id = R.string.cancel))
                     }
                     TextButton(
-                        onClick = { onConfirmation() },
+                        onClick = {
+                            if (text.isEmpty()) {
+                                Toast.makeText(context, context.getString(R.string.search_empty), Toast.LENGTH_SHORT).show()
+                            } else {
+                                onConfirmation(text)
+                            }
+                        },
                         modifier = Modifier.padding(8.dp),
                     ) {
-                        Text("Confirm")
+                        Text(stringResource(id = R.string.search))
                     }
                 }
             }
