@@ -2,6 +2,7 @@ package com.cookandroid.loarang.ui.character
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -153,7 +154,12 @@ private fun CharacterItem(character: CharacterEntity, viewModel: MainViewModel, 
             .shadow(12.dp, RoundedCornerShape(8.dp)),
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(8.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.backgroundListItem)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.backgroundListItem),
+        onClick = {
+            val characterFragmentDetail = Intent(context, CharacterFragmentDetail::class.java)
+            characterFragmentDetail.putExtra("nickname", character.characterName)
+            context.startActivity(characterFragmentDetail)
+        }
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
