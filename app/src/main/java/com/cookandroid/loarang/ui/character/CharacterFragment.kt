@@ -73,8 +73,11 @@ import com.cookandroid.loarang.ui.main.MainViewModel
 import com.cookandroid.loarang.ui.theme.AppTheme
 import com.cookandroid.loarang.ui.theme.AppTypography
 import com.cookandroid.loarang.ui.theme.backgroundGrey
+import com.cookandroid.loarang.ui.theme.backgroundLightGreen
 import com.cookandroid.loarang.ui.theme.backgroundListItem
+import com.cookandroid.loarang.ui.theme.component_green
 import com.cookandroid.loarang.ui.theme.iconColor
+import com.cookandroid.loarang.ui.theme.mainGreen
 import com.cookandroid.loarang.ui.theme.textColor
 
 @Composable
@@ -111,7 +114,8 @@ fun CharacterScreen(name: String, modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(16.dp),
-                onClick = { openAlertDialog.value = true }
+                onClick = { openAlertDialog.value = true },
+                containerColor = component_green
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.icon_add),
@@ -268,7 +272,7 @@ fun DialogScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(16.dp, 16.dp, 16.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {

@@ -7,6 +7,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,6 +31,7 @@ import com.cookandroid.loarang.ui.schedule.ScheduleScreen
 import com.cookandroid.loarang.ui.setting.SettingScreen
 import com.cookandroid.loarang.ui.theme.AppTheme
 import com.cookandroid.loarang.ui.theme.backgroundListItem
+import com.cookandroid.loarang.ui.theme.mainGreen
 import com.cookandroid.loarang.util.Const.CHARACTER
 import com.cookandroid.loarang.util.Const.HOMEWORK
 import com.cookandroid.loarang.util.Const.INFORMATION
@@ -63,7 +65,8 @@ fun MainNavigationBar(navController: NavController) {
     )
 
     NavigationBar(
-        modifier = Modifier.background(color = MaterialTheme.colorScheme.backgroundListItem)
+        containerColor = MaterialTheme.colorScheme.backgroundListItem,
+        contentColor = MaterialTheme.colorScheme.mainGreen
     ) {
         items.forEach { item ->
             val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -91,7 +94,10 @@ fun MainNavigationBar(navController: NavController) {
                 },
                 label = {
                     Text(stringResource(id = item.title), fontSize = 9.sp)
-                }
+                },
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor = MaterialTheme.colorScheme.mainGreen
+                )
             )
         }
     }

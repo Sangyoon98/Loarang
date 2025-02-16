@@ -32,8 +32,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -207,6 +209,10 @@ fun HomeworkScreen(name: String, modifier: Modifier = Modifier) {
     var chaosGate by remember { mutableStateOf(sharedPreferenceUtil.getBooleanPreference("CHAOS_GATE")) }
     var fieldBoss by remember { mutableStateOf(sharedPreferenceUtil.getBooleanPreference("FIELD_BOSS")) }
     var adventureIsland by remember { mutableStateOf(sharedPreferenceUtil.getBooleanPreference("ADVENTURE_ISLAND")) }
+
+    LaunchedEffect(homeworkList) {
+        viewModel.getCharacterList()
+    }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -411,6 +417,9 @@ fun HomeworkScreen(name: String, modifier: Modifier = Modifier) {
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel, context: Context) {
+    // characterState by viewModel.characterList.collectAsState()
+    //val updatedHomework = characterState.find { it.characterName == homework.characterName } ?: homework
+
     var boxEpona by remember { mutableIntStateOf(homework.epona) }
     var boxChaos by remember { mutableIntStateOf(homework.chaos) }
     var boxGadian by remember { mutableIntStateOf(homework.gadian) }
@@ -465,13 +474,15 @@ private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel, co
             Row(modifier = Modifier.fillMaxWidth()) {
                 Card(
                     onClick = {
-                        if (boxEpona == 3) {
+                        val newEpona = if (homework.epona == 3) 0 else homework.epona + 1
+                        viewModel.updateEpona(homework.characterName, newEpona)
+                        /*if (boxEpona == 3) {
                             viewModel.updateEpona(homework.characterName, 0)
                             boxEpona = 0
                         } else {
                             viewModel.updateEpona(homework.characterName, homework.epona + 1)
                             boxEpona += 1
-                        }
+                        }*/
                     },
                     modifier = Modifier.weight(1f),
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.backgroundLightGreen)
@@ -489,7 +500,16 @@ private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel, co
                         )
                         Spacer(modifier = Modifier.height(5.dp))
                         Row {
-                            Box(
+                            repeat(3) { index ->
+                                Box(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .height(3.dp)
+                                        .background(if (homework.epona > index) component_green else MaterialTheme.colorScheme.backgroundGrey)
+                                )
+                                if (index < 2) Spacer(modifier = Modifier.width(5.dp))
+                            }
+                            /*Box(
                                 modifier = Modifier
                                     .weight(1f)
                                     .height(3.dp)
@@ -508,20 +528,22 @@ private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel, co
                                     .weight(1f)
                                     .height(3.dp)
                                     .background(color = if (boxEpona >= 3) component_green else MaterialTheme.colorScheme.backgroundGrey)
-                            )
+                            )*/
                         }
                     }
                 }
                 Spacer(modifier = Modifier.width(10.dp))
                 Card(
                     onClick = {
-                        if (boxChaos == 0) {
+                        val newChaos = if (homework.chaos == 1) 0 else homework.chaos + 1
+                        viewModel.updateChaos(homework.characterName, newChaos)
+                        /*if (boxChaos == 0) {
                             viewModel.updateChaos(homework.characterName, 1)
                             boxChaos = 1
                         } else {
                             viewModel.updateChaos(homework.characterName, 0)
                             boxChaos = 0
-                        }
+                        }*/
                     },
                     modifier = Modifier.weight(1f),
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.backgroundLightGreen)
@@ -543,7 +565,7 @@ private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel, co
                                 modifier = Modifier
                                     .weight(1f)
                                     .height(3.dp)
-                                    .background(color = if (boxChaos == 1) component_green else MaterialTheme.colorScheme.backgroundGrey)
+                                    .background(color = if (homework.chaos == 1) component_green else MaterialTheme.colorScheme.backgroundGrey)
                             )
                         }
                     }
@@ -551,13 +573,15 @@ private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel, co
                 Spacer(modifier = Modifier.width(10.dp))
                 Card(
                     onClick = {
-                        if (boxGadian == 0) {
+                        val newGadian = if (homework.gadian == 1) 0 else homework.gadian + 1
+                        viewModel.updateGadian(homework.characterName, newGadian)
+                        /*if (boxGadian == 0) {
                             viewModel.updateGadian(homework.characterName, 1)
                             boxGadian = 1
                         } else {
                             viewModel.updateGadian(homework.characterName, 0)
                             boxGadian = 0
-                        }
+                        }*/
                     },
                     modifier = Modifier.weight(1f),
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.backgroundLightGreen)
@@ -579,7 +603,7 @@ private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel, co
                                 modifier = Modifier
                                     .weight(1f)
                                     .height(3.dp)
-                                    .background(color = if (boxGadian == 1) component_green else MaterialTheme.colorScheme.backgroundGrey)
+                                    .background(color = if (homework.gadian == 1) component_green else MaterialTheme.colorScheme.backgroundGrey)
                             )
                         }
                     }
@@ -596,13 +620,15 @@ private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel, co
             Row(modifier = Modifier.fillMaxWidth()) {
                 Card(
                     onClick = {
-                        if (boxEndContent == 3) {
+                        val newEndContent = if (homework.endContent == 3) 0 else homework.endContent + 1
+                        viewModel.updateEnd(homework.characterName, newEndContent)
+                        /*if (boxEndContent == 3) {
                             viewModel.updateEnd(homework.characterName, 0)
                             boxEndContent = 0
                         } else {
                             viewModel.updateEnd(homework.characterName, homework.endContent + 1)
                             boxEndContent += 1
-                        }
+                        }*/
                     },
                     modifier = Modifier.weight(1f),
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.backgroundLightGreen)
@@ -620,7 +646,16 @@ private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel, co
                         )
                         Spacer(modifier = Modifier.height(5.dp))
                         Row {
-                            Box(
+                            repeat(3) { index ->
+                                Box(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .height(3.dp)
+                                        .background(if (homework.endContent > index) component_green else MaterialTheme.colorScheme.backgroundGrey)
+                                )
+                                if (index < 2) Spacer(modifier = Modifier.width(5.dp))
+                            }
+                            /*Box(
                                 modifier = Modifier
                                     .weight(1f)
                                     .height(3.dp)
@@ -639,7 +674,7 @@ private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel, co
                                     .weight(1f)
                                     .height(3.dp)
                                     .background(color = if (boxEndContent >= 3) component_green else MaterialTheme.colorScheme.backgroundGrey)
-                            )
+                            )*/
                         }
                     }
                 }

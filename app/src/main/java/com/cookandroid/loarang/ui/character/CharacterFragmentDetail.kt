@@ -1,8 +1,10 @@
 package com.cookandroid.loarang.ui.character
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
+import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.BackHandler
@@ -88,22 +90,36 @@ fun CharacterDetailScreen(nickname: String) {
     var isLoading by remember { mutableStateOf(true) }
     val url = "https://lostark.game.onstove.com/Profile/Character/$nickname"
 
-    val webViewClient = remember { WebViewClient() }
-
+    //val webViewClient = remember { WebViewClient() }
+    var backEnabled by remember { mutableStateOf(false) }
+    var webView: WebView? = null
 
     Box(modifier = Modifier.fillMaxSize()) {
         // 웹뷰
         AndroidView(
             factory = { context ->
-                android.webkit.WebView(context).apply {
+                WebView(context).apply {
                     settings.javaScriptEnabled = true
-                    this.webViewClient = webViewClient
+                    //this.webViewClient = webViewClient
+                    webViewClient = object : WebViewClient() {
+                        override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
+                            backEnabled = view.canGoBack()
+                        }
+                    }
                     loadUrl(url)
                     isLoading = false
+                    webView = this
                 }
+            },
+            update = {
+                webView = it
             },
             modifier = Modifier.fillMaxSize()
         )
+
+        BackHandler(enabled = backEnabled) {
+            webView?.goBack()
+        }
 
         // ProgressBar
         if (isLoading) {
