@@ -3,10 +3,6 @@ package com.cookandroid.loarang.ui.character
 import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -15,7 +11,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -27,7 +22,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
@@ -39,7 +33,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -53,36 +46,29 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.cookandroid.loarang.R
-import com.cookandroid.loarang.base.BaseFragment
-import com.cookandroid.loarang.databinding.FragmentCharacterBinding
 import com.cookandroid.loarang.room.CharacterEntity
-import com.cookandroid.loarang.ui.main.MainActivity
 import com.cookandroid.loarang.ui.main.MainViewModel
 import com.cookandroid.loarang.ui.theme.AppTheme
 import com.cookandroid.loarang.ui.theme.AppTypography
 import com.cookandroid.loarang.ui.theme.backgroundGrey
-import com.cookandroid.loarang.ui.theme.backgroundLightGreen
 import com.cookandroid.loarang.ui.theme.backgroundListItem
 import com.cookandroid.loarang.ui.theme.component_green
 import com.cookandroid.loarang.ui.theme.iconColor
-import com.cookandroid.loarang.ui.theme.mainGreen
 import com.cookandroid.loarang.ui.theme.textColor
 
 @Composable
 fun CharacterScreen(name: String, modifier: Modifier = Modifier) {
-    val viewModel: MainViewModel = viewModel() // ViewModel 생성
+    val viewModel: MainViewModel = viewModel()
     val characterList by viewModel.characterList.collectAsState()
     val context = LocalContext.current
     val openAlertDialog = remember { mutableStateOf(false) }

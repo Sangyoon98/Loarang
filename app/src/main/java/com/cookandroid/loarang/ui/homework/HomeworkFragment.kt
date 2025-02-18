@@ -2,13 +2,7 @@ package com.cookandroid.loarang.ui.homework
 
 import android.app.Application
 import android.content.Context
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Space
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,7 +21,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -35,37 +28,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.recyclerview.widget.SimpleItemAnimator
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.cookandroid.loarang.R
 import com.cookandroid.loarang.application.BaseApplication.Companion.sharedPreferenceUtil
-import com.cookandroid.loarang.base.BaseFragment
-import com.cookandroid.loarang.databinding.FragmentHomeworkBinding
 import com.cookandroid.loarang.room.CharacterEntity
-import com.cookandroid.loarang.ui.character.CharacterModel
-import com.cookandroid.loarang.ui.main.MainActivity
 import com.cookandroid.loarang.ui.main.MainViewModel
-import com.cookandroid.loarang.ui.schedule.ScheduleModel
-import com.cookandroid.loarang.ui.schedule.ScheduleViewModel
 import com.cookandroid.loarang.ui.theme.AppTheme
 import com.cookandroid.loarang.ui.theme.AppTypography
 import com.cookandroid.loarang.ui.theme.backgroundGrey
@@ -74,131 +55,7 @@ import com.cookandroid.loarang.ui.theme.backgroundListItem
 import com.cookandroid.loarang.ui.theme.black
 import com.cookandroid.loarang.ui.theme.component_green
 import com.cookandroid.loarang.ui.theme.iconColor
-import com.cookandroid.loarang.ui.theme.mainGreen
 import com.cookandroid.loarang.ui.theme.textColor
-
-/*private var homeworkList = mutableStateListOf<HomeworkModel>()
-
-class HomeworkFragment : BaseFragment() {
-    companion object {
-        fun newInstance() = HomeworkFragment()
-        const val TAG = "HomeworkFragment"
-    }
-
-    private var _binding: FragmentHomeworkBinding? = null
-    private val binding get() = _binding!!
-    lateinit var context: MainActivity
-    private val viewModel: MainViewModel by viewModels()
-    private lateinit var homeworkAdapter: HomeworkAdapter
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        *//*viewModel.characterList.observe(viewLifecycleOwner) {
-            homeworkAdapter.submitList(it)
-        }*//*
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        context = activity as MainActivity
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentHomeworkBinding.inflate(inflater, container, false)
-
-        binding.homeworkList.itemAnimator = null
-        val animator = binding.homeworkList.itemAnimator     //리사이클러뷰 애니메이터 get
-        if (animator is SimpleItemAnimator) {          //아이템 애니메이커 기본 하위클래스
-            animator.supportsChangeAnimations =
-                false  //애니메이션 값 false (리사이클러뷰가 화면을 다시 갱신 했을때 뷰들의 깜빡임 방지)
-        }
-
-        homeworkAdapter = HomeworkAdapter(context, { nickname, count ->
-            viewModel.updateEpona(nickname, count)
-        }, { nickname, count ->
-            viewModel.updateChaos(nickname, count)
-        }, { nickname, count ->
-            viewModel.updateGadian(nickname, count)
-        }, { nickname, count ->
-            viewModel.updateEnd(nickname, count)
-        })
-        binding.homeworkList.adapter = homeworkAdapter
-
-        getEvent()
-
-        binding.containerGate.setOnClickListener {
-            setEvent("CHAOS_GATE", binding.gate)
-        }
-
-        binding.containerField.setOnClickListener {
-            setEvent("FIELD_BOSS", binding.field)
-        }
-
-        binding.containerAdventure.setOnClickListener {
-            setEvent("ADVENTURE_ISLAND", binding.adventure)
-        }
-
-        binding.allDelete.setOnClickListener {
-            resetEvent()
-            viewModel.resetAllHomework()
-        }
-
-        binding.todayDelete.setOnClickListener {
-            resetEvent()
-            viewModel.resetDailyHomework()
-        }
-
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getCharacterList()
-    }
-
-    private fun getEvent() {
-        when (sharedPreferenceUtil.getBooleanPreference("CHAOS_GATE")) {
-            true -> binding.gate.setBackgroundColor(context.getColor(R.color.component_green))
-            else -> binding.gate.setBackgroundColor(context.getColor(R.color.white))
-        }
-
-        when (sharedPreferenceUtil.getBooleanPreference("FIELD_BOSS")) {
-            true -> binding.field.setBackgroundColor(context.getColor(R.color.component_green))
-            else -> binding.field.setBackgroundColor(context.getColor(R.color.white))
-        }
-
-        when (sharedPreferenceUtil.getBooleanPreference("ADVENTURE_ISLAND")) {
-            true -> binding.adventure.setBackgroundColor(context.getColor(R.color.component_green))
-            else -> binding.adventure.setBackgroundColor(context.getColor(R.color.white))
-        }
-    }
-
-    private fun setEvent(sharedName: String, view: View) {
-        when (sharedPreferenceUtil.getBooleanPreference(sharedName)) {
-            true -> {
-                sharedPreferenceUtil.setBooleanPreference(sharedName, false)
-                view.setBackgroundColor(context.getColor(R.color.white))
-            }
-
-            else -> {
-                sharedPreferenceUtil.setBooleanPreference(sharedName, true)
-                view.setBackgroundColor(context.getColor(R.color.component_green))
-            }
-        }
-    }
-
-    private fun resetEvent() {
-        sharedPreferenceUtil.setBooleanPreference("CHAOS_GATE", false)
-        sharedPreferenceUtil.setBooleanPreference("FIELD_BOSS", false)
-        sharedPreferenceUtil.setBooleanPreference("ADVENTURE_ISLAND", false)
-        binding.gate.setBackgroundColor(context.getColor(R.color.white))
-        binding.field.setBackgroundColor(context.getColor(R.color.white))
-        binding.adventure.setBackgroundColor(context.getColor(R.color.white))
-    }
-}*/
 
 @Composable
 fun HomeworkScreen(name: String, modifier: Modifier = Modifier) {
@@ -417,14 +274,6 @@ fun HomeworkScreen(name: String, modifier: Modifier = Modifier) {
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel, context: Context) {
-    // characterState by viewModel.characterList.collectAsState()
-    //val updatedHomework = characterState.find { it.characterName == homework.characterName } ?: homework
-
-    var boxEpona by remember { mutableIntStateOf(homework.epona) }
-    var boxChaos by remember { mutableIntStateOf(homework.chaos) }
-    var boxGadian by remember { mutableIntStateOf(homework.gadian) }
-    var boxEndContent by remember { mutableIntStateOf(homework.endContent) }
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -476,13 +325,6 @@ private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel, co
                     onClick = {
                         val newEpona = if (homework.epona == 3) 0 else homework.epona + 1
                         viewModel.updateEpona(homework.characterName, newEpona)
-                        /*if (boxEpona == 3) {
-                            viewModel.updateEpona(homework.characterName, 0)
-                            boxEpona = 0
-                        } else {
-                            viewModel.updateEpona(homework.characterName, homework.epona + 1)
-                            boxEpona += 1
-                        }*/
                     },
                     modifier = Modifier.weight(1f),
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.backgroundLightGreen)
@@ -509,26 +351,6 @@ private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel, co
                                 )
                                 if (index < 2) Spacer(modifier = Modifier.width(5.dp))
                             }
-                            /*Box(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .height(3.dp)
-                                    .background(color = if (boxEpona >= 1) component_green else MaterialTheme.colorScheme.backgroundGrey)
-                            )
-                            Spacer(modifier = Modifier.width(5.dp))
-                            Box(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .height(3.dp)
-                                    .background(color = if (boxEpona >= 2) component_green else MaterialTheme.colorScheme.backgroundGrey)
-                            )
-                            Spacer(modifier = Modifier.width(5.dp))
-                            Box(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .height(3.dp)
-                                    .background(color = if (boxEpona >= 3) component_green else MaterialTheme.colorScheme.backgroundGrey)
-                            )*/
                         }
                     }
                 }
@@ -537,13 +359,6 @@ private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel, co
                     onClick = {
                         val newChaos = if (homework.chaos == 1) 0 else homework.chaos + 1
                         viewModel.updateChaos(homework.characterName, newChaos)
-                        /*if (boxChaos == 0) {
-                            viewModel.updateChaos(homework.characterName, 1)
-                            boxChaos = 1
-                        } else {
-                            viewModel.updateChaos(homework.characterName, 0)
-                            boxChaos = 0
-                        }*/
                     },
                     modifier = Modifier.weight(1f),
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.backgroundLightGreen)
@@ -575,13 +390,6 @@ private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel, co
                     onClick = {
                         val newGadian = if (homework.gadian == 1) 0 else homework.gadian + 1
                         viewModel.updateGadian(homework.characterName, newGadian)
-                        /*if (boxGadian == 0) {
-                            viewModel.updateGadian(homework.characterName, 1)
-                            boxGadian = 1
-                        } else {
-                            viewModel.updateGadian(homework.characterName, 0)
-                            boxGadian = 0
-                        }*/
                     },
                     modifier = Modifier.weight(1f),
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.backgroundLightGreen)
@@ -622,13 +430,6 @@ private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel, co
                     onClick = {
                         val newEndContent = if (homework.endContent == 3) 0 else homework.endContent + 1
                         viewModel.updateEnd(homework.characterName, newEndContent)
-                        /*if (boxEndContent == 3) {
-                            viewModel.updateEnd(homework.characterName, 0)
-                            boxEndContent = 0
-                        } else {
-                            viewModel.updateEnd(homework.characterName, homework.endContent + 1)
-                            boxEndContent += 1
-                        }*/
                     },
                     modifier = Modifier.weight(1f),
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.backgroundLightGreen)
@@ -655,26 +456,6 @@ private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel, co
                                 )
                                 if (index < 2) Spacer(modifier = Modifier.width(5.dp))
                             }
-                            /*Box(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .height(3.dp)
-                                    .background(color = if (boxEndContent >= 1) component_green else MaterialTheme.colorScheme.backgroundGrey)
-                            )
-                            Spacer(modifier = Modifier.width(5.dp))
-                            Box(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .height(3.dp)
-                                    .background(color = if (boxEndContent >= 2) component_green else MaterialTheme.colorScheme.backgroundGrey)
-                            )
-                            Spacer(modifier = Modifier.width(5.dp))
-                            Box(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .height(3.dp)
-                                    .background(color = if (boxEndContent >= 3) component_green else MaterialTheme.colorScheme.backgroundGrey)
-                            )*/
                         }
                     }
                 }
@@ -688,13 +469,7 @@ private fun HomeworkItem(homework: CharacterEntity, viewModel: MainViewModel, co
 @Composable
 private fun HomeworkScreenPreview() {
     AppTheme {
-        HomeworkScreen(
-            /*listOf(
-                HomeworkModel("", "Nickname", "1640.00", "13", "dd", "dd"),
-                HomeworkModel("", "Nickname", "1640.00", "13", "dd", "dd"),
-            )*/
-            name = "Homework"
-        )
+        HomeworkScreen(name = "Homework")
     }
 }
 

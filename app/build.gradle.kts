@@ -4,7 +4,6 @@ import java.util.Properties
 
 plugins {
     id ("com.android.application")
-    //id ("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
     id("com.google.devtools.ksp")
     kotlin("kapt") version "1.9.23"
@@ -37,8 +36,8 @@ android {
         applicationId = "com.cookandroid.loarang"
         minSdk = 24
         targetSdk = 35
-        versionCode = 6
-        versionName = "1.3"
+        versionCode = 8
+        versionName = "1.4"
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -59,6 +58,7 @@ android {
                 "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("release")
+            ndk.debugSymbolLevel = "FULL"
         }
         debug {
             isDefault = false

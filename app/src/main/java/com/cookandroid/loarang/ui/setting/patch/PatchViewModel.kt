@@ -1,7 +1,6 @@
 package com.cookandroid.loarang.ui.setting.patch
 
 import androidx.lifecycle.ViewModel
-import com.cookandroid.loarang.ui.setting.notice.NoticeModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference

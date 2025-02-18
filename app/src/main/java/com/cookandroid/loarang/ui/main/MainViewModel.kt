@@ -1,19 +1,12 @@
 package com.cookandroid.loarang.ui.main
 
 import android.app.Application
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cookandroid.loarang.base.BaseViewModel
 import com.cookandroid.loarang.room.CharacterDatabase
 import com.cookandroid.loarang.room.CharacterEntity
 import androidx.lifecycle.viewModelScope
-import com.cookandroid.loarang.ui.schedule.ScheduleModel
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
