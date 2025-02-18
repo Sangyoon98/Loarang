@@ -29,3 +29,32 @@
 ![Screenshot_20241226_030323](https://github.com/user-attachments/assets/fd33c868-bfac-480f-b59b-64b6fab09967) |![Screenshot_20241226_030333](https://github.com/user-attachments/assets/514dcc49-6f0e-44aa-8434-92e69696d0f2)
 ![Screenshot_20241226_030337](https://github.com/user-attachments/assets/bb26daf6-7234-4c78-a8a6-50eac9a9290a) |![Screenshot_20241226_030346](https://github.com/user-attachments/assets/743ed9da-be00-4e14-aeae-9ce8c5da68f8)
 ![Screenshot_20241226_030352](https://github.com/user-attachments/assets/7b58050c-c6f4-46fd-a9a9-69472f010dbb) |![Screenshot_20241226_030411](https://github.com/user-attachments/assets/bb56c4e5-182c-4315-91b5-71a41d6e2743)
+
+------
+
+# Loarang v1.4
+- XML -> Compose 변환
+- version catalog 적용
+
+![Image](https://github.com/user-attachments/assets/7110eabb-db08-48b2-b2c5-891af9573a44) |![Image](https://github.com/user-attachments/assets/148fbf35-bf98-4a37-97f3-4f068d5c06fa)
+--- | --- | 
+![Image](https://github.com/user-attachments/assets/4c2543b7-d099-4825-81fa-579772820a93) |![Image](https://github.com/user-attachments/assets/13c28f25-ee67-426b-9c06-b95c0f016d2f)
+![Image](https://github.com/user-attachments/assets/a86c53ba-2542-4f71-9875-c1adaaecd01c) |![Image](https://github.com/user-attachments/assets/fb2f5228-1c07-4cb3-9520-dc279c89e675)
+![Image](https://github.com/user-attachments/assets/188dad45-9ae2-40b5-9095-18ac3bc034ea) |![Image](https://github.com/user-attachments/assets/6428e3e4-f5e6-4da6-b411-5a37fae065bd)
+![Image](https://github.com/user-attachments/assets/dd57c9b4-c4c1-4feb-97e4-8b4b71a2efaa) |![Image](https://github.com/user-attachments/assets/c0f213bd-4f60-47f4-80ff-c416868ecd64)
+![Image](https://github.com/user-attachments/assets/474e3899-e895-444a-9e2e-51b2c31d2855) |![Image](https://github.com/user-attachments/assets/cb90abe0-f4e4-4179-b0f1-e9184f886940)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
