@@ -38,8 +38,8 @@ android {
         applicationId = "com.cookandroid.loarang"
         minSdk = 24
         targetSdk = 35
-        versionCode = 8
-        versionName = "1.4"
+        versionCode = 9
+        versionName = "1.4.1"
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
