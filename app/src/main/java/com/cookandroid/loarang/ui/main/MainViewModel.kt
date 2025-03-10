@@ -7,14 +7,21 @@ import com.cookandroid.loarang.base.BaseViewModel
 import com.cookandroid.loarang.room.CharacterDatabase
 import com.cookandroid.loarang.room.CharacterEntity
 import androidx.lifecycle.viewModelScope
+import com.cookandroid.loarang.room.CharacterDao
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.jsoup.Jsoup
+import javax.inject.Inject
 
-class MainViewModel(application: Application) : BaseViewModel(application) {
-    private val characterDao = CharacterDatabase.getInstance(application.applicationContext)!!.characterDao()
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    application: Application,
+    private val characterDao: CharacterDao
+) : BaseViewModel(application) {
+    //private val characterDao = CharacterDatabase.getInstance(application.applicationContext)!!.characterDao()
 
     private val _characterList = MutableStateFlow<List<CharacterEntity>>(emptyList())
     val characterList: StateFlow<List<CharacterEntity>> get() = _characterList

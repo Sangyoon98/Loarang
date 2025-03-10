@@ -1,26 +1,28 @@
 package com.cookandroid.loarang.ui.schedule
 
 import androidx.lifecycle.ViewModel
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.cookandroid.loarang.repository.FirebaseRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.StateFlow
+import javax.inject.Inject
 
-class ScheduleViewModel : ViewModel() {
-    private val _scheduleList = MutableStateFlow<List<ScheduleModel>>(emptyList())
-    val scheduleList: StateFlow<List<ScheduleModel>> get() = _scheduleList
+@HiltViewModel
+class ScheduleViewModel @Inject constructor(
+    private val repository: FirebaseRepository
+) : ViewModel() {
+    val scheduleList: StateFlow<List<ScheduleModel>> = repository.getDataList("content", ScheduleModel::class.java)
 
-    private val firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
-    private val databaseReference: DatabaseReference = firebaseDatabase.getReference("content")
+    //private val _scheduleList = MutableStateFlow<List<ScheduleModel>>(emptyList())
+    //val scheduleList: StateFlow<List<ScheduleModel>> get() = _scheduleList
 
-    init {
+    //private val firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
+    //private val databaseReference: DatabaseReference = firebaseDatabase.getReference("content")
+
+    /*init {
         fetchScheduleData()
-    }
+    }*/
 
-    private fun fetchScheduleData() {
+    /*private fun fetchScheduleData() {
         databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val tempList = mutableListOf<ScheduleModel>()
@@ -37,5 +39,5 @@ class ScheduleViewModel : ViewModel() {
                 // 에러 처리 (필요 시)
             }
         })
-    }
+    }*/
 }

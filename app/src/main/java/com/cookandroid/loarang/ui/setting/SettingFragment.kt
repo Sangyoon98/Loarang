@@ -24,7 +24,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.cookandroid.loarang.R
+import com.cookandroid.loarang.ui.main.MainViewModel
 import com.cookandroid.loarang.ui.setting.patch.PatchActivity
 import com.cookandroid.loarang.ui.setting.notice.NoticeActivity
 import com.cookandroid.loarang.ui.theme.AppTheme
@@ -33,7 +35,7 @@ import com.cookandroid.loarang.ui.theme.component_green
 import com.cookandroid.loarang.ui.theme.mainGreen
 
 @Composable
-fun SettingScreen(name: String, modifier: Modifier = Modifier) {
+fun SettingScreen(name: String, modifier: Modifier = Modifier, viewModel: MainViewModel = hiltViewModel()) {
     val context = LocalContext.current
 
     Column(
