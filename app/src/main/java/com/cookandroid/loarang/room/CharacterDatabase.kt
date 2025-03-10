@@ -4,12 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import dagger.hilt.android.HiltAndroidApp
 
 @Database(entities = [CharacterEntity::class], version = 1)
 abstract class CharacterDatabase : RoomDatabase() {
     abstract fun characterDao() : CharacterDao
 
-    companion object {
+    /*companion object {
         private var instance : CharacterDatabase? = null
 
         @Synchronized
@@ -25,5 +26,5 @@ abstract class CharacterDatabase : RoomDatabase() {
             }
             return instance
         }
-    }
+    }*/
 }

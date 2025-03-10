@@ -40,6 +40,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -58,8 +59,7 @@ import com.cookandroid.loarang.ui.theme.iconColor
 import com.cookandroid.loarang.ui.theme.textColor
 
 @Composable
-fun HomeworkScreen(name: String, modifier: Modifier = Modifier) {
-    val viewModel: MainViewModel = viewModel() // ViewModel 생성
+fun HomeworkScreen(name: String, modifier: Modifier = Modifier, viewModel: MainViewModel = hiltViewModel()) {
     val homeworkList by viewModel.characterList.collectAsState()
     val context = LocalContext.current
     
@@ -473,6 +473,7 @@ private fun HomeworkScreenPreview() {
     }
 }
 
+/*
 @Preview
 @Composable
 private fun HomeworkItemPreview() {
@@ -494,4 +495,4 @@ private fun HomeworkItemPreview() {
             context = LocalContext.current
         )
     }
-}
+}*/

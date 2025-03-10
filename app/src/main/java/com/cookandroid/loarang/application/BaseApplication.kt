@@ -2,7 +2,9 @@ package com.cookandroid.loarang.application
 
 import android.app.Application
 import com.cookandroid.loarang.util.SharedPreferenceUtil
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class BaseApplication: Application() {
     companion object {
         var instance: BaseApplication? = null
