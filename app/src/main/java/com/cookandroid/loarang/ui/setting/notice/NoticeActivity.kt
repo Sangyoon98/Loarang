@@ -25,13 +25,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cookandroid.loarang.ui.theme.AppTheme
 import com.cookandroid.loarang.ui.theme.AppTypography
 import com.cookandroid.loarang.ui.theme.backgroundGrey
 import com.cookandroid.loarang.ui.theme.backgroundListItem
 import com.cookandroid.loarang.ui.theme.textColor
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NoticeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +48,7 @@ class NoticeActivity : ComponentActivity() {
 
 @Composable
 fun NoticeScreen() {
-    val viewModel: NoticeViewModel = viewModel() // ViewModel 생성
+    val viewModel: NoticeViewModel = hiltViewModel() // ViewModel 생성
     val noticeList by viewModel.noticeList.collectAsState()
 
     Surface(

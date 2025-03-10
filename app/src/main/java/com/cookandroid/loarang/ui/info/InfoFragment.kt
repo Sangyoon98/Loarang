@@ -30,7 +30,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.cookandroid.loarang.R
+import com.cookandroid.loarang.ui.main.MainViewModel
 import com.cookandroid.loarang.ui.theme.AppTheme
 import com.cookandroid.loarang.ui.theme.AppTypography
 import com.cookandroid.loarang.ui.theme.backgroundGrey
@@ -40,7 +42,7 @@ import kotlin.math.ceil
 import kotlin.math.floor
 
 @Composable
-fun InfoScreen(name: String, modifier: Modifier = Modifier) {
+fun InfoScreen(name: String, modifier: Modifier = Modifier, viewModel: MainViewModel = hiltViewModel()) {
     Column(
         modifier = Modifier
             .fillMaxSize()

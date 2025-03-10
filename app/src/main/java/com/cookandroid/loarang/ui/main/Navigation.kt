@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -27,6 +28,7 @@ import com.cookandroid.loarang.ui.character.CharacterScreen
 import com.cookandroid.loarang.ui.homework.HomeworkScreen
 import com.cookandroid.loarang.ui.info.InfoScreen
 import com.cookandroid.loarang.ui.schedule.ScheduleScreen
+import com.cookandroid.loarang.ui.schedule.ScheduleViewModel
 import com.cookandroid.loarang.ui.setting.SettingScreen
 import com.cookandroid.loarang.ui.theme.AppTheme
 import com.cookandroid.loarang.ui.theme.backgroundListItem
@@ -44,11 +46,26 @@ fun MainNavigationView(navController: NavHostController) {
         navController = navController,
         startDestination = NavigationItem.Character.screenRoute
     ) {
-        composable(NavigationItem.Character.screenRoute) { CharacterScreen(name = stringResource(id = NavigationItem.Character.title)) }
-        composable(NavigationItem.Homework.screenRoute) { HomeworkScreen(name = stringResource(id = NavigationItem.Homework.title)) }
-        composable(NavigationItem.Schedule.screenRoute) { ScheduleScreen(name = stringResource(id = NavigationItem.Schedule.title)) }
-        composable(NavigationItem.Information.screenRoute) { InfoScreen(name = stringResource(id = NavigationItem.Information.title)) }
-        composable(NavigationItem.Setting.screenRoute) { SettingScreen(name = stringResource(id = NavigationItem.Setting.title)) }
+        composable(NavigationItem.Character.screenRoute) {
+            val viewModel: MainViewModel = hiltViewModel()
+            CharacterScreen(name = stringResource(id = NavigationItem.Character.title), viewModel = viewModel)
+        }
+        composable(NavigationItem.Homework.screenRoute) {
+            val viewModel: MainViewModel = hiltViewModel()
+            HomeworkScreen(name = stringResource(id = NavigationItem.Homework.title), viewModel = viewModel)
+        }
+        composable(NavigationItem.Schedule.screenRoute) {
+            val viewModel: ScheduleViewModel = hiltViewModel()
+            ScheduleScreen(name = stringResource(id = NavigationItem.Schedule.title), viewModel = viewModel)
+        }
+        composable(NavigationItem.Information.screenRoute) {
+            val viewModel: MainViewModel = hiltViewModel()
+            InfoScreen(name = stringResource(id = NavigationItem.Information.title), viewModel = viewModel)
+        }
+        composable(NavigationItem.Setting.screenRoute) {
+            val viewModel: MainViewModel = hiltViewModel()
+            SettingScreen(name = stringResource(id = NavigationItem.Setting.title), viewModel = viewModel)
+        }
     }
 }
 

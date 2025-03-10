@@ -52,10 +52,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.cookandroid.loarang.R
+import com.cookandroid.loarang.room.CharacterDao
 import com.cookandroid.loarang.room.CharacterEntity
 import com.cookandroid.loarang.ui.main.MainViewModel
 import com.cookandroid.loarang.ui.theme.AppTheme
@@ -67,8 +69,7 @@ import com.cookandroid.loarang.ui.theme.iconColor
 import com.cookandroid.loarang.ui.theme.textColor
 
 @Composable
-fun CharacterScreen(name: String, modifier: Modifier = Modifier) {
-    val viewModel: MainViewModel = viewModel()
+fun CharacterScreen(name: String, modifier: Modifier = Modifier, viewModel: MainViewModel = hiltViewModel()) {
     val characterList by viewModel.characterList.collectAsState()
     val context = LocalContext.current
     val openAlertDialog = remember { mutableStateOf(false) }
@@ -313,6 +314,7 @@ private fun CharacterScreenPreview() {
     }
 }
 
+/*
 @Preview
 @Composable
 private fun CharacterItemPreview() {
@@ -330,8 +332,8 @@ private fun CharacterItemPreview() {
                 gadian = 0,
                 endContent = 0
             ),
-            viewModel = MainViewModel(application = Application()),
+            //viewModel = MainViewModel(application = Application()),
             context = LocalContext.current
         )
     }
-}
+}*/
