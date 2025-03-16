@@ -1,4 +1,81 @@
-# Loarang
+# 로아랑 (Loarang)
+
+**개발 기간**: 2022년 3월 7일 ~
+<br>
+**사용 언어 및 라이브러리**: Kotlin, Compose, Room, Firebase Realtime Database, Hilt
+
+![icon-playstore_Large](https://github.com/user-attachments/assets/a4a62b7c-a5a6-490d-bfeb-2821716133d7)
+
+[https://github.com/Sangyoon98/Loarang](https://github.com/Sangyoon98/Loarang)
+<br>
+[https://play.google.com/store/apps/details?id=com.cookandroid.loarang](https://play.google.com/store/apps/details?id=com.cookandroid.loarang)
+
+# 💡Topic
+
+- **RPG 게임 ‘로스트아크’의 콘텐츠 관리 어플리케이션**
+- 강남대학교 공과대학 소프트웨어응용학부 졸업작품전시회에서 **최수우상 수상**
+
+# 📝Summary
+
+RPG 게임 ‘로스트아크’를 즐겨하면서 콘텐츠 진행 정보를 확인하기 불편하다는 것이 확인되었습니다. 게임 커뮤니티에서도 콘텐츠 진행 정보를 엑셀 파일로 저장해서 관리한다는 정보를 듣고 어플리케이션을 제작하게 됐습니다. 본인의 캐릭터와 캐릭터별 콘텐츠 진행 정보를 관리할 수 있고 게임 내 필요한 기능들이 더 제공되는 어플리케이션입니다.
+
+# ⭐️Key Function
+
+- 캐릭터 추가 삭제 기능으로 캐릭터 정보 리스트 제공
+- 추가한 캐릭터가 자동으로 연계되어 ‘주간숙제’탭에 캐릭터 콘텐츠 진행상황 표시
+- 게임 내 고정 컨텐츠 정보를 ‘일정표’탭에 제공
+- ‘정보실’탭에서 게임에서 가장 많이 계산되는 경매 손익 계산, 거래 수수료 계산을 자동으로 계산해주는 계산기 기능 제공
+- 공지 사항과 패치 내역을 확인하고 개발자에게 메일로 문의할 수 있는 기능 제공
+
+# 🛠️Tech Stack
+
+**v1.1 ~ v1.2**
+`Java`, `Jsoup`, `Firebase`, `Glide`, `RXJava`, `SQLite`
+
+**v1.3**
+`Kotlin`, `Firebase Realtime Database`, `Coroutine`, `Room`
+
+**v1.4**
+`Kotlin`, `Compose`, `Firebase Realtime Database`, `Coroutine`, `Room`, `Hilt`
+
+# ⚙️Architecture
+
+**v1.1 ~ v1.2**
+`MVC`
+
+**v1.3**
+`MVVM`
+
+**v1.4**
+`MVVM`
+
+# 🧑🏻‍💻Team
+
+- 안드로이드 개발자 2명
+
+# ✋🏻Part
+
+- 안드로이드 앱 전체 개발 및 총괄
+
+# 🤔Learned
+
+**v1.1 ~ v1.2**
+- `Recycler View`를 사용해보면서 재사용성이 좋은 Recycler View의 장점을 알게 됐고 `Adapter`의 데이터가 변경될 경우 구현해야 하는 코드에 대해 알게 됐음.
+- `Jsoup`을 사용해 **크롤링**을 하고 `RXJava`를 사용한 **비동기 처리**를 해보면서 **비동기 프로그래밍의 사용법**에 대해 알게 됐음.
+- `SQLite`를 사용해 캐릭터 정보를 저장하면서 DB관리의 방법을 알게 됐음.
+- Firebase Realtime Database를 사용해 Firebase 연동법과 Recycler View의 리스트들을 실시간으로 관리하는 방법을 알게 됐음.
+
+**v1.3**
+- `Java` 코드를 `Kotlin`으로 마이그레이션 하며 두 언어의 장단점과 차이점을 알게 됐음.
+- `Room`을 사용해 캐릭터 정보를 저장하면서 DB관리를 기존보다 더욱 직관적이고 수월하게 하는 방법을 알게 됐음.
+- 비동기 처리를 `RXJava`에서 `Coroutine`으로 변경하면서 `Coroutine`의 러닝커브가 낮고 더 낮은 메모리를 사용하는 것을 알게 됐음.
+- `MVC`에서 `MVVM`으로 아키텍처 구조를 변경하면서 `ViewModel`의 역할과 구성을 알게 됐음.
+
+**v1.4**
+- `XML`을 `Compose`로 변경하면서 `Compose`의 사용법과 구성 방법을 배우게 됐음.
+- `Hilt`를 적용해보며 의존성 주입의 필요성을 알게 됐음.
+
+# 📸ScreenShot
 
 로스트아크 게임 정보 제공 어플리케이션
 
