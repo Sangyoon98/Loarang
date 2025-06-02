@@ -38,8 +38,8 @@ android {
         applicationId = "com.cookandroid.loarang"
         minSdk = 24
         targetSdk = 35
-        versionCode = 9
-        versionName = "1.4.1"
+        versionCode = 11
+        versionName = "1.4.2"
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -55,6 +55,7 @@ android {
             isDefault = true
             isDebuggable = false
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles (
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
