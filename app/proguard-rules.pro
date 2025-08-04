@@ -23,3 +23,6 @@
 ###Firebase
 -keepattributes Signature
 -keepclassmembers class com.cookandroid.loarang.** { *; }
+
+# MaterialDatePicker 관련 클래스 보존
+-keep class com.google.android.material.datepicker.** { *; }
