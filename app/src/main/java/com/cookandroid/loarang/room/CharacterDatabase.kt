@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import dagger.hilt.android.HiltAndroidApp
 
-@Database(entities = [CharacterEntity::class], version = 1)
+@Database(entities = [CharacterEntity::class], version = 1, exportSchema = false)
 abstract class CharacterDatabase : RoomDatabase() {
     abstract fun characterDao() : CharacterDao
 
