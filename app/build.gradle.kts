@@ -6,10 +6,7 @@ plugins {
     id ("com.android.application")
     id("com.google.gms.google-services")
     id("com.google.devtools.ksp")
-    kotlin("kapt") version "1.9.23"
-    alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
-    id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
 }
 
@@ -23,7 +20,7 @@ fun getApiKey(propertyKey: String): String {
 
 android {
     namespace = "com.cookandroid.loarang"
-    compileSdk = 36
+    compileSdk = 37
 
     signingConfigs {
         create("release") {
@@ -37,9 +34,9 @@ android {
     defaultConfig {
         applicationId = "com.cookandroid.loarang"
         minSdk = 24
-        targetSdk = 35
-        versionCode = 12
-        versionName = "1.4.3"
+        targetSdk = 36
+        versionCode = 13
+        versionName = "1.4.4"
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -76,9 +73,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
 }
 
 dependencies {
@@ -91,7 +85,6 @@ dependencies {
     // Glide
     implementation(libs.glide)
     implementation(libs.glideCompose)
-    annotationProcessor(libs.compiler)
 
     // Jsoup
     implementation(libs.jsoup)
@@ -103,12 +96,10 @@ dependencies {
 
     // hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
     // compose
-    val composeBom = platform("androidx.compose:compose-bom:2024.12.01")
-    implementation(composeBom)
-    androidTestImplementation(composeBom)
+    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.material3)
     implementation(libs.ui.tooling.preview)
     debugImplementation(libs.ui.tooling)
